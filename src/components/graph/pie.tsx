@@ -6,10 +6,10 @@ import exporting from "highcharts/modules/exporting";
 import HighchartsMore from "highcharts/highcharts-more";
 
 import HighchartsReact from "highcharts-react-official";
-import { pieData } from "../../types/pieData.type";
+import { PieData } from "../../types/pieData.type";
 
 type Props = {
-  pieData: pieData[];
+  pieData: PieData[];
   themeColor: string[];
   background: string;
 };
