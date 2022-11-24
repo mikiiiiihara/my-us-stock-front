@@ -1,6 +1,6 @@
-import { sector } from "../types/sector.type";
+import { Sector } from "../types/sector.type";
 
-export const sectorList: sector[] = [
+export const sectorList: Sector[] = [
   { id: 1, name: "dividend" },
   { id: 2, name: "energy" },
   { id: 3, name: "material" },
