@@ -57,41 +57,48 @@ export const TickerContent: FC<Props> = ({ tickerDetail, currency }) => {
     })
     .slice(0, 3);
   return (
-    <div>
-      <h2>値上がりTOP3</h2>
-      <TickerPanel tickerDetail={dataPriceRateDesc} currency={currency} />
-      <div className="clear-both"></div>
-      <h2>値下がりTOP3</h2>
-      <TickerPanel tickerDetail={dataPriceRateAsc} currency={currency} />
-      <div className="clear-both"></div>
-      <h2>含み益（額）TOP3</h2>
-      <TickerPanel
-        tickerDetail={dataBalanceDesc}
-        currency={currency}
-        displayType="balance"
-      />
-      <div className="clear-both"></div>
-      <h2>含み損（額）TOP3</h2>
-      <TickerPanel
-        tickerDetail={dataBalanceAsc}
-        currency={currency}
-        displayType="balance"
-      />
-      <div className="clear-both"></div>
-      <h2>含み益（率）TOP3</h2>
-      <TickerPanel
-        tickerDetail={dataBalanceRateDesc}
-        currency={currency}
-        displayType="balanceRate"
-      />
-      <div className="clear-both"></div>
-      <h2>含み損（率）TOP3</h2>
-      <TickerPanel
-        tickerDetail={dataBalanceRateAsc}
-        currency={currency}
-        displayType="balanceRate"
-      />
-      <div className="clear-both"></div>
+    <div className="ticker-content">
+      <div className="content">
+        <h2>値上がりTOP3</h2>
+        <TickerPanel tickerDetail={dataPriceRateDesc} currency={currency} />
+        <div className="clear-both"></div>
+        <h2>値下がりTOP3</h2>
+        <TickerPanel tickerDetail={dataPriceRateAsc} currency={currency} />
+        <div className="clear-both"></div>
+        <h2>含み益（額）TOP3</h2>
+        <TickerPanel
+          tickerDetail={dataBalanceDesc}
+          currency={currency}
+          displayType="balance"
+        />
+        <div className="clear-both"></div>
+        <h2>含み損（額）TOP3</h2>
+        <TickerPanel
+          tickerDetail={dataBalanceAsc}
+          currency={currency}
+          displayType="balance"
+        />
+        <div className="clear-both"></div>
+        <h2>含み益（率）TOP3</h2>
+        <TickerPanel
+          tickerDetail={dataBalanceRateDesc}
+          currency={currency}
+          displayType="balanceRate"
+        />
+        <div className="clear-both"></div>
+        <h2>含み損（率）TOP3</h2>
+        <TickerPanel
+          tickerDetail={dataBalanceRateAsc}
+          currency={currency}
+          displayType="balanceRate"
+        />
+        <div className="clear-both"></div>
+      </div>
+      <div className="content">
+        <h2>保有株一覧</h2>
+        <TickerPanel tickerDetail={tickerDetail} currency={currency} />
+        <div className="clear-both"></div>
+      </div>
     </div>
   );
 };

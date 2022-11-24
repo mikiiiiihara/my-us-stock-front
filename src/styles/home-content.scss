@@ -10,6 +10,20 @@
   }
   .content {
     text-align: center;
+    .menu-btn-content {
+      width: 90%;
+      margin: 0 auto;
+    }
+    .menu-button {
+      width: 46%;
+      margin: 0 2%;
+    }
+    @media (max-width: 820px) {
+      .menu-button {
+        width: 100%;
+        margin: 0.4rem 0;
+      }
+    }
   }
   .strategy-content {
     .content {

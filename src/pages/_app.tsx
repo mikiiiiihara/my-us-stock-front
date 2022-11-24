@@ -1,8 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.css";
 import "../styles/header.scss";
+import "../styles/modal.scss";
 import "../styles/home-content.scss";
 import "../styles/ticker-panel-item.scss";
+import "../styles/ticker-content.scss";
 import type { AppProps } from "next/app";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";

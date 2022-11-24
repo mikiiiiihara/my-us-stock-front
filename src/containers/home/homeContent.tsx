@@ -16,6 +16,8 @@ import Pie from "../../components/graph/pie";
 import { StrategyContent } from "./strategy/strategyContent";
 import Image from "next/image";
 import { TickerContent } from "./ticker/tickerContent";
+import UpdateModal from "./modal/updateModal";
+import CreateModal from "./modal/createModal";
 
 export const HomeContent = () => {
   // ログイン情報
@@ -103,6 +105,26 @@ export const HomeContent = () => {
         </p>
         <p>（USDJPY: {currentUsd}）</p>
         <Pie pieData={pieData} themeColor={themeDefault} background="#343a40" />
+        <div className="menu-btn-content">
+          <input
+            type="button"
+            value="情報を変更"
+            onClick={ShowUpdModal}
+            className="btn menu-button primary-button"
+          />
+          <input
+            type="button"
+            value="銘柄を追加"
+            onClick={ShowAddModal}
+            className="btn menu-button primary-button"
+          />
+        </div>
+        <UpdateModal
+          showFlag={showUpdModal}
+          setShowModal={setUpdModal}
+          tickers={tickers}
+        />
+        <CreateModal showFlag={showAddModal} setShowModal={setAddModal} />
       </div>
       <StrategyContent />
       <button onClick={changeFx} className="primary-button fx-button-fix">
