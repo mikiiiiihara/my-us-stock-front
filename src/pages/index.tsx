@@ -1,16 +1,11 @@
-import { useSession, signIn, signOut } from "next-auth/react";
+import Header from "../components/common/header/header";
+import { HomeContent } from "../containers/home/homeContent";
 
 export default function Home() {
-  const { data: session } = useSession();
-
-  return session ? (
+  return (
     <>
-      {JSON.stringify(session)}
-      <button onClick={() => signOut()}>SignOut</button>
-    </>
-  ) : (
-    <>
-      <button onClick={() => signIn()}>SignIn</button>
+      <Header title="My US Stock Portfolio | Home" />
+      <HomeContent />
     </>
   );
 }

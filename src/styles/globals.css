@@ -1,5 +1,7 @@
 html,
 body {
+  background-color: #343a40;
+  color: white;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -11,16 +13,44 @@ a {
   text-decoration: none;
 }
 
+p,
+h1,
+h2,
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
 * {
   box-sizing: border-box;
 }
+.wrapper {
+  padding-bottom: 6rem;
+}
+.f-left {
+  float: left;
+}
+.fc-minus {
+  color: #fc6868;
+}
+.fc-plus {
+  color: rgb(82, 231, 171);
+}
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+.content {
+  width: 94%;
+  margin: 0.6rem auto;
+  padding: 1.2rem;
+  border: 1.5px solid #4d4d4d;
+  border-radius: 1rem;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04);
+}
+
+.primary-button {
+  background-color: #4fd4fd;
+  color: white;
+}
+
+.clear-both {
+  clear: left;
 }
