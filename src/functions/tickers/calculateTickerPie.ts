@@ -1,5 +1,5 @@
-import { PieData } from "../types/pieData.type";
-import { TickerDetail } from "../types/tickerDetail.type";
+import { PieData } from "../../types/pieData.type";
+import { TickerDetail } from "../../types/tickerDetail.type";
 
 export const calculateTickerPie = (
   tickerDetail: TickerDetail[],
