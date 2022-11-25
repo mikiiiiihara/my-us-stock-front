@@ -5,13 +5,14 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { GET_STRATEGY } from "../../../hooks/strategy/useGetStrategy";
 import { UPDATE_STRATEGY } from "../../../hooks/strategy/useUpdateStrategy";
+import { Loading } from "../../../components/common/loading/loading";
 type FormData = {
   text: string;
 };
 
 export const StrategyContent = () => {
   const { data: session } = useSession();
-  const { data: strategyData } = useQuery(GET_STRATEGY, {
+  const { data: strategyData, loading } = useQuery(GET_STRATEGY, {
     variables: { user: session?.user?.email },
   });
   const data = strategyData?.readStrategy;
@@ -37,6 +38,16 @@ export const StrategyContent = () => {
     let numOfN = (data?.text.match(new RegExp("\n", "g")) || []).length;
     return numOfN * 2;
   };
+  if (loading)
+    return (
+      <div className="strategy-content">
+        <div className="content">
+          <h2>投資方針メモ</h2>
+          <Loading />
+        </div>
+      </div>
+    );
+
   return (
     <div className="strategy-content">
       <div className="content">

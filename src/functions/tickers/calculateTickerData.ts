@@ -1,7 +1,7 @@
-import { Ticker } from "../types/ticker.type";
-import { TickerData } from "../types/tickerData.type";
-import { MarketData } from "../types/marketData.type";
-import { TickerDetail } from "../types/tickerDetail.type";
+import { Ticker } from "../../types/ticker.type";
+import { TickerData } from "../../types/tickerData.type";
+import { MarketData } from "../../types/marketData.type";
+import { TickerDetail } from "../../types/tickerDetail.type";
 
 export const calculateTickerData = (
   tickers: Ticker[],

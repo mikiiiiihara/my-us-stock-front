@@ -1,5 +1,5 @@
 import Header from "../components/common/header/header";
-import { HomeContent } from "../containers/home/homeContent";
+import { HomeContent } from "../contents/home/homeContent";
 
 export default function Home() {
   return (

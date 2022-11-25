@@ -8,16 +8,17 @@ import { GET_TICKERS } from "../../hooks/tickers/useGetTickers";
 import { GET_MARKETDATA } from "../../hooks/export/useGetMarketData";
 import { MarketData } from "../../types/marketData.type";
 import { TickerData } from "../../types/tickerData.type";
-import { calculateTickerData } from "../../functions/calculateTickerData";
+import { calculateTickerData } from "../../functions/tickers/calculateTickerData";
 import { TickerDetail } from "../../types/tickerDetail.type";
-import { calculateTickerPie } from "../../functions/calculateTickerPie";
+import { calculateTickerPie } from "../../functions/tickers/calculateTickerPie";
 import { themeDefault } from "../../constants/themeColor";
 import Pie from "../../components/graph/pie";
 import { StrategyContent } from "./strategy/strategyContent";
 import Image from "next/image";
 import { TickerContent } from "./ticker/tickerContent";
-import UpdateModal from "./modal/updateModal";
-import CreateModal from "./modal/createModal";
+import CreateForm from "./forms/createForm";
+import UpdateForm from "./forms/updateForm";
+import Modal from "../../components/modal/modal";
 
 export const HomeContent = () => {
   // ログイン情報
@@ -119,12 +120,16 @@ export const HomeContent = () => {
             className="btn menu-button primary-button"
           />
         </div>
-        <UpdateModal
+        <Modal
           showFlag={showUpdModal}
           setShowModal={setUpdModal}
-          tickers={tickers}
+          content={<UpdateForm setShowModal={setUpdModal} tickers={tickers} />}
         />
-        <CreateModal showFlag={showAddModal} setShowModal={setAddModal} />
+        <Modal
+          showFlag={showAddModal}
+          setShowModal={setAddModal}
+          content={<CreateForm setShowModal={setAddModal} />}
+        />
       </div>
       <StrategyContent />
       <button onClick={changeFx} className="primary-button fx-button-fix">
