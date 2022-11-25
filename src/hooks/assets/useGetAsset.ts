@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { Asset } from "../../common/asset.interface";
+import { Asset } from "../../types/asset.type";
 
 export const GET_ASSETS = gql`
   query GetAssets($user: String) {
@@ -34,7 +34,9 @@ const GET_ASSET = gql`
     }
   }
 `;
-export const UseGetAsset = (loginUser:string | null | undefined): Asset | undefined => {
-  const { data } = useQuery(GET_ASSET, {variables: {user: loginUser}});
+export const UseGetAsset = (
+  loginUser: string | null | undefined
+): Asset | undefined => {
+  const { data } = useQuery(GET_ASSET, { variables: { user: loginUser } });
   return data?.readAsset;
 };
