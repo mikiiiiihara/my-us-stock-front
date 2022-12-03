@@ -73,6 +73,7 @@ export const TickerPanelItem: FC<Props> = ({ data, currency, displayType }) => {
                 {displayType == "balance" ? "" : "%"}
               </p>
             </div>
+            <p className="modal-text">セクター：{data.sector}</p>
             <p className="modal-text">保有株数：{data.quantity}</p>
             <p className="modal-text">
               取得価格：{currency}
