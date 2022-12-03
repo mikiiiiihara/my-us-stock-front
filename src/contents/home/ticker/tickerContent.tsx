@@ -56,6 +56,15 @@ export const TickerContent: FC<Props> = ({ tickerDetail, currency }) => {
       return 0;
     })
     .slice(0, 3);
+  // 一覧表示用の配列をTickerでアルファベット順にソート
+  const tickerDetailValue = tickerDetail.map((ticker) => {
+    return ticker;
+  });
+  tickerDetailValue.sort(function (a, b) {
+    if (a.ticker < b.ticker) return -1;
+    if (a.ticker > b.ticker) return 1;
+    return 0;
+  });
   return (
     <div className="ticker-content">
       <div className="content">
@@ -96,7 +105,7 @@ export const TickerContent: FC<Props> = ({ tickerDetail, currency }) => {
       </div>
       <div className="content">
         <h2>保有株一覧</h2>
-        <TickerPanel tickerDetail={tickerDetail} currency={currency} />
+        <TickerPanel tickerDetail={tickerDetailValue} currency={currency} />
         <div className="clear-both"></div>
       </div>
     </div>

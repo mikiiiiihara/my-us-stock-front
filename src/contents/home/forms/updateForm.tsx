@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import router from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { sortTickers } from "../../../functions/tickers/sosrtTickers";
 
 import { UPDATE_TICKER } from "../../../hooks/tickers/useUpdateTicker";
 import { Ticker } from "../../../types/ticker.type";
@@ -26,6 +27,8 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
   const [quantity, setQuantity] = useState("");
   const [dividend, setDividend] = useState("");
   const [usdJpy, setUsdJpy] = useState("");
+  // フォーム表示用
+  const tickerDisplayList = sortTickers(tickers);
 
   const { register, handleSubmit } = useForm<FormData>();
   const closeModal = () => {
@@ -69,7 +72,7 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
           <select
             {...register("id", {
               onChange: (e) => {
-                const ticker = tickers.find(
+                const ticker = tickerDisplayList.find(
                   (element) => element.id == parseInt(e.target.value)
                 );
                 if (ticker !== undefined) {
@@ -82,7 +85,7 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
             })}
             className="form-control"
           >
-            {tickers?.map(
+            {tickerDisplayList?.map(
               (ticker: { id: number; ticker: string; price: number }) => (
                 <option key={ticker.id} value={ticker.id}>
                   {ticker.ticker}
