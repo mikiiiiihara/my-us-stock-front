@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { TickerPanel } from "../../../components/tickers/tickerPanel";
 import { TickerDetail } from "../../../types/tickerDetail.type";
 
@@ -8,6 +8,35 @@ type Props = {
 };
 
 export const TickerContent: FC<Props> = ({ tickerDetail, currency }) => {
+  // 一覧表示用の配列をTickerでアルファベット順にソート
+  const tickerDetailValue = tickerDetail.map((ticker) => {
+    return ticker;
+  });
+  tickerDetailValue.sort(function (a, b) {
+    if (a.ticker < b.ticker) return -1;
+    if (a.ticker > b.ticker) return 1;
+    return 0;
+  });
+  const [tickerList, setTickerList] = useState(tickerDetailValue);
+  // 検索値で値を書き換え
+  const search = (searchValue: string) => {
+    const result = tickerDetailValue
+      .map((ticker) => {
+        if (
+          ticker.ticker.includes(searchValue) ||
+          ticker.sector.includes(searchValue)
+        )
+          return ticker;
+      })
+      .filter((ticker): ticker is Exclude<typeof ticker, undefined> => {
+        return ticker !== undefined;
+      });
+    if (result) {
+      setTickerList(result);
+    } else {
+      setTickerList(tickerDetailValue);
+    }
+  };
   // 値上がりTOP3
   const dataPriceRateDesc = tickerDetail
     .sort(function (a, b) {
@@ -56,15 +85,6 @@ export const TickerContent: FC<Props> = ({ tickerDetail, currency }) => {
       return 0;
     })
     .slice(0, 3);
-  // 一覧表示用の配列をTickerでアルファベット順にソート
-  const tickerDetailValue = tickerDetail.map((ticker) => {
-    return ticker;
-  });
-  tickerDetailValue.sort(function (a, b) {
-    if (a.ticker < b.ticker) return -1;
-    if (a.ticker > b.ticker) return 1;
-    return 0;
-  });
   return (
     <div className="ticker-content">
       <div className="content">
@@ -105,7 +125,13 @@ export const TickerContent: FC<Props> = ({ tickerDetail, currency }) => {
       </div>
       <div className="content">
         <h2>保有株一覧</h2>
-        <TickerPanel tickerDetail={tickerDetailValue} currency={currency} />
+        <input
+          type="text"
+          className="form-control search-text"
+          placeholder="銘柄名、セクターを検索"
+          onChange={(e) => search(e.target.value)}
+        />
+        <TickerPanel tickerDetail={tickerList} currency={currency} />
         <div className="clear-both"></div>
       </div>
     </div>
