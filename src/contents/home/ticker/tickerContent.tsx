@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { TickerPanel } from "../../../components/tickers/tickerPanel";
 import { TickerDetail } from "../../../types/tickerDetail.type";
 
@@ -18,6 +18,10 @@ export const TickerContent: FC<Props> = ({ tickerDetail, currency }) => {
     return 0;
   });
   const [tickerList, setTickerList] = useState(tickerDetailValue);
+  useEffect(() => {
+    setTickerList(tickerDetailValue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currency]);
   // 検索値で値を書き換え
   const search = (searchValue: string) => {
     const result = tickerDetailValue

@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import router from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { sortTickers } from "../../../functions/tickers/sosrtTickers";
+import { sortTickers } from "../../../functions/tickers/sortTickers";
 
 import { UPDATE_TICKER } from "../../../hooks/tickers/useUpdateTicker";
 import { Ticker } from "../../../types/ticker.type";
