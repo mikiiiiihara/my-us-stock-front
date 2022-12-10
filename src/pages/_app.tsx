@@ -15,7 +15,8 @@ import { Layout } from "../components/common/layout/layout";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 export const client = new ApolloClient({
-  uri: `${process.env.API_URL}` || "http://localhost:4000/graphql",
+  uri: "https://asia-northeast1-my-stock-be-b1b1f.cloudfunctions.net/api/graphql",
+  // uri: 'http://localhost:4000/graphql',
   cache: new InMemoryCache(),
 });
 
