@@ -13,10 +13,10 @@ import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { Layout } from "../components/common/layout/layout";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { env } from "process";
 
 export const client = new ApolloClient({
-  uri: "https://asia-northeast1-my-stock-be-b1b1f.cloudfunctions.net/api/graphql",
-  // uri: 'http://localhost:4000/graphql',
+  uri: env.API_URL || "http://localhost:4000/graphql",
   cache: new InMemoryCache(),
 });
 
