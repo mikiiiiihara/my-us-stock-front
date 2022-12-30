@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
-import { TickerPanel } from "../../../components/tickers/tickerPanel";
-import { TickerDetail } from "../../../types/tickerDetail.type";
+import { TickerPanel } from "../../components/tickers/tickerPanel";
+import { TickerDetail } from "../../types/tickerDetail.type";
 
 type Props = {
   tickerDetail: TickerDetail[];

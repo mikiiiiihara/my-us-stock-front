@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Nav } from "react-bootstrap";
 import { signOut, useSession } from "next-auth/react";
+import { NAVIGATION_LIST } from "../../../constants/navigation";
 
 type Props = {
   title: string;
@@ -31,22 +32,25 @@ const Header: FC<Props> = ({ title }) => {
       </div>
       <Nav className="navbar navbar-expand-lg navbar-dark bg-dark d-none-tb">
         <div className="container-xl">
-          <Link href="/" className="navbar-brand f-left main-menu">
+          <Link
+            href={NAVIGATION_LIST.HOME}
+            className="navbar-brand f-left main-menu"
+          >
             My US Stock Portfolio
           </Link>
           <ul className="navbar-nav mr-auto f-left sub-menu">
             <li className="nav-item">
-              <Link href="/asset" className="nav-link">
+              <Link href={NAVIGATION_LIST.ASSET} className="nav-link">
                 Asset
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/dividend" className="nav-link">
+              <Link href={NAVIGATION_LIST.DIVIDEND} className="nav-link">
                 Dividend
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/sector" className="nav-link">
+              <Link href={NAVIGATION_LIST.SECTOR} className="nav-link">
                 Sector
               </Link>
             </li>
@@ -54,7 +58,7 @@ const Header: FC<Props> = ({ title }) => {
         </div>
       </Nav>
       <div className="nav-sp">
-        <Link href="/">
+        <Link href={NAVIGATION_LIST.HOME}>
           <div className="nav-sp-item">
             <Image
               src="/portfolio.png"
@@ -66,7 +70,7 @@ const Header: FC<Props> = ({ title }) => {
             <p>Home</p>
           </div>
         </Link>
-        <Link href="/asset">
+        <Link href={NAVIGATION_LIST.ASSET}>
           <div className="nav-sp-item">
             <Image
               src="/asset.png"
@@ -78,7 +82,7 @@ const Header: FC<Props> = ({ title }) => {
             <p>Asset</p>
           </div>
         </Link>
-        <Link href="/dividend">
+        <Link href={NAVIGATION_LIST.DIVIDEND}>
           <div className="nav-sp-item">
             <Image
               src="/dividend.png"
@@ -90,7 +94,7 @@ const Header: FC<Props> = ({ title }) => {
             <p>Dividend</p>
           </div>
         </Link>
-        <Link href="/sector">
+        <Link href={NAVIGATION_LIST.SECTOR}>
           <div className="nav-sp-item">
             <Image
               src="/sector.png"

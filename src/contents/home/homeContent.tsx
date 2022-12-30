@@ -15,7 +15,7 @@ import { themeDefault } from "../../constants/themeColor";
 import Pie from "../../components/graph/pie";
 import { StrategyContent } from "./strategy/strategyContent";
 import Image from "next/image";
-import { TickerContent } from "./ticker/tickerContent";
+import { TickerContent } from "../portfolio/tickerContent";
 import CreateForm from "./forms/createForm";
 import UpdateForm from "./forms/updateForm";
 import Modal from "../../components/modal/modal";
