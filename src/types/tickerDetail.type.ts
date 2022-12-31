@@ -1,4 +1,5 @@
 export type TickerDetail = {
+  id: number;
   ticker: string;
   quantity: number;
   getPrice: number;

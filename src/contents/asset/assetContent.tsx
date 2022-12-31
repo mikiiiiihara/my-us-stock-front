@@ -1,58 +1,26 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 import router from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import { Loading } from "../../components/common/loading/loading";
 import StackedArea from "../../components/graph/StakedArea";
+import { HOOKS_STATE } from "../../constants/hooks";
 import { themeElectronic } from "../../constants/themeColor";
-import { calculateTickerData } from "../../functions/tickers/calculateTickerData";
 import { convertYYYYMMDD } from "../../functions/util/convertYYYYMMDD";
-import { GET_ASSETS } from "../../hooks/assets/useGetAsset";
+import { useAssets } from "../../hooks/assets/useAssets";
 import { UPDATE_ASSET } from "../../hooks/assets/useUpdateAsset";
-import { GET_MARKETDATA } from "../../hooks/export/useGetMarketData";
-import { GET_USD } from "../../hooks/export/useGetUSDJPY";
-import { GET_TICKERS } from "../../hooks/tickers/useGetTickers";
-import { Asset } from "../../types/asset.type";
-import { MarketData } from "../../types/marketData.type";
-import { Ticker } from "../../types/ticker.type";
-import { TickerData } from "../../types/tickerData.type";
+import { useGetUSDJPY } from "../../hooks/export/useGetUSDJPY";
+import { useGetTickers } from "../../hooks/tickers/useGetTickers";
 import CashContent from "./cash/cashContent";
 
 export const AssetContent = () => {
+  // 保有株式情報取得
+  const { tickers } = useGetTickers("¥");
   // ログイン情報
   const { data: session } = useSession();
-  // 保有株式情報取得
-  const { data: tickersData, loading: tickerLoading } = useQuery(GET_TICKERS, {
-    variables: { user: session?.user?.email },
-  });
-  const tickers: Ticker[] = tickersData?.readAllTickers;
   // 為替情報取得
-  const { data: usdJpyData, loading: usdJpyLoading } = useQuery(GET_USD);
-  const currentUsd = usdJpyData?.readUsd;
-  //保有株式の現在価格を取得
-  const tickerList: string[] = [];
-  tickers?.forEach((ticker) => {
-    tickerList.push(ticker.ticker);
-  });
-  const { data: priceData, loading: marketDataLoading } = useQuery(
-    GET_MARKETDATA,
-    {
-      variables: { tickerList },
-    }
-  );
-  const marketData: MarketData[] = priceData?.getRealtimeData;
-  // 保有株式総額を算出
-  const tickerDataList: TickerData = calculateTickerData(
-    tickers,
-    marketData,
-    currentUsd
-  );
-  // 資産情報算出
-  const { data: assetsData, loading: assetsLoading } = useQuery(GET_ASSETS, {
-    variables: { user: session?.user?.email },
-  });
-  const assets: Asset[] = assetsData?.readAllAssets;
+  const { currentUsd } = useGetUSDJPY();
   // 現在日時取得
   const year = format(new Date(), "yyyy");
   const month = format(new Date(), "MM");
@@ -61,13 +29,37 @@ export const AssetContent = () => {
   let todayCashUSD = 0;
   let xDataList: string[] = new Array();
   let yDataList: number[] = new Array();
-  if (assets != undefined) {
+  // 資産情報取得
+  const { assets } = useAssets();
+  // 当日の資産情報を更新
+  const [UpdateAsset] = useMutation(UPDATE_ASSET);
+  if (
+    tickers === HOOKS_STATE.LOADING ||
+    currentUsd === HOOKS_STATE.LOADING ||
+    assets === HOOKS_STATE.LOADING
+  )
+    return (
+      <div className="asset-content">
+        <Loading />
+      </div>
+    );
+  const update = async () => {
+    const result = await UpdateAsset({
+      variables: {
+        user: session?.user?.email,
+        asset: tickers.priceTotal,
+      },
+    });
+    if (result) {
+      router.reload();
+    }
+  };
+  if (assets != null) {
     // for cash content
     for (let value of assets) {
       if (value != undefined) {
         const xData = convertYYYYMMDD(value.year, value.month, value.date);
-        const yData =
-          value.asset + value.cashJPY + value.cashUSD * parseInt(currentUsd);
+        const yData = value.asset + value.cashJPY + value.cashUSD * currentUsd;
         xDataList.push(xData);
         yDataList.push(Math.round(yData * 1) / 1);
         if (value.year == year && value.month == month && value.date == date) {
@@ -76,28 +68,9 @@ export const AssetContent = () => {
       }
     }
     if (todayAsset != undefined) {
-      todayCashUSD = todayAsset.cashUSD * parseInt(currentUsd);
+      todayCashUSD = todayAsset.cashUSD * currentUsd;
     }
   }
-  // 当日の資産情報を更新
-  const [UpdateAsset] = useMutation(UPDATE_ASSET);
-  const update = async () => {
-    const result = await UpdateAsset({
-      variables: {
-        user: session?.user?.email,
-        asset: tickerDataList.priceTotal,
-      },
-    });
-    if (result) {
-      router.reload();
-    }
-  };
-  if (tickerLoading || usdJpyLoading || marketDataLoading || assetsLoading)
-    return (
-      <div className="asset-content">
-        <Loading />
-      </div>
-    );
   return (
     <div className="asset-content">
       <div className="content">
@@ -117,7 +90,7 @@ export const AssetContent = () => {
       </div>
       <CashContent
         cash={todayCashUSD + (todayAsset?.cashJPY || 0)}
-        stock={tickerDataList.priceTotal}
+        stock={tickers.priceTotal}
       />
     </div>
   );

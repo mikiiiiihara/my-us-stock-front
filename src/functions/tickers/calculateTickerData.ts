@@ -14,6 +14,7 @@ export const calculateTickerData = (
   let dividendSum = 0;
   if (marketData != undefined) {
     for (let i = 0; i < tickers?.length; i++) {
+      const id = tickers[i].id;
       const usdJpy = tickers[i].usdjpy;
       const ticker = tickers[i].ticker;
       const quantity = tickers[i].quantity;
@@ -35,6 +36,7 @@ export const calculateTickerData = (
       dividendSum += sumOfDividend;
 
       const item: TickerDetail = {
+        id: id,
         ticker: ticker,
         quantity: quantity,
         getPrice: getPrice,

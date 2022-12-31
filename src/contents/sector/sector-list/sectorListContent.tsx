@@ -1,40 +1,15 @@
-import { useQuery } from "@apollo/client";
 import React from "react";
 import { Loading } from "../../../components/common/loading/loading";
 import SectorPanel from "../../../components/sector/sectorPanel";
+import { DISPLAY_SECTOR_LIST } from "../../../constants/displaySectorList";
+import { HOOKS_STATE } from "../../../constants/hooks";
 import { getTickerRealData } from "../../../functions/export/getTickerRealData";
-import { GET_MARKETDATA } from "../../../hooks/export/useGetMarketData";
-import { MarketData } from "../../../types/marketData.type";
+import { useGetMarketData } from "../../../hooks/export/useGetMarketData";
 
 export const SectorListContent = () => {
-  const allSectorList = [
-    "SPY",
-    "XLE",
-    "XLK",
-    "SMH",
-    "IBB",
-    "XLV",
-    "XLP",
-    "XLU",
-    "XLB",
-    "XLY",
-    "XLF",
-    "XLI",
-    "XLRE",
-    "XME",
-    "XRT",
-    "ITA",
-    "ICLN",
-    "AGG",
-    "GLD",
-    "DBA",
-  ];
-  const { data, loading } = useQuery(GET_MARKETDATA, {
-    variables: { tickerList: allSectorList },
-  });
-  const realSectorData: MarketData[] = data?.getRealtimeData;
-  const allSectorData = getTickerRealData(allSectorList, realSectorData);
-  if (loading)
+  const allSectorList = DISPLAY_SECTOR_LIST;
+  const { marketData } = useGetMarketData(allSectorList);
+  if (marketData === HOOKS_STATE.LOADING)
     return (
       <>
         <div className="sector-content">
@@ -43,6 +18,7 @@ export const SectorListContent = () => {
         </div>
       </>
     );
+  const allSectorData = getTickerRealData(allSectorList, marketData);
   return (
     <div className="sector-list-content">
       <div className="content">

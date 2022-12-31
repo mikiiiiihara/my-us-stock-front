@@ -1,48 +1,29 @@
-import { useQuery } from "@apollo/client";
-import { useSession } from "next-auth/react";
 import React from "react";
-import { calculateTickerData } from "../../functions/tickers/calculateTickerData";
-import { GET_MARKETDATA } from "../../hooks/export/useGetMarketData";
-import { GET_USD } from "../../hooks/export/useGetUSDJPY";
-import { GET_TICKERS } from "../../hooks/tickers/useGetTickers";
+import { useGetUSDJPY } from "../../hooks/export/useGetUSDJPY";
+import { useGetTickers } from "../../hooks/tickers/useGetTickers";
 import { DivData } from "../../types/divData.type";
-import { MarketData } from "../../types/marketData.type";
 import { PieData } from "../../types/pieData.type";
-import { Ticker } from "../../types/ticker.type";
-import { TickerData } from "../../types/tickerData.type";
 import { TickerDetail } from "../../types/tickerDetail.type";
 import { calculateDividendCalendar } from "../../functions/dividend/calculateDividendCalendar";
 import { Loading } from "../../components/common/loading/loading";
 import Pie from "../../components/graph/pie";
 import StackedColumn from "../../components/graph/stackedColumn";
 import { themeDefault } from "../../constants/themeColor";
+import { HOOKS_STATE } from "../../constants/hooks";
 
 export const DividendContent = () => {
-  const { data: session } = useSession();
   // 為替情報取得
-  const { data: usdJpyData, loading: usdJpyLoading } = useQuery(GET_USD);
-  const currentUsd = usdJpyData?.readUsd;
+  const { currentUsd } = useGetUSDJPY();
   // 保有株式情報取得
-  const { data: tickersData, loading: tickerLoading } = useQuery(GET_TICKERS, {
-    variables: { user: session?.user?.email },
-  });
-  const tickers: Ticker[] = tickersData?.readAllTickers;
-  //保有株式の現在価格を取得
-  const tickerList: string[] = [];
-  tickers?.forEach((ticker) => {
-    tickerList.push(ticker.ticker);
-  });
-  const { data: priceData, loading: marketDataLoading } = useQuery(
-    GET_MARKETDATA,
-    {
-      variables: { tickerList },
-    }
-  );
-  const marketData: MarketData[] = priceData?.getRealtimeData;
-  // 保有株式総額を算出
-  const tickerData: TickerData = calculateTickerData(tickers, marketData, 1);
-  const tickerDetail: TickerDetail[] = tickerData.tickerDetail;
-  const dividendTotal = tickerData.dividendTotal;
+  const { tickers } = useGetTickers("$");
+  if (tickers === HOOKS_STATE.LOADING || currentUsd === HOOKS_STATE.LOADING)
+    return (
+      <div className="dividend-content">
+        <Loading />
+      </div>
+    );
+  const tickerDetail: TickerDetail[] = tickers.tickerDetail;
+  const dividendTotal = tickers.dividendTotal;
   const divData: DivData[] = calculateDividendCalendar(tickerDetail);
   const pieDataList = tickerDetail
     .sort(function (a, b) {
@@ -54,18 +35,12 @@ export const DividendContent = () => {
       const pie: PieData = { name: data.ticker, y: data.sumOfDividend };
       return pie;
     });
-  if (tickerLoading || usdJpyLoading || marketDataLoading)
-    return (
-      <div className="dividend-content">
-        <Loading />
-      </div>
-    );
   return (
     <div className="dividend-content">
       <div className="content">
         <h2>
           年配当総額: ${dividendTotal}（¥
-          {(dividendTotal * parseInt(currentUsd)).toLocaleString()}）
+          {(dividendTotal * currentUsd).toLocaleString()}）
         </h2>
         <StackedColumn
           divData={divData}

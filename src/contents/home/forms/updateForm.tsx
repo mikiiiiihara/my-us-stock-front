@@ -5,11 +5,11 @@ import { useForm } from "react-hook-form";
 import { sortTickers } from "../../../functions/tickers/sortTickers";
 
 import { UPDATE_TICKER } from "../../../hooks/tickers/useUpdateTicker";
-import { Ticker } from "../../../types/ticker.type";
+import { TickerDetail } from "../../../types/tickerDetail.type";
 
 type Props = {
   setShowModal: Function;
-  tickers: Ticker[];
+  tickers: TickerDetail[];
 };
 
 interface FormData {

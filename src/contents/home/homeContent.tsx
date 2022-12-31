@@ -1,14 +1,7 @@
-import { useSession } from "next-auth/react";
-import { useQuery } from "@apollo/client";
 import React, { useState } from "react";
-import { GET_USD } from "../../hooks/export/useGetUSDJPY";
+import { useGetUSDJPY } from "../../hooks/export/useGetUSDJPY";
 import { Loading } from "../../components/common/loading/loading";
-import { Ticker } from "../../types/ticker.type";
-import { GET_TICKERS } from "../../hooks/tickers/useGetTickers";
-import { GET_MARKETDATA } from "../../hooks/export/useGetMarketData";
-import { MarketData } from "../../types/marketData.type";
-import { TickerData } from "../../types/tickerData.type";
-import { calculateTickerData } from "../../functions/tickers/calculateTickerData";
+import { useGetTickers } from "../../hooks/tickers/useGetTickers";
 import { TickerDetail } from "../../types/tickerDetail.type";
 import { calculateTickerPie } from "../../functions/tickers/calculateTickerPie";
 import { themeDefault } from "../../constants/themeColor";
@@ -19,10 +12,9 @@ import { TickerContent } from "../portfolio/tickerContent";
 import CreateForm from "./forms/createForm";
 import UpdateForm from "./forms/updateForm";
 import Modal from "../../components/modal/modal";
+import { HOOKS_STATE } from "../../constants/hooks";
 
 export const HomeContent = () => {
-  // ログイン情報
-  const { data: session } = useSession();
   // 画面表示
   const [showUpdModal, setUpdModal] = useState(false);
   const [showAddModal, setAddModal] = useState(false);
@@ -40,41 +32,22 @@ export const HomeContent = () => {
       setFx("$");
     }
   };
-  // 保有株式情報取得
-  const { data: tickerData, loading: tickerLoading } = useQuery(GET_TICKERS, {
-    variables: { user: session?.user?.email },
-  });
-  const tickers: Ticker[] = tickerData?.readAllTickers;
-  // 為替情報取得
-  const { data: usdJpyData, loading: usdJpyLoading } = useQuery(GET_USD);
-  const currentUsd = usdJpyData?.readUsd;
-  //保有株式の現在価格を取得
-  const tickerList: string[] = [];
-  tickers?.forEach((ticker) => {
-    tickerList.push(ticker.ticker);
-  });
-  const { data: priceData, loading: marketDataLoading } = useQuery(
-    GET_MARKETDATA,
-    {
-      variables: { tickerList },
-    }
-  );
-  const marketData: MarketData[] = priceData?.getRealtimeData;
-  const fxValue = fx == "$" ? 1 : currentUsd;
-  const portfolioData: TickerData = calculateTickerData(
-    tickers,
-    marketData,
-    fxValue
-  );
-  const tickerDetail: TickerDetail[] = portfolioData.tickerDetail;
-  const priceTotal = portfolioData.priceTotal;
+  // 為替情報取得(useGetTickers, useGetUSDJPYをuseContext化できたら削除する)
+  const { currentUsd } = useGetUSDJPY();
+  const { tickers } = useGetTickers(fx);
+  if (tickers === HOOKS_STATE.LOADING || currentUsd === HOOKS_STATE.LOADING)
+    return (
+      <div className="home-content">
+        <Loading />
+      </div>
+    );
+  const tickerDetail: TickerDetail[] = tickers.tickerDetail;
+  const priceTotal = tickers.priceTotal;
   const balanceTotal =
-    Math.round((portfolioData.priceTotal - portfolioData.getPriceTotal) * 10) /
-    10;
+    Math.round((tickers.priceTotal - tickers.getPriceTotal) * 10) / 10;
   const balanceRateTotal =
-    (Math.round((balanceTotal / portfolioData.getPriceTotal) * 100) / 100) *
-    100;
-  const dividendTotal = portfolioData.dividendTotal;
+    (Math.round((balanceTotal / tickers.getPriceTotal) * 100) / 100) * 100;
+  const dividendTotal = tickers.dividendTotal;
   const pieData = calculateTickerPie(tickerDetail, priceTotal);
   let balanceRateClass = "";
   if (balanceRateTotal > 0) {
@@ -82,12 +55,6 @@ export const HomeContent = () => {
   } else if (balanceRateTotal < 0) {
     balanceRateClass = "fc-minus";
   }
-  if (usdJpyLoading || tickerLoading || marketDataLoading)
-    return (
-      <div className="home-content">
-        <Loading />
-      </div>
-    );
   return (
     <div className="home-content">
       <div className="content">
@@ -123,7 +90,12 @@ export const HomeContent = () => {
         <Modal
           showFlag={showUpdModal}
           setShowModal={setUpdModal}
-          content={<UpdateForm setShowModal={setUpdModal} tickers={tickers} />}
+          content={
+            <UpdateForm
+              setShowModal={setUpdModal}
+              tickers={tickers.tickerDetail}
+            />
+          }
         />
         <Modal
           showFlag={showAddModal}

@@ -1,50 +1,32 @@
-import { useQuery } from "@apollo/client";
-import { useSession } from "next-auth/react";
 import React from "react";
 import { Loading } from "../../../components/common/loading/loading";
 import Pie from "../../../components/graph/pie";
+import { HOOKS_STATE } from "../../../constants/hooks";
 import { themeDefault } from "../../../constants/themeColor";
 import { calculateSectors } from "../../../functions/sector/calculateSector";
-import { calculateTickerData } from "../../../functions/tickers/calculateTickerData";
-import { GET_MARKETDATA } from "../../../hooks/export/useGetMarketData";
-import { GET_USD } from "../../../hooks/export/useGetUSDJPY";
-import { GET_TICKERS } from "../../../hooks/tickers/useGetTickers";
-import { MarketData } from "../../../types/marketData.type";
+import { useGetUSDJPY } from "../../../hooks/export/useGetUSDJPY";
+import { useGetTickers } from "../../../hooks/tickers/useGetTickers";
 import { PieData } from "../../../types/pieData.type";
-import { Ticker } from "../../../types/ticker.type";
-import { TickerData } from "../../../types/tickerData.type";
 import { TickerDetail } from "../../../types/tickerDetail.type";
 
 export const PortfolioContent = () => {
-  // ログイン情報
-  const { data: session } = useSession();
   // 為替情報取得
-  const { data: usdJpyData, loading: usdJpyLoading } = useQuery(GET_USD);
-  const currentUsd = usdJpyData?.readUsd;
+  const { currentUsd } = useGetUSDJPY();
   // 保有株式情報取得
-  const { data: tickersData, loading: tickersLoading } = useQuery(GET_TICKERS, {
-    variables: { user: session?.user?.email },
-  });
-  const tickers: Ticker[] = tickersData?.readAllTickers;
-  //保有株式の現在価格を取得
-  const tickerList: string[] = [];
-  tickers?.forEach((ticker) => {
-    tickerList.push(ticker.ticker);
-  });
-  const { data: priceData, loading: marketDataLoading } = useQuery(
-    GET_MARKETDATA,
-    { variables: { tickerList } }
-  );
-  const realtimeData: MarketData[] = priceData?.getRealtimeData;
-  // 資産総額取得
-  const tickerData: TickerData = calculateTickerData(tickers, realtimeData, 1);
-  const tickerDetail: TickerDetail[] = tickerData.tickerDetail;
-  const priceTotal = tickerData.priceTotal;
+  const { tickers } = useGetTickers("$");
+  if (tickers === HOOKS_STATE.LOADING || currentUsd === HOOKS_STATE.LOADING)
+    return (
+      <div className="asset-content">
+        <Loading />
+      </div>
+    );
+  const tickerDetail: TickerDetail[] = tickers.tickerDetail;
+  const priceTotal = tickers.priceTotal;
   const balanceTotal =
-    Math.round((tickerData.priceTotal - tickerData.getPriceTotal) * 10) / 10;
+    Math.round((tickers.priceTotal - tickers.getPriceTotal) * 10) / 10;
   const balanceRateTotal =
-    (Math.round((balanceTotal / tickerData.getPriceTotal) * 100) / 100) * 100;
-  const dividendTotal = tickerData.dividendTotal;
+    (Math.round((balanceTotal / tickers.getPriceTotal) * 100) / 100) * 100;
+  const dividendTotal = tickers.dividendTotal;
   let balanceRateClass = "";
   if (balanceRateTotal > 0) {
     balanceRateClass = "fc-plus";
@@ -53,15 +35,6 @@ export const PortfolioContent = () => {
   }
   // セクターデータ計算
   const pieData: PieData[] = calculateSectors(tickerDetail, priceTotal);
-  if (usdJpyLoading || tickersLoading || marketDataLoading)
-    return (
-      <>
-        <h1 className="sector-title">資産総額: ${priceTotal}</h1>
-        <div className="sector-content">
-          <Loading />
-        </div>
-      </>
-    );
   return (
     <div className="sector-content">
       <div className="content">
@@ -70,11 +43,11 @@ export const PortfolioContent = () => {
           損益: ${balanceTotal}（{Math.round(balanceRateTotal * 100) / 100}%）
         </p>
         <p className="">
-          円換算: ¥{(priceTotal * parseInt(currentUsd)).toLocaleString()}
+          円換算: ¥{(priceTotal * currentUsd).toLocaleString()}
         </p>
         <p>
           年配当金総額： ${dividendTotal} （¥
-          {(dividendTotal * parseInt(currentUsd)).toLocaleString()}）
+          {(dividendTotal * currentUsd).toLocaleString()}）
         </p>
         <p>（USDJPY: {currentUsd}）</p>
         <Pie pieData={pieData} themeColor={themeDefault} background="#343a40" />

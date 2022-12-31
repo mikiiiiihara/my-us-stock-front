@@ -1,6 +1,6 @@
-import { Ticker } from "../../types/ticker.type";
+import { TickerDetail } from "../../types/tickerDetail.type";
 
-export const sortTickers = (tickers: Ticker[]) => {
+export const sortTickers = (tickers: TickerDetail[]) => {
   const result = tickers.map((ticker) => {
     return ticker;
   });
