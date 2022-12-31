@@ -13,6 +13,7 @@ import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { Layout } from "../components/common/layout/layout";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { TickerProvider } from "../contexts/tickersContext";
 
 export const client = new ApolloClient({
   uri: `${process.env.NEXT_PUBLIC_API_URL}`,
@@ -26,9 +27,11 @@ export default function App({
   return (
     <ApolloProvider client={client}>
       <SessionProvider session={pageProps.session}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <TickerProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </TickerProvider>
       </SessionProvider>
     </ApolloProvider>
   );

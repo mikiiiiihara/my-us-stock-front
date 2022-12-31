@@ -1,6 +1,4 @@
 import React from "react";
-import { useGetUSDJPY } from "../../hooks/export/useGetUSDJPY";
-import { useGetTickers } from "../../hooks/tickers/useGetTickers";
 import { DivData } from "../../types/divData.type";
 import { PieData } from "../../types/pieData.type";
 import { TickerDetail } from "../../types/tickerDetail.type";
@@ -10,12 +8,13 @@ import Pie from "../../components/graph/pie";
 import StackedColumn from "../../components/graph/stackedColumn";
 import { themeDefault } from "../../constants/themeColor";
 import { HOOKS_STATE } from "../../constants/hooks";
+import { useTickerContext } from "../../contexts/tickersContext";
 
 export const DividendContent = () => {
-  // 為替情報取得
-  const { currentUsd } = useGetUSDJPY();
-  // 保有株式情報取得
-  const { tickers } = useGetTickers("$");
+  // コンテキストから取得
+  const { getTickers, currentUsd } = useTickerContext();
+  // 保有株式総額をドル建てで取得
+  const { tickers } = getTickers("$");
   if (tickers === HOOKS_STATE.LOADING || currentUsd === HOOKS_STATE.LOADING)
     return (
       <div className="dividend-content">

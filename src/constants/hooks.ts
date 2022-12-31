@@ -1,4 +1,4 @@
 export const HOOKS_STATE = {
   LOADING: "loading",
-  ERROR: "ERROR",
+  // ERROR: "ERROR",
 } as const;

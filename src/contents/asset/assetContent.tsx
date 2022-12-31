@@ -1,26 +1,21 @@
-import { useMutation } from "@apollo/client";
 import { format } from "date-fns";
-import { useSession } from "next-auth/react";
 import router from "next/router";
 import React from "react";
 import { Loading } from "../../components/common/loading/loading";
 import StackedArea from "../../components/graph/StakedArea";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { themeElectronic } from "../../constants/themeColor";
+import { useTickerContext } from "../../contexts/tickersContext";
 import { convertYYYYMMDD } from "../../functions/util/convertYYYYMMDD";
 import { useAssets } from "../../hooks/assets/useAssets";
-import { UPDATE_ASSET } from "../../hooks/assets/useUpdateAsset";
-import { useGetUSDJPY } from "../../hooks/export/useGetUSDJPY";
-import { useGetTickers } from "../../hooks/tickers/useGetTickers";
+import { useUpdateAsset } from "../../hooks/assets/useUpdateAsset";
 import CashContent from "./cash/cashContent";
 
 export const AssetContent = () => {
-  // 保有株式情報取得
-  const { tickers } = useGetTickers("¥");
-  // ログイン情報
-  const { data: session } = useSession();
-  // 為替情報取得
-  const { currentUsd } = useGetUSDJPY();
+  // コンテキストから取得
+  const { getTickers, currentUsd } = useTickerContext();
+  // 保有株式総額を円建てで取得
+  const { tickers } = getTickers("¥");
   // 現在日時取得
   const year = format(new Date(), "yyyy");
   const month = format(new Date(), "MM");
@@ -32,7 +27,7 @@ export const AssetContent = () => {
   // 資産情報取得
   const { assets } = useAssets();
   // 当日の資産情報を更新
-  const [UpdateAsset] = useMutation(UPDATE_ASSET);
+  const { executeUpdateAsset } = useUpdateAsset();
   if (
     tickers === HOOKS_STATE.LOADING ||
     currentUsd === HOOKS_STATE.LOADING ||
@@ -43,16 +38,10 @@ export const AssetContent = () => {
         <Loading />
       </div>
     );
+  // 当日の資産情報を更新
   const update = async () => {
-    const result = await UpdateAsset({
-      variables: {
-        user: session?.user?.email,
-        asset: tickers.priceTotal,
-      },
-    });
-    if (result) {
-      router.reload();
-    }
+    await executeUpdateAsset(tickers.priceTotal);
+    router.reload();
   };
   if (assets != null) {
     // for cash content

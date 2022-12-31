@@ -3,17 +3,16 @@ import { Loading } from "../../../components/common/loading/loading";
 import Pie from "../../../components/graph/pie";
 import { HOOKS_STATE } from "../../../constants/hooks";
 import { themeDefault } from "../../../constants/themeColor";
+import { useTickerContext } from "../../../contexts/tickersContext";
 import { calculateSectors } from "../../../functions/sector/calculateSector";
-import { useGetUSDJPY } from "../../../hooks/export/useGetUSDJPY";
-import { useGetTickers } from "../../../hooks/tickers/useGetTickers";
 import { PieData } from "../../../types/pieData.type";
 import { TickerDetail } from "../../../types/tickerDetail.type";
 
 export const PortfolioContent = () => {
-  // 為替情報取得
-  const { currentUsd } = useGetUSDJPY();
-  // 保有株式情報取得
-  const { tickers } = useGetTickers("$");
+  // コンテキストから取得
+  const { getTickers, currentUsd } = useTickerContext();
+  // 保有株式総額をドル建てで取得
+  const { tickers } = getTickers("$");
   if (tickers === HOOKS_STATE.LOADING || currentUsd === HOOKS_STATE.LOADING)
     return (
       <div className="asset-content">

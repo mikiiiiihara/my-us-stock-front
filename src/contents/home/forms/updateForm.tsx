@@ -1,10 +1,9 @@
-import { useMutation } from "@apollo/client";
 import router from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { sortTickers } from "../../../functions/tickers/sortTickers";
 
-import { UPDATE_TICKER } from "../../../hooks/tickers/useUpdateTicker";
+import { useUpdateTicker } from "../../../hooks/tickers/useUpdateTicker";
 import { TickerDetail } from "../../../types/tickerDetail.type";
 
 type Props = {
@@ -34,30 +33,28 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
   const closeModal = () => {
     setShowModal(false);
   };
-  const [updateTicker] = useMutation(UPDATE_TICKER);
+  const { executeUpdateTicker, loading } = useUpdateTicker();
 
   const onSubmit = handleSubmit(
     async ({ id, getPrice, quantity, dividend, usdjpy }) => {
       const intQuantity = parseInt(quantity);
-      const result = await updateTicker({
-        variables: {
-          id: parseInt(id),
-          getPrice: parseFloat(getPrice),
-          quantity: intQuantity,
-          dividend: parseFloat(dividend),
-          usdjpy: parseFloat(usdjpy),
-        },
-      });
-      if (result != null) {
-        setMsg("更新が完了しました！");
-        if (intQuantity == 0) {
-          router.reload();
-        }
-        await new Promise((s) => {
-          setTimeout(s, 300);
-        });
-        closeModal();
+      await executeUpdateTicker(
+        parseInt(id),
+        parseFloat(getPrice),
+        intQuantity,
+        parseFloat(dividend),
+        parseFloat(usdjpy)
+      );
+      if (loading) {
+        setMsg("更新中...");
       }
+      await new Promise((s) => {
+        setTimeout(s, 300);
+      });
+      if (intQuantity == 0) {
+        router.reload();
+      }
+      closeModal();
     }
   );
   return (

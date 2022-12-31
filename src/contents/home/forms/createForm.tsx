@@ -1,10 +1,7 @@
-import { useMutation } from "@apollo/client";
-import router from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
-import { CREATE_TICKER } from "../../../hooks/tickers/useCreateTicker";
 import { sectorList } from "../../../constants/sectorList";
+import { useTickerContext } from "../../../contexts/tickersContext";
 
 type Props = {
   setShowModal: Function;
@@ -23,13 +20,11 @@ type FormData = {
 
 const CreateForm: React.FC<Props> = ({ setShowModal }) => {
   const [msg, setMsg] = useState("");
-  const { data: session } = useSession();
   const closeModal = () => {
     setMsg("");
     setShowModal(false);
   };
-  const [createTicker] = useMutation(CREATE_TICKER);
-
+  const { executeCreateTicker, createLoading: loading } = useTickerContext();
   const { register, handleSubmit } = useForm<FormData>();
 
   const onSubmit = handleSubmit(
@@ -43,27 +38,23 @@ const CreateForm: React.FC<Props> = ({ setShowModal }) => {
       sector,
       usdjpy,
     }) => {
-      const result = await createTicker({
-        variables: {
-          ticker: ticker,
-          getPrice: parseFloat(getPrice),
-          quantity: parseInt(quantity),
-          user: session?.user?.email,
-          dividend: parseFloat(dividend),
-          dividendTime: parseInt(dividendTime),
-          dividendFirstTime: parseInt(dividendFirstTime),
-          sector: sector,
-          usdjpy: parseFloat(usdjpy),
-        },
-      });
-      if (result != null) {
-        setMsg("登録が完了しました！");
+      await executeCreateTicker(
+        ticker,
+        parseFloat(getPrice),
+        parseInt(quantity),
+        parseFloat(dividend),
+        parseInt(dividendTime),
+        parseInt(dividendFirstTime),
+        sector,
+        parseFloat(usdjpy)
+      );
+      if (loading) {
+        setMsg("追加中...");
       }
       await new Promise((s) => {
         setTimeout(s, 300);
       });
       closeModal();
-      router.reload();
     }
   );
   return (

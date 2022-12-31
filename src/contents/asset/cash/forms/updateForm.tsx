@@ -1,12 +1,10 @@
-import { useMutation } from "@apollo/client";
 import { format } from "date-fns";
-import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Loading } from "../../../../components/common/loading/loading";
 import { HOOKS_STATE } from "../../../../constants/hooks";
 import { useAssets } from "../../../../hooks/assets/useAssets";
-import { UPDATE_CASH } from "../../../../hooks/assets/useUpdateCash";
+import { useUpdateCash } from "../../../../hooks/assets/useUpdateCash";
 
 type Props = {
   setShowModal: Function;
@@ -18,13 +16,12 @@ type FormData = {
 };
 const UpdateForm: React.FC<Props> = ({ setShowModal, priceTotal }) => {
   const [msg, setMsg] = useState("");
-  const { data: session } = useSession();
   const { assets } = useAssets();
   const closeModal = () => {
     setMsg("");
     setShowModal(false);
   };
-  const [updateCash] = useMutation(UPDATE_CASH);
+  const { executeUpdateCash, loading } = useUpdateCash();
   const { register, handleSubmit } = useForm<FormData>();
   if (assets === HOOKS_STATE.LOADING) return <Loading />;
   // 本日の資産総額を取得
@@ -37,17 +34,9 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, priceTotal }) => {
       year === asset.year && month === asset.month && date === asset.date
   );
   const onSubmit = handleSubmit(async ({ cashUSD, cashJPY }) => {
-    const result = await updateCash({
-      variables: {
-        user: session?.user?.email,
-        cashUSD: parseFloat(cashUSD),
-        cashJPY: parseInt(cashJPY),
-        dividend: parseInt(cashJPY),
-        priceTotal: priceTotal,
-      },
-    });
-    if (result != null) {
-      setMsg("更新が完了しました！");
+    await executeUpdateCash(cashUSD, cashJPY, priceTotal);
+    if (loading) {
+      setMsg("更新中...");
     }
     await new Promise((s) => {
       setTimeout(s, 300);

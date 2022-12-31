@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { useGetUSDJPY } from "../../hooks/export/useGetUSDJPY";
 import { Loading } from "../../components/common/loading/loading";
-import { useGetTickers } from "../../hooks/tickers/useGetTickers";
 import { TickerDetail } from "../../types/tickerDetail.type";
 import { calculateTickerPie } from "../../functions/tickers/calculateTickerPie";
 import { themeDefault } from "../../constants/themeColor";
@@ -12,6 +10,7 @@ import CreateForm from "./forms/createForm";
 import UpdateForm from "./forms/updateForm";
 import Modal from "../../components/modal/modal";
 import { HOOKS_STATE } from "../../constants/hooks";
+import { useTickerContext } from "../../contexts/tickersContext";
 
 export const HomeContent = () => {
   // 画面表示
@@ -23,18 +22,10 @@ export const HomeContent = () => {
   const ShowAddModal = () => {
     setAddModal(true);
   };
-  const [fx, setFx] = useState("$");
-  const changeFx = () => {
-    if (fx == "$") {
-      setFx("¥");
-    } else if (fx == "¥") {
-      setFx("$");
-    }
-  };
-  // 為替情報取得(useGetTickers, useGetUSDJPYをuseContext化できたら削除する)
-  const { currentUsd } = useGetUSDJPY();
-  // 保有株式情報取得
-  const { tickers } = useGetTickers(fx);
+  // コンテキストから取得
+  const { fx, changeFx, getTickers, currentUsd } = useTickerContext();
+  // 保有株式総額を取得
+  const { tickers } = getTickers(fx);
   if (tickers === HOOKS_STATE.LOADING || currentUsd === HOOKS_STATE.LOADING)
     return (
       <div className="home-content">
