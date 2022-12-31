@@ -54,13 +54,18 @@
       bottom: 0;
       background-color: #343a40;
       z-index: 999;
-      padding: 0.5rem;
-      width: 100vw;
+      padding: 0.5rem auto;
+      width: 100%;
       border: 2px solid #4d4d4d;
       box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.04);
     }
+    .nav-sp-content {
+      width: 98%;
+      margin: 0 auto;
+    }
     .nav-sp-item {
-      width: 23%;
+      width: 18%;
+      font-size: 0.16rem;
       display: inline-block;
       padding: 0.2rem;
       margin: 0.2rem;

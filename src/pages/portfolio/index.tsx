@@ -1,11 +1,11 @@
 import Header from "../../components/common/header/header";
-import { TickerContent } from "../../contents/portfolio/tickerContent";
+import { TickerContent } from "../../contents/ticker/tickerContent";
 
 export default function Portfolio() {
   return (
     <>
       <Header title="My US Stock Portfolio | Portfolio" />
-      <TickerContent tickerDetail={[]} currency={""} />
+      <TickerContent />
     </>
   );
 }

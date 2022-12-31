@@ -40,6 +40,11 @@ const Header: FC<Props> = ({ title }) => {
           </Link>
           <ul className="navbar-nav mr-auto f-left sub-menu">
             <li className="nav-item">
+              <Link href={NAVIGATION_LIST.PORTFOLIO} className="nav-link">
+                Portfolio
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link href={NAVIGATION_LIST.ASSET} className="nav-link">
                 Asset
               </Link>
@@ -58,54 +63,68 @@ const Header: FC<Props> = ({ title }) => {
         </div>
       </Nav>
       <div className="nav-sp">
-        <Link href={NAVIGATION_LIST.HOME}>
-          <div className="nav-sp-item">
-            <Image
-              src="/portfolio.png"
-              width={60}
-              height={60}
-              style={{ objectFit: "contain" }}
-              alt="logo"
-            />
-            <p>Home</p>
-          </div>
-        </Link>
-        <Link href={NAVIGATION_LIST.ASSET}>
-          <div className="nav-sp-item">
-            <Image
-              src="/asset.png"
-              width={60}
-              height={60}
-              style={{ objectFit: "contain" }}
-              alt="logo"
-            />
-            <p>Asset</p>
-          </div>
-        </Link>
-        <Link href={NAVIGATION_LIST.DIVIDEND}>
-          <div className="nav-sp-item">
-            <Image
-              src="/dividend.png"
-              width={60}
-              height={60}
-              style={{ objectFit: "contain" }}
-              alt="logo"
-            />
-            <p>Dividend</p>
-          </div>
-        </Link>
-        <Link href={NAVIGATION_LIST.SECTOR}>
-          <div className="nav-sp-item">
-            <Image
-              src="/sector.png"
-              width={60}
-              height={60}
-              style={{ objectFit: "contain" }}
-              alt="logo"
-            />
-            <p>Sector</p>
-          </div>
-        </Link>
+        <div className="nav-sp-content">
+          <Link href={NAVIGATION_LIST.HOME}>
+            <div className="nav-sp-item">
+              <Image
+                src="/home.png"
+                width={36}
+                height={36}
+                style={{ objectFit: "contain" }}
+                alt="logo"
+              />
+              <p>Home</p>
+            </div>
+          </Link>
+          <Link href={NAVIGATION_LIST.PORTFOLIO}>
+            <div className="nav-sp-item">
+              <Image
+                src="/portfolio.png"
+                width={36}
+                height={36}
+                style={{ objectFit: "contain" }}
+                alt="logo"
+              />
+              <p>Portfolio</p>
+            </div>
+          </Link>
+          <Link href={NAVIGATION_LIST.ASSET}>
+            <div className="nav-sp-item">
+              <Image
+                src="/asset.png"
+                width={36}
+                height={36}
+                style={{ objectFit: "contain" }}
+                alt="logo"
+              />
+              <p>Asset</p>
+            </div>
+          </Link>
+          <Link href={NAVIGATION_LIST.DIVIDEND}>
+            <div className="nav-sp-item">
+              <Image
+                src="/dividend.png"
+                width={36}
+                height={36}
+                style={{ objectFit: "contain" }}
+                alt="logo"
+              />
+              <p>Dividend</p>
+            </div>
+          </Link>
+          <Link href={NAVIGATION_LIST.SECTOR}>
+            <div className="nav-sp-item">
+              <Image
+                src="/sector.png"
+                width={36}
+                height={36}
+                style={{ objectFit: "contain" }}
+                alt="logo"
+              />
+              <p>Sector</p>
+            </div>
+          </Link>
+        </div>
       </div>
     </div>
   );

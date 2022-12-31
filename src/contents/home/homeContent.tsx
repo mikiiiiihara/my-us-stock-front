@@ -34,6 +34,7 @@ export const HomeContent = () => {
   };
   // 為替情報取得(useGetTickers, useGetUSDJPYをuseContext化できたら削除する)
   const { currentUsd } = useGetUSDJPY();
+  // 保有株式情報取得
   const { tickers } = useGetTickers(fx);
   if (tickers === HOOKS_STATE.LOADING || currentUsd === HOOKS_STATE.LOADING)
     return (
@@ -114,7 +115,6 @@ export const HomeContent = () => {
           alt="logo"
         />
       </button>
-      <TickerContent tickerDetail={tickerDetail} currency={fx} />
     </div>
   );
 };
