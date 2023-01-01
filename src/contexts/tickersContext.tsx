@@ -31,7 +31,15 @@ type ContextType = {
     sector: string,
     usdjpy: number
   ) => Promise<void>; // 保有株式情報追加関数
-  createLoading: MutationResult<any>; // 保有株式情報追加関数ステータス
+  createLoading: boolean; // 保有株式情報追加関数ステータス
+  executeUpdateTicker: (
+    id: number,
+    getPrice: number,
+    quantity: number,
+    dividend: number,
+    usdjpy: number
+  ) => Promise<void>; // 保有株式情報更新関数
+  updateLoading: boolean; // 保有株式情報更新関数ステータス
   currentUsd: number | Loading; // 現在のドル円
 };
 /**
@@ -47,7 +55,13 @@ export const TickerProvider: FC<Props> = ({ children }) => {
   // カスタムフックから状態とロジックを呼び出してコンテキストプロバイダーにあてがう
   const { fx, changeFx } = useSelectedFx();
   const { currentUsd } = useGetUSDJPY();
-  const { getTickers, executeCreateTicker, createLoading } = useTickers();
+  const {
+    getTickers,
+    executeCreateTicker,
+    createLoading,
+    executeUpdateTicker,
+    updateLoading,
+  } = useTickers();
   return (
     <TickerContext.Provider
       value={{
@@ -56,6 +70,8 @@ export const TickerProvider: FC<Props> = ({ children }) => {
         getTickers,
         executeCreateTicker,
         createLoading,
+        executeUpdateTicker,
+        updateLoading,
         currentUsd,
       }}
     >

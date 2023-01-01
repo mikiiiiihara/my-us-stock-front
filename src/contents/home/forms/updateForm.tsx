@@ -1,9 +1,9 @@
 import router from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTickerContext } from "../../../contexts/tickersContext";
 import { sortTickers } from "../../../functions/tickers/sortTickers";
 
-import { useUpdateTicker } from "../../../hooks/tickers/useUpdateTicker";
 import { TickerDetail } from "../../../types/tickerDetail.type";
 
 type Props = {
@@ -33,7 +33,7 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
   const closeModal = () => {
     setShowModal(false);
   };
-  const { executeUpdateTicker, loading } = useUpdateTicker();
+  const { executeUpdateTicker, updateLoading: loading } = useTickerContext();
 
   const onSubmit = handleSubmit(
     async ({ id, getPrice, quantity, dividend, usdjpy }) => {

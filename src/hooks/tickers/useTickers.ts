@@ -30,11 +30,7 @@ export function useTickers() {
   // 為替情報取得
   const { currentUsd } = useGetUSDJPY();
   // 保有株式情報取得
-  const {
-    data,
-    loading: getLoading,
-    refetch,
-  } = useQuery(GET_TICKERS, {
+  const { data, loading: getLoading } = useQuery(GET_TICKERS, {
     variables: { user: session?.user?.email },
   });
   const tickers: Ticker[] = data?.readAllTickers;
@@ -97,7 +93,39 @@ export function useTickers() {
       }
     }
   `;
-  const [CreateTicker, loading] = useMutation(CREATE_TICKER);
+  // 追加時にキャッシュする処理も実装
+  const [CreateTicker, { loading: createLoading }] = useMutation(
+    CREATE_TICKER,
+    {
+      update(cache, { data: { createTicker } }) {
+        cache.modify({
+          fields: {
+            readAllTickers(existingTickers = []) {
+              const newTickerRef = cache.writeFragment({
+                data: createTicker,
+                fragment: gql`
+                  fragment NewTicker on Ticker {
+                    id
+                    ticker
+                    getPrice
+                    quantity
+                    user
+                    dividend
+                    dividendTime
+                    dividendFirstTime
+                    sector
+                    usdjpy
+                  }
+                `,
+              });
+              return [...existingTickers, newTickerRef];
+            },
+          },
+        });
+      },
+    }
+  );
+  // 保有株式情報を追加する関数
   const executeCreateTicker = async (
     ticker: string,
     getPrice: number,
@@ -122,8 +150,61 @@ export function useTickers() {
       },
     });
     // TODO: 画面側でのuseState管理が実装できたら削除する
-    refetch({ user: session?.user?.email });
+    // refetch({ user: session?.user?.email });
   };
-  // 保有株式情報を追加する関数
-  return { getTickers, executeCreateTicker, createLoading: loading };
+  // 保有株式情報の更新
+  const UPDATE_TICKER = gql`
+    mutation updateTicker(
+      $id: Int!
+      $getPrice: Float
+      $quantity: Int
+      $dividend: Float
+      $usdjpy: Float
+    ) {
+      updateTicker(
+        id: $id
+        getPrice: $getPrice
+        quantity: $quantity
+        dividend: $dividend
+        usdjpy: $usdjpy
+      ) {
+        id
+        ticker
+        getPrice
+        quantity
+        user
+        dividend
+        dividendTime
+        dividendFirstTime
+        sector
+        usdjpy
+      }
+    }
+  `;
+  const [UpdateTicker, { loading: updateLoading }] = useMutation(UPDATE_TICKER);
+  // 保有株式情報を更新する関数
+  const executeUpdateTicker = async (
+    id: number,
+    getPrice: number,
+    quantity: number,
+    dividend: number,
+    usdjpy: number
+  ): Promise<void> => {
+    await UpdateTicker({
+      variables: {
+        id,
+        getPrice,
+        quantity,
+        dividend,
+        usdjpy,
+      },
+    });
+  };
+  return {
+    getTickers,
+    executeCreateTicker,
+    createLoading,
+    executeUpdateTicker,
+    updateLoading,
+  };
 }
