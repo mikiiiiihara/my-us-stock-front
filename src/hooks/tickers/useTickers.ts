@@ -206,5 +206,6 @@ export function useTickers() {
     createLoading,
     executeUpdateTicker,
     updateLoading,
+    currentUsd,
   };
 }

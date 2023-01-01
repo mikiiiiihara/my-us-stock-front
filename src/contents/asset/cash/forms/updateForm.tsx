@@ -16,7 +16,8 @@ type FormData = {
 };
 const UpdateForm: React.FC<Props> = ({ setShowModal, priceTotal }) => {
   const [msg, setMsg] = useState("");
-  const { assets } = useAssets();
+  const { getAssets } = useAssets();
+  const { assets } = getAssets();
   const closeModal = () => {
     setMsg("");
     setShowModal(false);

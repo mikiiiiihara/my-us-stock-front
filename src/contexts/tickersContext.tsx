@@ -1,4 +1,3 @@
-import { MutationResult } from "@apollo/client";
 import { FC, ReactNode, useContext, createContext } from "react";
 import { HOOKS_STATE } from "../constants/hooks";
 import { useGetUSDJPY } from "../hooks/export/useGetUSDJPY";
@@ -54,13 +53,13 @@ const TickerContext = createContext({} as ContextType);
 export const TickerProvider: FC<Props> = ({ children }) => {
   // カスタムフックから状態とロジックを呼び出してコンテキストプロバイダーにあてがう
   const { fx, changeFx } = useSelectedFx();
-  const { currentUsd } = useGetUSDJPY();
   const {
     getTickers,
     executeCreateTicker,
     createLoading,
     executeUpdateTicker,
     updateLoading,
+    currentUsd,
   } = useTickers();
   return (
     <TickerContext.Provider

@@ -1,44 +1,25 @@
-import { useSession } from "next-auth/react";
-import { useMutation, useQuery } from "@apollo/client";
 import { format } from "date-fns";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { GET_STRATEGY } from "../../../hooks/strategy/useGetStrategy";
-import { UPDATE_STRATEGY } from "../../../hooks/strategy/useUpdateStrategy";
 import { Loading } from "../../../components/common/loading/loading";
+import { useStrategy } from "../../../hooks/strategy/useStrategy";
+import { HOOKS_STATE } from "../../../constants/hooks";
 type FormData = {
   text: string;
 };
 
 export const StrategyContent = () => {
-  const { data: session } = useSession();
-  const { data: strategyData, loading } = useQuery(GET_STRATEGY, {
-    variables: { user: session?.user?.email },
-  });
-  const data = strategyData?.readStrategy;
+  const { getStrategy, updateStrategy, updateLoading } = useStrategy();
+  const data = getStrategy();
   const [msg, setMsg] = useState("");
-  const [updateStratery] = useMutation(UPDATE_STRATEGY);
   const { register, handleSubmit } = useForm<FormData>();
   const onSubmit = handleSubmit(async ({ text }) => {
-    const result = await updateStratery({
-      variables: {
-        user: session?.user?.email,
-        text: text,
-      },
-    });
-
-    if (result != undefined) {
-      const nowDate = format(new Date(), "yyyy/MM/dd/HH:mm:ss");
-      const msg = `更新完了しました！：${nowDate}更新`;
-      setMsg(msg);
-    }
+    await updateStrategy(text);
+    const nowDate = format(new Date(), "yyyy/MM/dd/HH:mm:ss");
+    const msg = `更新完了しました！：${nowDate}更新`;
+    setMsg(msg);
   });
-  // textarea行数自動算出
-  const autoTxtAreaRows = () => {
-    let numOfN = (data?.text.match(new RegExp("\n", "g")) || []).length;
-    return numOfN * 2;
-  };
-  if (loading)
+  if (data === HOOKS_STATE.LOADING)
     return (
       <div className="strategy-content">
         <div className="content">
@@ -47,6 +28,11 @@ export const StrategyContent = () => {
         </div>
       </div>
     );
+  // textarea行数自動算出
+  const autoTxtAreaRows = () => {
+    let numOfN = (data?.text.match(new RegExp("\n", "g")) || []).length;
+    return numOfN * 2;
+  };
 
   return (
     <div className="strategy-content">

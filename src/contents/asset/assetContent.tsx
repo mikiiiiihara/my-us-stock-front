@@ -8,7 +8,6 @@ import { themeElectronic } from "../../constants/themeColor";
 import { useTickerContext } from "../../contexts/tickersContext";
 import { convertYYYYMMDD } from "../../functions/util/convertYYYYMMDD";
 import { useAssets } from "../../hooks/assets/useAssets";
-import { useUpdateAsset } from "../../hooks/assets/useUpdateAsset";
 import CashContent from "./cash/cashContent";
 
 export const AssetContent = () => {
@@ -25,9 +24,8 @@ export const AssetContent = () => {
   let xDataList: string[] = new Array();
   let yDataList: number[] = new Array();
   // 資産情報取得
-  const { assets } = useAssets();
-  // 当日の資産情報を更新
-  const { executeUpdateAsset } = useUpdateAsset();
+  const { getAssets, executeUpdateAsset } = useAssets();
+  const { assets } = getAssets();
   if (
     tickers === HOOKS_STATE.LOADING ||
     currentUsd === HOOKS_STATE.LOADING ||
