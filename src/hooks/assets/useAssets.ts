@@ -6,8 +6,8 @@ import { Asset } from "../../types/asset.type";
 export function useAssets() {
   // 取得
   const GET_ASSETS = gql`
-    query GetAssets($user: String) {
-      readAllAssets(user: $user) {
+    query GetAssets($user: String!) {
+      getAssets(user: $user) {
         id
         asset
         year
@@ -25,11 +25,11 @@ export function useAssets() {
   const { data: session } = useSession();
   // 資産情報算出
   const { data, loading } = useQuery(GET_ASSETS, {
-    variables: { user: session?.user?.email },
+    variables: { user: session?.user?.email ?? "none" },
   });
   // 取得関数
   const getAssets = () => {
-    const assets: Asset[] = data?.readAllAssets ?? [];
+    const assets: Asset[] = data?.getAssets ?? [];
     return {
       assets: loading ? HOOKS_STATE.LOADING : assets,
     };
@@ -37,8 +37,8 @@ export function useAssets() {
 
   // 更新
   const UPDATE_ASSET = gql`
-    mutation UpdateAsset($user: String!, $asset: Float!) {
-      updateAsset(user: $user, asset: $asset) {
+    mutation UpdateOrCreateAsset($input: UpdateOrCreateAssetInput!) {
+      updateOrCreateAsset(input: $input) {
         id
         asset
         year
@@ -57,8 +57,10 @@ export function useAssets() {
   const executeUpdateAsset = async (priceTotal: number): Promise<void> => {
     await UpdateAsset({
       variables: {
-        user: session?.user?.email,
-        asset: priceTotal,
+        input: {
+          user: session?.user?.email,
+          asset: priceTotal,
+        },
       },
     });
   };

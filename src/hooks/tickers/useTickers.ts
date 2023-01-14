@@ -11,8 +11,8 @@ import { useGetUSDJPY } from "../export/useGetUSDJPY";
 export const useTickers = () => {
   // 保有株式情報の取得
   const GET_TICKERS = gql`
-    query GetTickers($user: String) {
-      readAllTickers(user: $user) {
+    query GetTickers($user: String!) {
+      getTickers(user: $user) {
         id
         ticker
         getPrice
@@ -32,9 +32,9 @@ export const useTickers = () => {
   const { currentUsd } = useGetUSDJPY();
   // 保有株式情報取得
   const { data, loading: getLoading } = useQuery(GET_TICKERS, {
-    variables: { user: session?.user?.email },
+    variables: { user: session?.user?.email ?? "none" },
   });
-  const tickers: Ticker[] = data?.readAllTickers;
+  const tickers: Ticker[] = data?.getTickers;
   //保有株式の現在価格を取得
   const tickerList: string[] = [];
   tickers?.forEach((ticker) => {
@@ -62,28 +62,8 @@ export const useTickers = () => {
   );
   // 保有株式情報の追加
   const CREATE_TICKER = gql`
-    mutation createTicker(
-      $ticker: String!
-      $getPrice: Float!
-      $quantity: Int!
-      $user: String!
-      $dividend: Float!
-      $dividendTime: Int!
-      $dividendFirstTime: Int!
-      $sector: String!
-      $usdjpy: Float!
-    ) {
-      createTicker(
-        ticker: $ticker
-        getPrice: $getPrice
-        quantity: $quantity
-        user: $user
-        dividend: $dividend
-        dividendTime: $dividendTime
-        dividendFirstTime: $dividendFirstTime
-        sector: $sector
-        usdjpy: $usdjpy
-      ) {
+    mutation CreateTicker($input: CreateTickerInput!) {
+      createTicker(input: $input) {
         id
         ticker
         getPrice
@@ -142,36 +122,24 @@ export const useTickers = () => {
   ): Promise<void> => {
     await CreateTicker({
       variables: {
-        ticker,
-        getPrice,
-        quantity,
-        user: session?.user?.email,
-        dividend,
-        dividendTime,
-        dividendFirstTime,
-        sector,
-        usdjpy,
+        input: {
+          ticker,
+          getPrice,
+          quantity,
+          user: session?.user?.email,
+          dividend,
+          dividendTime,
+          dividendFirstTime,
+          sector,
+          usdjpy,
+        },
       },
     });
-    // TODO: 画面側でのuseState管理が実装できたら削除する
-    // refetch({ user: session?.user?.email });
   };
   // 保有株式情報の更新
   const UPDATE_TICKER = gql`
-    mutation updateTicker(
-      $id: Int!
-      $getPrice: Float
-      $quantity: Int
-      $dividend: Float
-      $usdjpy: Float
-    ) {
-      updateTicker(
-        id: $id
-        getPrice: $getPrice
-        quantity: $quantity
-        dividend: $dividend
-        usdjpy: $usdjpy
-      ) {
+    mutation UpdateTicker($input: UpdateTickerInput!) {
+      updateTicker(input: $input) {
         id
         ticker
         getPrice
@@ -196,11 +164,13 @@ export const useTickers = () => {
   ): Promise<void> => {
     await UpdateTicker({
       variables: {
-        id,
-        getPrice,
-        quantity,
-        dividend,
-        usdjpy,
+        input: {
+          id,
+          getPrice,
+          quantity,
+          dividend,
+          usdjpy,
+        },
       },
     });
   };

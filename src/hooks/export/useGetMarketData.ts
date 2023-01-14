@@ -4,18 +4,19 @@ import { MarketData } from "../../types/marketData.type";
 
 export function useGetMarketData(tickerList: string[]) {
   const GET_MARKETDATA = gql`
-    query getRealtimeData($tickerList: [String]!) {
-      getRealtimeData(tickerList: $tickerList) {
-        c
-        d
-        dp
+    query GetMarketPrices($tickerList: [String]!) {
+      getMarketPrices(tickerList: $tickerList) {
+        ticker
+        currentPrice
+        currentRate
+        priceGets
       }
     }
   `;
   const { data, loading } = useQuery(GET_MARKETDATA, {
     variables: { tickerList },
   });
-  const marketData: MarketData[] = data?.getRealtimeData;
+  const marketData: MarketData[] = data?.getMarketPrices;
   return {
     marketData: loading ? HOOKS_STATE.LOADING : marketData,
   };

@@ -20,9 +20,9 @@ export const calculateTickerData = (
       const quantity = tickers[i].quantity;
       const jpyBasedValue = fx === 1 ? 1 : usdJpy;
       const getPrice = tickers[i].getPrice * jpyBasedValue;
-      const price = marketData[i].c * fx;
-      const priceGets = marketData[i].d;
-      const priceRate = marketData[i].dp;
+      const price = marketData[i].currentPrice * fx;
+      const priceGets = marketData[i].priceGets;
+      const priceRate = marketData[i].currentRate;
       const dividend = tickers[i].dividend * fx;
       const dividendTime = tickers[i].dividendTime;
       const dividendFirstTime = tickers[i].dividendFirstTime;

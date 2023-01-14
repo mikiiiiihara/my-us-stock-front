@@ -1,5 +1,6 @@
 export type MarketData = {
-  c: number;
-  d: number;
-  dp: number;
+  ticker: string;
+  currentPrice: number;
+  priceGets: number;
+  currentRate: number;
 };

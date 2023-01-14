@@ -3,18 +3,8 @@ import { useSession } from "next-auth/react";
 
 export function useUpdateCash() {
   const UPDATE_CASH = gql`
-    mutation UpdateCash(
-      $user: String!
-      $cashUSD: Float!
-      $cashJPY: Int!
-      $priceTotal: Float!
-    ) {
-      updateCash(
-        user: $user
-        cashUSD: $cashUSD
-        cashJPY: $cashJPY
-        priceTotal: $priceTotal
-      ) {
+    mutation UpdateCash(input: UpdateCashInput!) {
+      updateCash(input: $input) {
         id
         asset
         year
@@ -38,10 +28,12 @@ export function useUpdateCash() {
   ): Promise<void> => {
     await updateCash({
       variables: {
-        user: session?.user?.email,
-        cashUSD: parseFloat(cashUSD),
-        cashJPY: parseInt(cashJPY),
-        priceTotal: priceTotal,
+        input: {
+          user: session?.user?.email,
+          cashUSD: parseFloat(cashUSD),
+          cashJPY: parseInt(cashJPY),
+          asset: priceTotal,
+        },
       },
     });
   };

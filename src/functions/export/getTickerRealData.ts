@@ -14,9 +14,9 @@ export const getTickerRealData = (
       )?.describe;
       const item: TickerRealData = {
         ticker: ticker || "",
-        c: realData[i].c,
-        d: realData[i].d,
-        dp: Math.round(realData[i].dp * 100) / 100,
+        c: realData[i].currentPrice,
+        d: realData[i].priceGets,
+        dp: Math.round(realData[i].currentRate * 100) / 100,
       };
       tickerRealData.push(item);
     }
