@@ -34,7 +34,6 @@ export const useTickers = () => {
   const { data, loading: getLoading } = useQuery(GET_TICKERS, {
     variables: { user: session?.user?.email },
   });
-  console.log("レンダリング〜");
   const tickers: Ticker[] = data?.readAllTickers;
   //保有株式の現在価格を取得
   const tickerList: string[] = [];
