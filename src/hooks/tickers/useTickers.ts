@@ -1,5 +1,6 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useSession } from "next-auth/react";
+import { useCallback } from "react";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { calculateTickerData } from "../../functions/tickers/calculateTickerData";
 import { Ticker } from "../../types/ticker.type";
@@ -7,7 +8,7 @@ import { TickerData } from "../../types/tickerData.type";
 import { useGetMarketData } from "../export/useGetMarketData";
 import { useGetUSDJPY } from "../export/useGetUSDJPY";
 
-export function useTickers() {
+export const useTickers = () => {
   // 保有株式情報の取得
   const GET_TICKERS = gql`
     query GetTickers($user: String) {
@@ -33,6 +34,7 @@ export function useTickers() {
   const { data, loading: getLoading } = useQuery(GET_TICKERS, {
     variables: { user: session?.user?.email },
   });
+  console.log("レンダリング〜");
   const tickers: Ticker[] = data?.readAllTickers;
   //保有株式の現在価格を取得
   const tickerList: string[] = [];
@@ -41,21 +43,24 @@ export function useTickers() {
   });
   const { marketData } = useGetMarketData(tickerList);
   // 保有株式情報を取得する関数
-  const getTickers = (selectedFx: string) => {
-    const fxValue = selectedFx == "$" ? 1 : currentUsd;
-    if (
-      getLoading ||
-      marketData === HOOKS_STATE.LOADING ||
-      fxValue === HOOKS_STATE.LOADING
-    )
-      return { tickers: HOOKS_STATE.LOADING };
-    const portfolio: TickerData = calculateTickerData(
-      tickers,
-      marketData,
-      fxValue
-    );
-    return { tickers: portfolio };
-  };
+  const getTickers = useCallback(
+    (selectedFx: string) => {
+      const fxValue = selectedFx == "$" ? 1 : currentUsd;
+      if (
+        getLoading ||
+        marketData === HOOKS_STATE.LOADING ||
+        fxValue === HOOKS_STATE.LOADING
+      )
+        return { tickers: HOOKS_STATE.LOADING };
+      const portfolio: TickerData = calculateTickerData(
+        tickers,
+        marketData,
+        fxValue
+      );
+      return { tickers: portfolio };
+    },
+    [currentUsd, getLoading, marketData, tickers]
+  );
   // 保有株式情報の追加
   const CREATE_TICKER = gql`
     mutation createTicker(
@@ -208,4 +213,4 @@ export function useTickers() {
     updateLoading,
     currentUsd,
   };
-}
+};

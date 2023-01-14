@@ -1,6 +1,5 @@
 import { FC, ReactNode, useContext, createContext } from "react";
 import { HOOKS_STATE } from "../constants/hooks";
-import { useGetUSDJPY } from "../hooks/export/useGetUSDJPY";
 import { useSelectedFx } from "../hooks/selected-fx/useSelectedFx";
 import { useTickers } from "../hooks/tickers/useTickers";
 import { TickerData } from "../types/tickerData.type";
