@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 
 export function useUpdateCash() {
   const UPDATE_CASH = gql`
-    mutation UpdateCash(input: UpdateCashInput!) {
+    mutation UpdateCash($input: UpdateCashInput!) {
       updateCash(input: $input) {
         id
         asset
