@@ -54,3 +54,7 @@ h3 {
 .clear-both {
   clear: left;
 }
+
+.background-primary {
+  background-color: #343a40;
+}

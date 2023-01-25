@@ -10,6 +10,11 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.1",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.6",
+    "@mui/styled-engine-sc": "^5.11.0",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
@@ -26,6 +31,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.39.5",
     "sass": "^1.56.1",
+    "styled-components": "^5.3.6",
     "typescript": "4.9.3"
   }
 }
