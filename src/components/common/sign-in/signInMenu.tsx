@@ -51,7 +51,6 @@ export const SignInMenu = () => {
             component={Paper}
             elevation={6}
             square
-            className="background-primary text-white"
           >
             <Box
               sx={{
