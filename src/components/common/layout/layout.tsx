@@ -5,7 +5,8 @@ type Props = {
   children: ReactNode;
 };
 export const Layout: FC<Props> = ({ children }) => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  if (status == "loading") return <></>;
   return session ? (
     <div className="wrapper">{children}</div>
   ) : (
