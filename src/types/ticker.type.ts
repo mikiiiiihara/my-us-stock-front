@@ -10,4 +10,7 @@ export type Ticker = {
   dividendFirstTime: number;
   sector: string;
   usdjpy: number;
+  currentPrice: number;
+  priceGets: number;
+  currentRate: number;
 };

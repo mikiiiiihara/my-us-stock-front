@@ -38,12 +38,23 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
   const onSubmit = handleSubmit(
     async ({ id, getPrice, quantity, dividend, usdjpy }) => {
       const intQuantity = parseInt(quantity);
+      const parsedToNumberId = parseInt(id);
+      // 更新時、マーケットデータの取得は実施せず、入力時の値を表示
+      // なんらかの理由で取得できなかった場合は新規登録時と同じ対応
+      const myTicker = tickers.find((ticker) => ticker.id.toString() === id);
+      // 現在価格
+      const currentPrice = myTicker ? myTicker.price : parseFloat(getPrice);
+      const priceGets = myTicker ? myTicker.priceGets : 0;
+      const priceRate = myTicker ? myTicker.priceRate : 0;
       await executeUpdateTicker(
-        parseInt(id),
+        parsedToNumberId,
         parseFloat(getPrice),
         intQuantity,
         parseFloat(dividend),
-        parseFloat(usdjpy)
+        parseFloat(usdjpy),
+        currentPrice,
+        priceGets,
+        priceRate
       );
       if (loading) {
         setMsg("更新中...");

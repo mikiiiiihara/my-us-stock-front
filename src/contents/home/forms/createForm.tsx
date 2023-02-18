@@ -46,7 +46,11 @@ const CreateForm: React.FC<Props> = ({ setShowModal }) => {
         parseInt(dividendTime),
         parseInt(dividendFirstTime),
         sector,
-        parseFloat(usdjpy)
+        parseFloat(usdjpy),
+        // 新規登録時、マーケットデータの取得は実施せず、ダミー値を表示
+        parseFloat(getPrice),
+        0,
+        0
       );
       if (loading) {
         setMsg("追加中...");

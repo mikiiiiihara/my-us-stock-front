@@ -27,7 +27,10 @@ type ContextType = {
     dividendTime: number,
     dividendFirstTime: number,
     sector: string,
-    usdjpy: number
+    usdjpy: number,
+    currentPrice: number,
+    priceGets: number,
+    currentRate: number
   ) => Promise<void>; // 保有株式情報追加関数
   createLoading: boolean; // 保有株式情報追加関数ステータス
   executeUpdateTicker: (
@@ -35,7 +38,10 @@ type ContextType = {
     getPrice: number,
     quantity: number,
     dividend: number,
-    usdjpy: number
+    usdjpy: number,
+    currentPrice: number,
+    priceGets: number,
+    currentRate: number
   ) => Promise<void>; // 保有株式情報更新関数
   updateLoading: boolean; // 保有株式情報更新関数ステータス
   currentUsd: number | Loading; // 現在のドル円

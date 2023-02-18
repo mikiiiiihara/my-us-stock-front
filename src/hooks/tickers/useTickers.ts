@@ -5,7 +5,6 @@ import { HOOKS_STATE } from "../../constants/hooks";
 import { calculateTickerData } from "../../functions/tickers/calculateTickerData";
 import { Ticker } from "../../types/ticker.type";
 import { TickerData } from "../../types/tickerData.type";
-import { useGetMarketData } from "../export/useGetMarketData";
 import { useGetUSDJPY } from "../export/useGetUSDJPY";
 
 export const useTickers = () => {
@@ -23,6 +22,9 @@ export const useTickers = () => {
         dividendFirstTime
         sector
         usdjpy
+        currentPrice
+        priceGets
+        currentRate
       }
     }
   `;
@@ -40,25 +42,16 @@ export const useTickers = () => {
   tickers?.forEach((ticker) => {
     tickerList.push(ticker.ticker);
   });
-  const { marketData } = useGetMarketData(tickerList);
   // 保有株式情報を取得する関数
   const getTickers = useCallback(
     (selectedFx: string) => {
       const fxValue = selectedFx == "$" ? 1 : currentUsd;
-      if (
-        getLoading ||
-        marketData === HOOKS_STATE.LOADING ||
-        fxValue === HOOKS_STATE.LOADING
-      )
+      if (getLoading || fxValue === HOOKS_STATE.LOADING)
         return { tickers: HOOKS_STATE.LOADING };
-      const portfolio: TickerData = calculateTickerData(
-        tickers,
-        marketData,
-        fxValue
-      );
+      const portfolio: TickerData = calculateTickerData(tickers, fxValue);
       return { tickers: portfolio };
     },
-    [currentUsd, getLoading, marketData, tickers]
+    [currentUsd, getLoading, tickers]
   );
   // 保有株式情報の追加
   const CREATE_TICKER = gql`
@@ -74,6 +67,9 @@ export const useTickers = () => {
         dividendFirstTime
         sector
         usdjpy
+        currentPrice
+        priceGets
+        currentRate
       }
     }
   `;
@@ -84,7 +80,7 @@ export const useTickers = () => {
       update(cache, { data: { createTicker } }) {
         cache.modify({
           fields: {
-            readAllTickers(existingTickers = []) {
+            getTickers(existingTickers = []) {
               const newTickerRef = cache.writeFragment({
                 data: createTicker,
                 fragment: gql`
@@ -99,6 +95,9 @@ export const useTickers = () => {
                     dividendFirstTime
                     sector
                     usdjpy
+                    currentPrice
+                    priceGets
+                    currentRate
                   }
                 `,
               });
@@ -118,7 +117,10 @@ export const useTickers = () => {
     dividendTime: number,
     dividendFirstTime: number,
     sector: string,
-    usdjpy: number
+    usdjpy: number,
+    currentPrice: number,
+    priceGets: number,
+    currentRate: number
   ): Promise<void> => {
     await CreateTicker({
       variables: {
@@ -132,6 +134,9 @@ export const useTickers = () => {
           dividendFirstTime,
           sector,
           usdjpy,
+          currentPrice,
+          priceGets,
+          currentRate,
         },
       },
     });
@@ -150,6 +155,9 @@ export const useTickers = () => {
         dividendFirstTime
         sector
         usdjpy
+        currentPrice
+        priceGets
+        currentRate
       }
     }
   `;
@@ -160,7 +168,10 @@ export const useTickers = () => {
     getPrice: number,
     quantity: number,
     dividend: number,
-    usdjpy: number
+    usdjpy: number,
+    currentPrice: number,
+    priceGets: number,
+    currentRate: number
   ): Promise<void> => {
     await UpdateTicker({
       variables: {
@@ -170,6 +181,9 @@ export const useTickers = () => {
           quantity,
           dividend,
           usdjpy,
+          currentPrice,
+          priceGets,
+          currentRate,
         },
       },
     });
