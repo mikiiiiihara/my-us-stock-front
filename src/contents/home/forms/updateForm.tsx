@@ -1,4 +1,3 @@
-import router from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTickerContext } from "../../../contexts/tickersContext";
@@ -33,7 +32,12 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
   const closeModal = () => {
     setShowModal(false);
   };
-  const { executeUpdateTicker, updateLoading: loading } = useTickerContext();
+  const {
+    executeUpdateTicker,
+    updateLoading,
+    executeDeleteTicker,
+    deleteLoading,
+  } = useTickerContext();
 
   const onSubmit = handleSubmit(
     async ({ id, getPrice, quantity, dividend, usdjpy }) => {
@@ -46,25 +50,36 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
       const currentPrice = myTicker ? myTicker.price : parseFloat(getPrice);
       const priceGets = myTicker ? myTicker.priceGets : 0;
       const priceRate = myTicker ? myTicker.priceRate : 0;
-      await executeUpdateTicker(
-        parsedToNumberId,
-        parseFloat(getPrice),
-        intQuantity,
-        parseFloat(dividend),
-        parseFloat(usdjpy),
-        currentPrice,
-        priceGets,
-        priceRate
-      );
-      if (loading) {
-        setMsg("更新中...");
+      if (intQuantity == 0) {
+        // 削除
+        await executeDeleteTicker(
+          parsedToNumberId,
+          currentPrice,
+          priceGets,
+          priceRate
+        );
+        if (deleteLoading) {
+          setMsg("削除中...");
+        }
+      } else {
+        // 更新
+        await executeUpdateTicker(
+          parsedToNumberId,
+          parseFloat(getPrice),
+          intQuantity,
+          parseFloat(dividend),
+          parseFloat(usdjpy),
+          currentPrice,
+          priceGets,
+          priceRate
+        );
+        if (updateLoading) {
+          setMsg("更新中...");
+        }
       }
       await new Promise((s) => {
         setTimeout(s, 300);
       });
-      if (intQuantity == 0) {
-        router.reload();
-      }
       closeModal();
     }
   );

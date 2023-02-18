@@ -45,6 +45,13 @@ type ContextType = {
   ) => Promise<void>; // 保有株式情報更新関数
   updateLoading: boolean; // 保有株式情報更新関数ステータス
   currentUsd: number | Loading; // 現在のドル円
+  executeDeleteTicker: (
+    id: number,
+    currentPrice: number,
+    priceGets: number,
+    currentRate: number
+  ) => Promise<void>; // 保有株式情報削除関数
+  deleteLoading: boolean; // 保有株式情報削除関数ステータス
 };
 /**
  * TickerContext
@@ -65,6 +72,8 @@ export const TickerProvider: FC<Props> = ({ children }) => {
     executeUpdateTicker,
     updateLoading,
     currentUsd,
+    executeDeleteTicker,
+    deleteLoading,
   } = useTickers();
   return (
     <TickerContext.Provider
@@ -77,6 +86,8 @@ export const TickerProvider: FC<Props> = ({ children }) => {
         executeUpdateTicker,
         updateLoading,
         currentUsd,
+        executeDeleteTicker,
+        deleteLoading,
       }}
     >
       {children}

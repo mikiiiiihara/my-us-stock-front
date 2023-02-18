@@ -52,7 +52,36 @@ export function useAssets() {
       }
     }
   `;
-  const [UpdateAsset] = useMutation(UPDATE_ASSET);
+  const [UpdateAsset] = useMutation(UPDATE_ASSET, {
+    update(cache, { data: { updateOrCreateAsset } }) {
+      cache.modify({
+        fields: {
+          getAssets(existingAssets = []) {
+            const newAssetRef = cache.writeFragment({
+              data: updateOrCreateAsset,
+              fragment: gql`
+                fragment NewAsset on Asset {
+                  id
+                  asset
+                  year
+                  month
+                  date
+                  addDate
+                  updDate
+                  user
+                  cashUSD
+                  cashJPY
+                }
+              `,
+            });
+            console.log(newAssetRef);
+            console.log(existingAssets);
+            return [...existingAssets, newAssetRef];
+          },
+        },
+      });
+    },
+  });
   // 更新関数
   const executeUpdateAsset = async (priceTotal: number): Promise<void> => {
     await UpdateAsset({

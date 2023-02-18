@@ -188,6 +188,62 @@ export const useTickers = () => {
       },
     });
   };
+
+  // 保有株式情報の削除
+  const DELETE_TICKER = gql`
+    mutation DeleteTicker($input: UpdateTickerInput!) {
+      deleteTicker(input: $input) {
+        id
+        ticker
+        getPrice
+        quantity
+        user
+        dividend
+        dividendTime
+        dividendFirstTime
+        sector
+        usdjpy
+        currentPrice
+        priceGets
+        currentRate
+      }
+    }
+  `;
+  const [DeleteTicker, { loading: deleteLoading }] = useMutation(
+    DELETE_TICKER,
+    {
+      update(cache, data) {
+        cache.modify({
+          fields: {
+            getTickers(existing = [], { readField }) {
+              const newTickerList = existing.filter((item: any) => {
+                return readField("id", item) !== data.data?.deleteTicker?.id;
+              });
+              return [...newTickerList];
+            },
+          },
+        });
+      },
+    }
+  );
+  // 保有株式情報を更新する関数
+  const executeDeleteTicker = async (
+    id: number,
+    currentPrice: number,
+    priceGets: number,
+    currentRate: number
+  ): Promise<void> => {
+    await DeleteTicker({
+      variables: {
+        input: {
+          id,
+          currentPrice,
+          priceGets,
+          currentRate,
+        },
+      },
+    });
+  };
   return {
     getTickers,
     executeCreateTicker,
@@ -195,5 +251,7 @@ export const useTickers = () => {
     executeUpdateTicker,
     updateLoading,
     currentUsd,
+    executeDeleteTicker,
+    deleteLoading,
   };
 };

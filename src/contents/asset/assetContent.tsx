@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import router from "next/router";
 import React from "react";
 import { Loading } from "../../components/common/loading/loading";
 import StackedArea from "../../components/graph/StakedArea";
@@ -39,7 +38,6 @@ export const AssetContent = () => {
   // 当日の資産情報を更新
   const update = async () => {
     await executeUpdateAsset(tickers.priceTotal);
-    router.reload();
   };
   if (assets != null) {
     // for cash content
