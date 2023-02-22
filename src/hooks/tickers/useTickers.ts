@@ -74,40 +74,37 @@ export const useTickers = () => {
     }
   `;
   // 追加時にキャッシュする処理も実装
-  const [CreateTicker, { loading: createLoading }] = useMutation(
-    CREATE_TICKER,
-    {
-      update(cache, { data: { createTicker } }) {
-        cache.modify({
-          fields: {
-            getTickers(existingTickers = []) {
-              const newTickerRef = cache.writeFragment({
-                data: createTicker,
-                fragment: gql`
-                  fragment NewTicker on Ticker {
-                    id
-                    ticker
-                    getPrice
-                    quantity
-                    user
-                    dividend
-                    dividendTime
-                    dividendFirstTime
-                    sector
-                    usdjpy
-                    currentPrice
-                    priceGets
-                    currentRate
-                  }
-                `,
-              });
-              return [...existingTickers, newTickerRef];
-            },
+  const [CreateTicker] = useMutation(CREATE_TICKER, {
+    update(cache, { data: { createTicker } }) {
+      cache.modify({
+        fields: {
+          getTickers(existingTickers = []) {
+            const newTickerRef = cache.writeFragment({
+              data: createTicker,
+              fragment: gql`
+                fragment NewTicker on Ticker {
+                  id
+                  ticker
+                  getPrice
+                  quantity
+                  user
+                  dividend
+                  dividendTime
+                  dividendFirstTime
+                  sector
+                  usdjpy
+                  currentPrice
+                  priceGets
+                  currentRate
+                }
+              `,
+            });
+            return [...existingTickers, newTickerRef];
           },
-        });
-      },
-    }
-  );
+        },
+      });
+    },
+  });
   // 保有株式情報を追加する関数
   const executeCreateTicker = async (
     ticker: string,
@@ -161,7 +158,7 @@ export const useTickers = () => {
       }
     }
   `;
-  const [UpdateTicker, { loading: updateLoading }] = useMutation(UPDATE_TICKER);
+  const [UpdateTicker] = useMutation(UPDATE_TICKER);
   // 保有株式情報を更新する関数
   const executeUpdateTicker = async (
     id: number,
@@ -209,23 +206,20 @@ export const useTickers = () => {
       }
     }
   `;
-  const [DeleteTicker, { loading: deleteLoading }] = useMutation(
-    DELETE_TICKER,
-    {
-      update(cache, data) {
-        cache.modify({
-          fields: {
-            getTickers(existing = [], { readField }) {
-              const newTickerList = existing.filter((item: any) => {
-                return readField("id", item) !== data.data?.deleteTicker?.id;
-              });
-              return [...newTickerList];
-            },
+  const [DeleteTicker] = useMutation(DELETE_TICKER, {
+    update(cache, data) {
+      cache.modify({
+        fields: {
+          getTickers(existing = [], { readField }) {
+            const newTickerList = existing.filter((item: any) => {
+              return readField("id", item) !== data.data?.deleteTicker?.id;
+            });
+            return [...newTickerList];
           },
-        });
-      },
-    }
-  );
+        },
+      });
+    },
+  });
   // 保有株式情報を更新する関数
   const executeDeleteTicker = async (
     id: number,
@@ -247,11 +241,8 @@ export const useTickers = () => {
   return {
     getTickers,
     executeCreateTicker,
-    createLoading,
     executeUpdateTicker,
-    updateLoading,
     currentUsd,
     executeDeleteTicker,
-    deleteLoading,
   };
 };

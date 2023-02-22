@@ -24,7 +24,7 @@ const CreateForm: React.FC<Props> = ({ setShowModal }) => {
     setMsg("");
     setShowModal(false);
   };
-  const { executeCreateTicker, createLoading: loading } = useTickerContext();
+  const { executeCreateTicker } = useTickerContext();
   const { register, handleSubmit } = useForm<FormData>();
 
   const onSubmit = handleSubmit(
@@ -52,13 +52,12 @@ const CreateForm: React.FC<Props> = ({ setShowModal }) => {
         0,
         0
       );
-      if (loading) {
-        setMsg("追加中...");
-      }
+      setMsg("追加中...");
       await new Promise((s) => {
         setTimeout(s, 300);
       });
       closeModal();
+      setMsg("");
     }
   );
   return (

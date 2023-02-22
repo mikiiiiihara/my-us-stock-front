@@ -23,7 +23,8 @@ export const AssetContent = () => {
   let xDataList: string[] = new Array();
   let yDataList: number[] = new Array();
   // 資産情報取得
-  const { getAssets, executeUpdateAsset } = useAssets();
+  const { getAssets, executeUpdateTodayAsset, executeCreateTodayAsset } =
+    useAssets();
   const { assets } = getAssets();
   if (
     tickers === HOOKS_STATE.LOADING ||
@@ -37,7 +38,21 @@ export const AssetContent = () => {
     );
   // 当日の資産情報を更新
   const update = async () => {
-    await executeUpdateAsset(tickers.priceTotal);
+    // 当日の資産が登録されているか確認
+    const todayAsset = assets.find(
+      (asset) =>
+        asset.year == year && asset.month == month && asset.date == date
+    );
+    if (todayAsset == null) {
+      // create
+      await executeCreateTodayAsset(tickers.priceTotal);
+    } else {
+      // update
+      await executeUpdateTodayAsset(
+        parseInt(todayAsset.id.toString()),
+        tickers.priceTotal
+      );
+    }
   };
   if (assets != null) {
     // for cash content

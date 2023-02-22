@@ -36,9 +36,9 @@ export function useAssets() {
   };
 
   // 更新
-  const UPDATE_ASSET = gql`
-    mutation UpdateOrCreateAsset($input: UpdateOrCreateAssetInput!) {
-      updateOrCreateAsset(input: $input) {
+  const UPDATE_TODAY_ASSET = gql`
+    mutation UpdateTodayAsset($input: UpdateTodayAssetInput!) {
+      updateTodayAsset(input: $input) {
         id
         asset
         year
@@ -52,13 +52,45 @@ export function useAssets() {
       }
     }
   `;
-  const [UpdateAsset] = useMutation(UPDATE_ASSET, {
-    update(cache, { data: { updateOrCreateAsset } }) {
+  const [UpdateTodayAsset] = useMutation(UPDATE_TODAY_ASSET);
+  // 更新関数
+  const executeUpdateTodayAsset = async (
+    id: number,
+    asset: number
+  ): Promise<void> => {
+    await UpdateTodayAsset({
+      variables: {
+        input: {
+          id,
+          asset,
+        },
+      },
+    });
+  };
+  // 更新
+  const CREATE_TODAY_ASSET = gql`
+    mutation CreateTodayAsset($input: CreateTodayAssetInput!) {
+      createTodayAsset(input: $input) {
+        id
+        asset
+        year
+        month
+        date
+        addDate
+        updDate
+        user
+        cashUSD
+        cashJPY
+      }
+    }
+  `;
+  const [CreateTodayAsset] = useMutation(CREATE_TODAY_ASSET, {
+    update(cache, { data: { createTodayAsset } }) {
       cache.modify({
         fields: {
           getAssets(existingAssets = []) {
             const newAssetRef = cache.writeFragment({
-              data: updateOrCreateAsset,
+              data: createTodayAsset,
               fragment: gql`
                 fragment NewAsset on Asset {
                   id
@@ -74,24 +106,22 @@ export function useAssets() {
                 }
               `,
             });
-            console.log(newAssetRef);
-            console.log(existingAssets);
             return [...existingAssets, newAssetRef];
           },
         },
       });
     },
   });
-  // 更新関数
-  const executeUpdateAsset = async (priceTotal: number): Promise<void> => {
-    await UpdateAsset({
+  // 新規作成関数
+  const executeCreateTodayAsset = async (asset: number): Promise<void> => {
+    await CreateTodayAsset({
       variables: {
         input: {
           user: session?.user?.email,
-          asset: priceTotal,
+          asset,
         },
       },
     });
   };
-  return { getAssets, executeUpdateAsset };
+  return { getAssets, executeUpdateTodayAsset, executeCreateTodayAsset };
 }

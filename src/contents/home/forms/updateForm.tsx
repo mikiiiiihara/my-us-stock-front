@@ -32,12 +32,7 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
   const closeModal = () => {
     setShowModal(false);
   };
-  const {
-    executeUpdateTicker,
-    updateLoading,
-    executeDeleteTicker,
-    deleteLoading,
-  } = useTickerContext();
+  const { executeUpdateTicker, executeDeleteTicker } = useTickerContext();
 
   const onSubmit = handleSubmit(
     async ({ id, getPrice, quantity, dividend, usdjpy }) => {
@@ -58,9 +53,7 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
           priceGets,
           priceRate
         );
-        if (deleteLoading) {
-          setMsg("削除中...");
-        }
+        setMsg("削除中...");
       } else {
         // 更新
         await executeUpdateTicker(
@@ -73,14 +66,13 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
           priceGets,
           priceRate
         );
-        if (updateLoading) {
-          setMsg("更新中...");
-        }
+        setMsg("更新中...");
       }
       await new Promise((s) => {
         setTimeout(s, 300);
       });
       closeModal();
+      setMsg("");
     }
   );
   return (
