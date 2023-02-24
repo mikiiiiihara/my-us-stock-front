@@ -6,7 +6,6 @@ import "../styles/asset-content.scss";
 import "../styles/dividend-content.scss";
 import "../styles/ticker-content.scss";
 import "../styles/sector-content.scss";
-import "../styles/ticker-panel-item.scss";
 import type { AppProps } from "next/app";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";

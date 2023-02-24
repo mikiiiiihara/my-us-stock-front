@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 import { TickerDetail } from "../../types/tickerDetail.type";
-import { TickerPanelItem } from "./tickerPanelItem";
+import { DisplayType, TickerPanelItem } from "./tickerPanelItem";
 
 type Props = {
   tickerDetail: TickerDetail[];
   currency: string;
-  displayType?: string;
+  displayType?: DisplayType;
 };
 
 export const TickerPanel: FC<Props> = ({
@@ -14,7 +14,7 @@ export const TickerPanel: FC<Props> = ({
   displayType,
 }) => {
   return (
-    <div className="ticker-panel">
+    <div>
       {tickerDetail.map((data) => (
         <div key={data.ticker}>
           <TickerPanelItem

@@ -1,5 +1,5 @@
-.ticker-panel-item {
-  .ticker-panel-item-content {
+.tickerPanelItem {
+  .tickerPanelItemContent {
     display: block;
     float: left;
     width: 29%;
@@ -13,11 +13,7 @@
       font-size: 160%;
     }
   }
-  .ticker-acco-close,
-  .ticker-modal-close {
-    display: none;
-  }
-  .ticker-modal {
+  .tickerModal {
     position: fixed;
     top: 0;
     left: 0;
@@ -28,7 +24,7 @@
     align-items: center;
     justify-content: center;
   }
-  .ticker-modal-content {
+  .tickerModalContent {
     width: 90%;
     height: auto;
     margin: auto;
@@ -38,24 +34,18 @@
     border-radius: 1rem;
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04);
   }
-  .ticker-name {
-    font-size: 3rem;
-  }
-  .base-info {
+  .baseInfo {
     display: flex;
     justify-content: space-between;
+    div p {
+      text-align: right;
+    }
   }
-  .base-info div p {
-    text-align: right;
-  }
-  .ticker-name {
+  .tickerName {
     font-size: 2rem;
   }
-  .ticker-acco {
-    display: block;
-  }
-  .base-info-rate p,
-  .modal-text {
+  .baseInfoRate p,
+  .modalText {
     font-size: 1.2rem;
   }
 }
