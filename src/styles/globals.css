@@ -54,3 +54,17 @@ h3 {
 .clear-both {
   clear: left;
 }
+
+.sub-sentence {
+  font-size: 0.75rem;
+}
+@media (max-width: 992px) {
+  .navbar-expand-lg .navbar-nav {
+    flex-direction: row;
+  }
+}
+@media (max-width: 820px) {
+  .d-none-tb {
+    display: none !important;
+  }
+}

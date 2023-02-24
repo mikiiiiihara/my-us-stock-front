@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
+import styles from "./modal.module.scss";
 
 type Props = {
   showFlag: Boolean;
@@ -14,13 +15,13 @@ const Modal: React.FC<Props> = ({ showFlag, setShowModal, content }) => {
   return (
     <>
       {showFlag ? ( // showFlagがtrueだったらModalを表示する
-        <div className="overlay">
-          <div className="modalContent card">
+        <div className={styles.overlay}>
+          <Card className={styles.modalContent}>
             {content}
             <Button onClick={closeModal} variant="secondary">
               Close
             </Button>
-          </div>
+          </Card>
         </div>
       ) : (
         <></> // showFlagがfalseの場合はModalは表示しない

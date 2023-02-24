@@ -1,7 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.css";
-import "../styles/header.scss";
-import "../styles/modal.scss";
 import "../styles/home-content.scss";
 import "../styles/strategy-content.scss";
 import "../styles/asset-content.scss";
