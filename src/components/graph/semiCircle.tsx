@@ -62,7 +62,7 @@ const SemiCircle: FC<Props> = ({ value1, value2, themeColor, background }) => {
     series: [
       {
         type: "pie",
-        name: "Browser share",
+        name: "Cash vs Stock",
         innerSize: "50%",
         data: [
           [value1.name, value1.value],
