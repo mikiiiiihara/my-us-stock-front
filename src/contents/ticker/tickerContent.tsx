@@ -28,7 +28,7 @@ export const TickerContent = () => {
     return 0;
   });
   return (
-    <div className="ticker-content">
+    <div>
       <SearchTicker tickers={tickerDetailValue} selectedFx={fx} />
       <PrimaryButton
         content={

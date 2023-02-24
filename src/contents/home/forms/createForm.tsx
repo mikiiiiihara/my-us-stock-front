@@ -62,7 +62,7 @@ const CreateForm: React.FC<Props> = ({ setShowModal }) => {
     }
   );
   return (
-    <div className="create-form">
+    <div>
       <h4 className="mb-3">Add Ticker Info</h4>
       <form onSubmit={onSubmit}>
         <div className="form-group mb-3">

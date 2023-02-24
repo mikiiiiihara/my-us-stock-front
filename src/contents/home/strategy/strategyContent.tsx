@@ -22,11 +22,9 @@ export const StrategyContent = () => {
   });
   if (data === HOOKS_STATE.LOADING)
     return (
-      <div className="strategy-content">
-        <div className="content">
-          <h2>投資方針メモ</h2>
-          <Loading />
-        </div>
+      <div className="content">
+        <h2>投資方針メモ</h2>
+        <Loading />
       </div>
     );
   // textarea行数自動算出
@@ -36,24 +34,22 @@ export const StrategyContent = () => {
   };
 
   return (
-    <div className="strategy-content">
-      <div className="content">
-        <h2 className="m-2">投資方針メモ</h2>
-        <p className="m-2">{data?.updDate}更新</p>
-        <form onSubmit={onSubmit}>
-          <div className="form-group mb-3">
-            <textarea
-              className="form-control"
-              {...register("text", { required: true })}
-              placeholder="投資方針のメモを記入してください。"
-              defaultValue={data?.text}
-              rows={autoTxtAreaRows()}
-            />
-          </div>
-          <PrimaryButton content="更新" className="mb-3" type="submit" />
-          <p className="m-2">{msg}</p>
-        </form>
-      </div>
+    <div className="content">
+      <h2 className="m-2">投資方針メモ</h2>
+      <p className="m-2">{data?.updDate}更新</p>
+      <form onSubmit={onSubmit}>
+        <div className="form-group mb-3">
+          <textarea
+            className="form-control"
+            {...register("text", { required: true })}
+            placeholder="投資方針のメモを記入してください。"
+            defaultValue={data?.text}
+            rows={autoTxtAreaRows()}
+          />
+        </div>
+        <PrimaryButton content="更新" className="mb-3" type="submit" />
+        <p className="m-2">{msg}</p>
+      </form>
     </div>
   );
 };

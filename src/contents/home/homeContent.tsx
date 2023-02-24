@@ -28,11 +28,7 @@ export const HomeContent = () => {
   // 保有株式総額を取得
   const { tickers } = getTickers(fx);
   if (tickers === HOOKS_STATE.LOADING || currentUsd === HOOKS_STATE.LOADING)
-    return (
-      <div className="home-content">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   const tickerDetail: TickerDetail[] = tickers.tickerDetail;
   const priceTotal = tickers.priceTotal;
   const balanceTotal =
@@ -65,18 +61,16 @@ export const HomeContent = () => {
         </p>
         <p>（USDJPY: {currentUsd}）</p>
         <Pie pieData={pieData} themeColor={themeDefault} background="#343a40" />
-        <div className="menu-btn-content">
-          <PrimaryButton
-            content="情報を変更"
-            onClick={ShowUpdModal}
-            isForContent={true}
-          />
-          <PrimaryButton
-            content="銘柄を追加"
-            onClick={ShowAddModal}
-            isForContent={true}
-          />
-        </div>
+        <PrimaryButton
+          content="情報を変更"
+          onClick={ShowUpdModal}
+          isForContent={true}
+        />
+        <PrimaryButton
+          content="銘柄を追加"
+          onClick={ShowAddModal}
+          isForContent={true}
+        />
         <Modal
           showFlag={showUpdModal}
           setShowModal={setUpdModal}

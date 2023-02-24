@@ -16,11 +16,7 @@ export const DividendContent = () => {
   // 保有株式総額をドル建てで取得
   const { tickers } = getTickers("$");
   if (tickers === HOOKS_STATE.LOADING || currentUsd === HOOKS_STATE.LOADING)
-    return (
-      <div className="dividend-content">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   const tickerDetail: TickerDetail[] = tickers.tickerDetail;
   const dividendTotal = tickers.dividendTotal;
   const divData: DivData[] = calculateDividendCalendar(tickerDetail);
@@ -35,7 +31,7 @@ export const DividendContent = () => {
       return pie;
     });
   return (
-    <div className="dividend-content">
+    <div>
       <div className="content">
         <h2>
           年配当総額: ${dividendTotal}（¥

@@ -14,11 +14,7 @@ export const PortfolioContent = () => {
   // 保有株式総額をドル建てで取得
   const { tickers } = getTickers("$");
   if (tickers === HOOKS_STATE.LOADING || currentUsd === HOOKS_STATE.LOADING)
-    return (
-      <div className="asset-content">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   const tickerDetail: TickerDetail[] = tickers.tickerDetail;
   const priceTotal = tickers.priceTotal;
   const balanceTotal =
@@ -35,22 +31,18 @@ export const PortfolioContent = () => {
   // セクターデータ計算
   const pieData: PieData[] = calculateSectors(tickerDetail, priceTotal);
   return (
-    <div className="sector-content">
-      <div className="content">
-        <h1>資産総額: ${priceTotal}</h1>
-        <p className={balanceRateClass}>
-          損益: ${balanceTotal}（{Math.round(balanceRateTotal * 100) / 100}%）
-        </p>
-        <p className="">
-          円換算: ¥{(priceTotal * currentUsd).toLocaleString()}
-        </p>
-        <p>
-          年配当金総額： ${dividendTotal} （¥
-          {(dividendTotal * currentUsd).toLocaleString()}）
-        </p>
-        <p>（USDJPY: {currentUsd}）</p>
-        <Pie pieData={pieData} themeColor={themeDefault} background="#343a40" />
-      </div>
+    <div className="content">
+      <h1>資産総額: ${priceTotal}</h1>
+      <p className={balanceRateClass}>
+        損益: ${balanceTotal}（{Math.round(balanceRateTotal * 100) / 100}%）
+      </p>
+      <p className="">円換算: ¥{(priceTotal * currentUsd).toLocaleString()}</p>
+      <p>
+        年配当金総額： ${dividendTotal} （¥
+        {(dividendTotal * currentUsd).toLocaleString()}）
+      </p>
+      <p>（USDJPY: {currentUsd}）</p>
+      <Pie pieData={pieData} themeColor={themeDefault} background="#343a40" />
     </div>
   );
 };

@@ -77,7 +77,7 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
     }
   );
   return (
-    <div className="update-form">
+    <div>
       <h4 className="mb-3">Update ticker Price</h4>
       <p className="sub-sentence text-secondary">
         買い増し・売却による取得価格・株数の変更

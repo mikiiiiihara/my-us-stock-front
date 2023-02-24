@@ -33,11 +33,7 @@ export const AssetContent = () => {
     currentUsd === HOOKS_STATE.LOADING ||
     assets === HOOKS_STATE.LOADING
   )
-    return (
-      <div className="asset-content">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   // 当日の資産情報を更新
   const update = async () => {
     // 当日の資産が登録されているか確認
