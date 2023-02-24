@@ -4,7 +4,6 @@ import { TickerDetail } from "../../types/tickerDetail.type";
 import { calculateTickerPie } from "../../functions/tickers/calculateTickerPie";
 import { themeDefault } from "../../constants/themeColor";
 import Pie from "../../components/graph/pie";
-import { StrategyContent } from "./strategy/strategyContent";
 import Image from "next/image";
 import CreateForm from "./forms/createForm";
 import UpdateForm from "./forms/updateForm";
@@ -94,7 +93,6 @@ export const HomeContent = () => {
           content={<CreateForm setShowModal={setAddModal} />}
         />
       </div>
-      <StrategyContent />
       <button onClick={changeFx} className="primary-button fx-button-fix">
         <p className="fx-button">{fx == "$" ? "$" : "¥"}表示</p>
         <Image

@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import "../styles/header.scss";
 import "../styles/modal.scss";
 import "../styles/home-content.scss";
+import "../styles/strategy-content.scss";
 import "../styles/asset-content.scss";
 import "../styles/dividend-content.scss";
 import "../styles/ticker-content.scss";
