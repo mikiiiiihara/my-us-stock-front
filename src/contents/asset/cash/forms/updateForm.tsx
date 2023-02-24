@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Loading } from "../../../../components/common/loading/loading";
+import PrimaryButton from "../../../../components/primary-button/primaryButton";
 import { HOOKS_STATE } from "../../../../constants/hooks";
 import { useAssets } from "../../../../hooks/assets/useAssets";
 import { useUpdateCash } from "../../../../hooks/assets/useUpdateCash";
@@ -71,9 +72,7 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, priceTotal }) => {
             defaultValue={todayCashData?.cashJPY.toString(10)}
           />
         </div>
-        <button type="submit" className="btn primary-button mb-3 w-100">
-          更新
-        </button>
+        <PrimaryButton content="更新" className="mb-3 w-100" type="submit" />
         <p>{msg}</p>
       </form>
     </div>

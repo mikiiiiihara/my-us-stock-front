@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import PrimaryButton from "../../../components/primary-button/primaryButton";
 import { sectorList } from "../../../constants/sectorList";
 import { useTickerContext } from "../../../contexts/tickersContext";
 
@@ -145,9 +146,7 @@ const CreateForm: React.FC<Props> = ({ setShowModal }) => {
             placeholder="例：133.43"
           />
         </div>
-        <button type="submit" className="btn primary-button mb-3 w-100">
-          追加
-        </button>
+        <PrimaryButton content="追加" className="mb-3 w-100" type="submit" />
         <p>{msg}</p>
       </form>
     </div>

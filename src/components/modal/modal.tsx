@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { Button } from "react-bootstrap";
 
 type Props = {
   showFlag: Boolean;
@@ -16,9 +17,9 @@ const Modal: React.FC<Props> = ({ showFlag, setShowModal, content }) => {
         <div className="overlay">
           <div className="modalContent card">
             {content}
-            <button onClick={closeModal} className="btn btn-secondary">
+            <Button onClick={closeModal} variant="secondary">
               Close
-            </button>
+            </Button>
           </div>
         </div>
       ) : (

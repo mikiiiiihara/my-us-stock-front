@@ -4,6 +4,7 @@ import { Loading } from "../../components/common/loading/loading";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { SearchTicker } from "./search-ticker/search-ticker";
 import { useTickerContext } from "../../contexts/tickersContext";
+import PrimaryButton from "../../components/primary-button/primaryButton";
 
 export const TickerContent = () => {
   // コンテキストから以下を取得
@@ -29,16 +30,22 @@ export const TickerContent = () => {
   return (
     <div className="ticker-content">
       <SearchTicker tickers={tickerDetailValue} selectedFx={fx} />
-      <button onClick={changeFx} className="primary-button fx-button-fix">
-        <p className="fx-button">{fx == "$" ? "$" : "¥"}表示</p>
-        <Image
-          src="/fx.png"
-          width={30}
-          height={30}
-          style={{ objectFit: "contain" }}
-          alt="logo"
-        />
-      </button>
+      <PrimaryButton
+        content={
+          <>
+            <p className="fx-button">{fx == "$" ? "$" : "¥"}表示</p>
+            <Image
+              src="/fx.png"
+              width={30}
+              height={30}
+              style={{ objectFit: "contain" }}
+              alt="logo"
+            />
+          </>
+        }
+        onClick={changeFx}
+        className="fx-button-fix"
+      />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import PrimaryButton from "../../../components/primary-button/primaryButton";
 import { useTickerContext } from "../../../contexts/tickersContext";
 import { sortTickers } from "../../../functions/tickers/sortTickers";
 
@@ -149,9 +150,7 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
             defaultValue={usdJpy}
           />
         </div>
-        <button type="submit" className="btn primary-button mb-3 w-100">
-          更新
-        </button>
+        <PrimaryButton content="更新" className="mb-3 w-100" type="submit" />
         <p>{msg}</p>
       </form>
     </div>

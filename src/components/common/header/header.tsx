@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import { Button } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
 import { signOut, useSession } from "next-auth/react";
 import { NAVIGATION_LIST } from "../../../constants/navigation";
@@ -26,9 +27,9 @@ const Header: FC<Props> = ({ title }) => {
       <div className="my-account">
         <p>{session?.user?.email} </p>
         <br />
-        <button className="btn btn-primary btn-sm" onClick={() => signOut()}>
+        <Button variant="primary" size="sm" onClick={() => signOut()}>
           Sign out
-        </button>
+        </Button>
       </div>
       <Nav className="navbar navbar-expand-lg navbar-dark bg-dark d-none-tb">
         <div className="container-xl">

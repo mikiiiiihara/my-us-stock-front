@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import React from "react";
 import { Loading } from "../../components/common/loading/loading";
 import StackedArea from "../../components/graph/StakedArea";
+import PrimaryButton from "../../components/primary-button/primaryButton";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { themeElectronic } from "../../constants/themeColor";
 import { useTickerContext } from "../../contexts/tickersContext";
@@ -81,11 +82,10 @@ export const AssetContent = () => {
           themeColor={themeElectronic[0]}
           background="#343a40"
         />
-        <input
-          type="button"
-          className="btn menu-button primary-button"
+        <PrimaryButton
+          content="最新状態に更新"
           onClick={update}
-          value="最新状態に更新"
+          isForContent={true}
         />
       </div>
       <CashContent

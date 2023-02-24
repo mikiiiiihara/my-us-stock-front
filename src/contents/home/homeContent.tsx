@@ -10,6 +10,7 @@ import UpdateForm from "./forms/updateForm";
 import Modal from "../../components/modal/modal";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { useTickerContext } from "../../contexts/tickersContext";
+import PrimaryButton from "../../components/primary-button/primaryButton";
 
 export const HomeContent = () => {
   // 画面表示
@@ -64,17 +65,15 @@ export const HomeContent = () => {
         <p>（USDJPY: {currentUsd}）</p>
         <Pie pieData={pieData} themeColor={themeDefault} background="#343a40" />
         <div className="menu-btn-content">
-          <input
-            type="button"
-            value="情報を変更"
+          <PrimaryButton
+            content="情報を変更"
             onClick={ShowUpdModal}
-            className="btn menu-button primary-button"
+            isForContent={true}
           />
-          <input
-            type="button"
-            value="銘柄を追加"
+          <PrimaryButton
+            content="銘柄を追加"
             onClick={ShowAddModal}
-            className="btn menu-button primary-button"
+            isForContent={true}
           />
         </div>
         <Modal
@@ -93,16 +92,22 @@ export const HomeContent = () => {
           content={<CreateForm setShowModal={setAddModal} />}
         />
       </div>
-      <button onClick={changeFx} className="primary-button fx-button-fix">
-        <p className="fx-button">{fx == "$" ? "$" : "¥"}表示</p>
-        <Image
-          src="/fx.png"
-          width={30}
-          height={30}
-          style={{ objectFit: "contain" }}
-          alt="logo"
-        />
-      </button>
+      <PrimaryButton
+        content={
+          <>
+            <p className="fx-button">{fx == "$" ? "$" : "¥"}表示</p>
+            <Image
+              src="/fx.png"
+              width={30}
+              height={30}
+              style={{ objectFit: "contain" }}
+              alt="logo"
+            />
+          </>
+        }
+        onClick={changeFx}
+        className="fx-button-fix"
+      />
     </div>
   );
 };

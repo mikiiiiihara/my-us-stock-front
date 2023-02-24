@@ -3,6 +3,7 @@ import { themeElectronic } from "../../../constants/themeColor";
 import SemiCircle from "../../../components/graph/semiCircle";
 import Modal from "../../../components/modal/modal";
 import UpdateForm from "./forms/updateForm";
+import PrimaryButton from "../../../components/primary-button/primaryButton";
 
 type Props = {
   cash: number;
@@ -37,11 +38,10 @@ const CashContent: FC<Props> = ({ cash, stock }) => {
           setShowModal={setUpdModal}
           content={<UpdateForm setShowModal={setUpdModal} priceTotal={stock} />}
         />
-        <input
-          type="button"
-          value="所有現金を変更"
+        <PrimaryButton
+          content="所有現金を変更"
           onClick={ShowUpdModal}
-          className="btn menu-button primary-button"
+          isForContent={true}
         />
       </div>
     </div>

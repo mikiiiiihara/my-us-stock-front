@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Loading } from "../../../components/common/loading/loading";
 import { useStrategy } from "../../../hooks/strategy/useStrategy";
 import { HOOKS_STATE } from "../../../constants/hooks";
+import PrimaryButton from "../../../components/primary-button/primaryButton";
 type FormData = {
   text: string;
 };
@@ -49,9 +50,7 @@ export const StrategyContent = () => {
               rows={autoTxtAreaRows()}
             />
           </div>
-          <button type="submit" className="btn primary-button mb-3">
-            更新
-          </button>
+          <PrimaryButton content="更新" className="mb-3" type="submit" />
           <p>{msg}</p>
         </form>
       </div>
