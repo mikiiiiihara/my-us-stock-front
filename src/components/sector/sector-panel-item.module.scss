@@ -1,0 +1,13 @@
+.sectorPanelItem {
+  float: left;
+  width: 15.7%;
+  margin: 0.8% 2%;
+  padding: 1rem 0;
+  border: 1.5px solid #4d4d4d;
+  border-radius: 1rem;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04);
+  font-size: 0.8rem;
+  @media (max-width: 820px) {
+    width: 29%;
+  }
+}

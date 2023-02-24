@@ -8,7 +8,7 @@ type Props = {
 };
 const SectorPanel: React.FC<Props> = ({ sectorList }) => {
   return (
-    <div className="sector-panel">
+    <div>
       {sectorList.map((sector) => (
         <div key={sector.ticker}>
           <SectorPanelItem data={sector} />

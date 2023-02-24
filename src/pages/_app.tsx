@@ -1,11 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.css";
-import "../styles/home-content.scss";
-import "../styles/strategy-content.scss";
-import "../styles/asset-content.scss";
-import "../styles/dividend-content.scss";
-import "../styles/ticker-content.scss";
-import "../styles/sector-content.scss";
 import type { AppProps } from "next/app";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";

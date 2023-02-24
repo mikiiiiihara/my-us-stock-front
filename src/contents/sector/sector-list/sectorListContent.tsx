@@ -12,7 +12,7 @@ export const SectorListContent = () => {
   if (marketData === HOOKS_STATE.LOADING)
     return (
       <>
-        <div className="sector-content">
+        <div className="content">
           <h4 className="sector-title">セクター別当落率（降順）</h4>
           <Loading />
         </div>
@@ -20,11 +20,9 @@ export const SectorListContent = () => {
     );
   const allSectorData = getTickerRealData(allSectorList, marketData);
   return (
-    <div className="sector-list-content">
-      <div className="content">
-        <h4 className="sector-title">セクター別当落率（降順）</h4>
-        <SectorPanel sectorList={allSectorData} />
-      </div>
+    <div className="content">
+      <h4 className="sector-title">セクター別当落率（降順）</h4>
+      <SectorPanel sectorList={allSectorData} />
     </div>
   );
 };

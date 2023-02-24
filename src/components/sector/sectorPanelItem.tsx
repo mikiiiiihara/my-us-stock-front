@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./sector-panel-item.module.scss";
 import { TickerRealData } from "../../types/tickerRealData.type";
 
 interface Props {
@@ -16,7 +17,7 @@ const SectorPanelItem: React.FC<{ data: TickerRealData }> = ({
     rateClass = "fc-minus";
   }
   return (
-    <div className="sector-panel-item">
+    <div className={styles.sectorPanelItem}>
       <p className="fw-bold">{data.ticker}</p>
       <p className={rateClass}>{rate}%</p>
     </div>

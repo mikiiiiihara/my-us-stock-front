@@ -11,6 +11,7 @@ import Modal from "../../components/modal/modal";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { useTickerContext } from "../../contexts/tickersContext";
 import PrimaryButton from "../../components/primary-button/primaryButton";
+import { Center } from "../../components/common/center/center";
 
 export const HomeContent = () => {
   // 画面表示
@@ -47,7 +48,7 @@ export const HomeContent = () => {
     balanceRateClass = "fc-minus";
   }
   return (
-    <div className="home-content">
+    <Center>
       <div className="content">
         <h1>
           保有株式総額: {fx}
@@ -108,6 +109,6 @@ export const HomeContent = () => {
         onClick={changeFx}
         className="fx-button-fix"
       />
-    </div>
+    </Center>
   );
 };

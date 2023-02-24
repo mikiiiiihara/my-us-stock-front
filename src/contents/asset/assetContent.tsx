@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import React from "react";
+import { Center } from "../../components/common/center/center";
 import { Loading } from "../../components/common/loading/loading";
 import StackedArea from "../../components/graph/StakedArea";
 import PrimaryButton from "../../components/primary-button/primaryButton";
@@ -73,25 +74,27 @@ export const AssetContent = () => {
     }
   }
   return (
-    <div className="asset-content">
-      <div className="content">
-        <h1>資産総額推移</h1>
-        <StackedArea
-          xData={xDataList}
-          yData={yDataList}
-          themeColor={themeElectronic[0]}
-          background="#343a40"
+    <>
+      <Center>
+        <div className="content">
+          <h1>資産総額推移</h1>
+          <StackedArea
+            xData={xDataList}
+            yData={yDataList}
+            themeColor={themeElectronic[0]}
+            background="#343a40"
+          />
+          <PrimaryButton
+            content="最新状態に更新"
+            onClick={update}
+            isForContent={true}
+          />
+        </div>
+        <CashContent
+          cash={todayCashUSD + (todayAsset?.cashJPY || 0)}
+          stock={tickers.priceTotal}
         />
-        <PrimaryButton
-          content="最新状態に更新"
-          onClick={update}
-          isForContent={true}
-        />
-      </div>
-      <CashContent
-        cash={todayCashUSD + (todayAsset?.cashJPY || 0)}
-        stock={tickers.priceTotal}
-      />
-    </div>
+      </Center>
+    </>
   );
 };

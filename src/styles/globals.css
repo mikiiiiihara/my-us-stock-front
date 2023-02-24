@@ -46,9 +46,17 @@ h3 {
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04);
 }
 
-.primary-button {
-  background-color: #4fd4fd;
+.form-control {
+  background-color: #343a40;
   color: white;
+  border: 1.5px solid #4d4d4d;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04);
+}
+.form-control:focus {
+  color: white;
+  background-color: #343a40;
+  border: 1.5px solid #4d4d4d;
 }
 
 .clear-both {
@@ -57,6 +65,20 @@ h3 {
 
 .sub-sentence {
   font-size: 0.75rem;
+}
+.fx-button-fix {
+  position: fixed;
+  bottom: 8rem;
+  right: 2.2rem;
+  padding: 0.8rem;
+  font-size: 1.4rem;
+  border-radius: 0.8rem;
+  border: none;
+}
+.fx-button {
+  vertical-align: middle;
+  display: inline-block;
+  margin-right: 0.2rem;
 }
 @media (max-width: 992px) {
   .navbar-expand-lg .navbar-nav {

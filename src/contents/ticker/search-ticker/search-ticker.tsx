@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import SearchBar from "../../../components/search-bar/search-bar";
 import { TickerPanel } from "../../../components/tickers/tickerPanel";
 import { TickerDetail } from "../../../types/tickerDetail.type";
 
@@ -82,45 +83,40 @@ export const SearchTicker: React.FC<Props> = ({ tickers, selectedFx }) => {
   return (
     <>
       <div className="content">
-        <h2>保有株一覧</h2>
-        <input
-          type="text"
-          className="form-control search-text"
-          placeholder="銘柄名、セクターを検索"
-          onChange={(e) => search(e.target.value)}
-        />
+        <h2 className="ml-3">保有株一覧</h2>
+        <SearchBar placeholder="銘柄名、セクターを検索" search={search} />
         <TickerPanel tickerDetail={tickerList} currency={selectedFx} />
         <div className="clear-both"></div>
       </div>
       <div className="content">
-        <h2>値上がりTOP3</h2>
+        <h2 className="ml-3">値上がりTOP3</h2>
         <TickerPanel tickerDetail={dataPriceRateDesc} currency={selectedFx} />
         <div className="clear-both"></div>
-        <h2>値下がりTOP3</h2>
+        <h2 className="ml-3">値下がりTOP3</h2>
         <TickerPanel tickerDetail={dataPriceRateAsc} currency={selectedFx} />
         <div className="clear-both"></div>
-        <h2>含み益（額）TOP3</h2>
+        <h2 className="ml-3">含み益（額）TOP3</h2>
         <TickerPanel
           tickerDetail={dataBalanceDesc}
           currency={selectedFx}
           displayType="balance"
         />
         <div className="clear-both"></div>
-        <h2>含み損（額）TOP3</h2>
+        <h2 className="ml-3">含み損（額）TOP3</h2>
         <TickerPanel
           tickerDetail={dataBalanceAsc}
           currency={selectedFx}
           displayType="balance"
         />
         <div className="clear-both"></div>
-        <h2>含み益（率）TOP3</h2>
+        <h2 className="ml-3">含み益（率）TOP3</h2>
         <TickerPanel
           tickerDetail={dataBalanceRateDesc}
           currency={selectedFx}
           displayType="balanceRate"
         />
         <div className="clear-both"></div>
-        <h2>含み損（率）TOP3</h2>
+        <h2 className="ml-3">含み損（率）TOP3</h2>
         <TickerPanel
           tickerDetail={dataBalanceRateAsc}
           currency={selectedFx}
