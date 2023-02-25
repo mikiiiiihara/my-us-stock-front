@@ -18,7 +18,7 @@ export const TickerPanel: FC<Props> = ({
       {tickerDetail.map((data) => (
         <div key={data.ticker}>
           <TickerPanelItem
-            data={data || []}
+            data={data}
             currency={currency}
             displayType={displayType}
           />

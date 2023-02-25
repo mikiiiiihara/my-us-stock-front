@@ -1,10 +1,9 @@
 import React from "react";
-import Image from "next/image";
 import { Loading } from "../../components/common/loading/loading";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { SearchTicker } from "./search-ticker/search-ticker";
 import { useTickerContext } from "../../contexts/tickersContext";
-import PrimaryButton from "../../components/primary-button/primaryButton";
+import { FxChangeButton } from "../../components/fx-change-button/fxChangeButton";
 
 export const TickerContent = () => {
   // コンテキストから以下を取得
@@ -30,22 +29,7 @@ export const TickerContent = () => {
   return (
     <div>
       <SearchTicker tickers={tickerDetailValue} selectedFx={fx} />
-      <PrimaryButton
-        content={
-          <>
-            <p className="fx-button">{fx == "$" ? "$" : "¥"}表示</p>
-            <Image
-              src="/fx.png"
-              width={30}
-              height={30}
-              style={{ objectFit: "contain" }}
-              alt="logo"
-            />
-          </>
-        }
-        onClick={changeFx}
-        className="fx-button-fix"
-      />
+      <FxChangeButton currency={fx == "$" ? "$" : "¥"} onClick={changeFx} />
     </div>
   );
 };

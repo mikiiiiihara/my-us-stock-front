@@ -66,20 +66,7 @@ h3 {
 .sub-sentence {
   font-size: 0.75rem;
 }
-.fx-button-fix {
-  position: fixed;
-  bottom: 8rem;
-  right: 2.2rem;
-  padding: 0.8rem;
-  font-size: 1.4rem;
-  border-radius: 0.8rem;
-  border: none;
-}
-.fx-button {
-  vertical-align: middle;
-  display: inline-block;
-  margin-right: 0.2rem;
-}
+
 @media (max-width: 992px) {
   .navbar-expand-lg .navbar-nav {
     flex-direction: row;

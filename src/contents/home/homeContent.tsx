@@ -4,7 +4,6 @@ import { TickerDetail } from "../../types/tickerDetail.type";
 import { calculateTickerPie } from "../../functions/tickers/calculateTickerPie";
 import { themeDefault } from "../../constants/themeColor";
 import Pie from "../../components/graph/pie";
-import Image from "next/image";
 import CreateForm from "./forms/createForm";
 import UpdateForm from "./forms/updateForm";
 import Modal from "../../components/modal/modal";
@@ -12,6 +11,7 @@ import { HOOKS_STATE } from "../../constants/hooks";
 import { useTickerContext } from "../../contexts/tickersContext";
 import PrimaryButton from "../../components/primary-button/primaryButton";
 import { Center } from "../../components/common/center/center";
+import { FxChangeButton } from "../../components/fx-change-button/fxChangeButton";
 
 export const HomeContent = () => {
   // 画面表示
@@ -28,7 +28,14 @@ export const HomeContent = () => {
   // 保有株式総額を取得
   const { tickers } = getTickers(fx);
   if (tickers === HOOKS_STATE.LOADING || currentUsd === HOOKS_STATE.LOADING)
-    return <Loading />;
+    return (
+      <Center>
+        <div className="content">
+          <h1>保有株式総額:</h1>
+          <Loading />
+        </div>
+      </Center>
+    );
   const tickerDetail: TickerDetail[] = tickers.tickerDetail;
   const priceTotal = tickers.priceTotal;
   const balanceTotal =
@@ -87,22 +94,7 @@ export const HomeContent = () => {
           content={<CreateForm setShowModal={setAddModal} />}
         />
       </div>
-      <PrimaryButton
-        content={
-          <>
-            <p className="fx-button">{fx == "$" ? "$" : "¥"}表示</p>
-            <Image
-              src="/fx.png"
-              width={30}
-              height={30}
-              style={{ objectFit: "contain" }}
-              alt="logo"
-            />
-          </>
-        }
-        onClick={changeFx}
-        className="fx-button-fix"
-      />
+      <FxChangeButton currency={fx == "$" ? "$" : "¥"} onClick={changeFx} />
     </Center>
   );
 };
