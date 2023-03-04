@@ -44,7 +44,7 @@ export const TickerContent = () => {
   });
   return (
     <div className="content">
-      <div className="mb-3 d-flex">
+      <div className="mb-3 d-lg-flex">
         <h2 className="m-3 mr-auto">保有株一覧</h2>
         <div className="m-3">
           <PrimaryButton
