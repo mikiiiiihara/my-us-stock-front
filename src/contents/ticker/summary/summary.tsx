@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import SearchBar from "../../../components/search-bar/search-bar";
 import { TickerPanel } from "../../../components/tickers/tickerPanel";
 import { TickerDetail } from "../../../types/tickerDetail.type";
 
@@ -7,31 +6,7 @@ type Props = {
   tickers: TickerDetail[];
   selectedFx: string;
 };
-export const SearchTicker: React.FC<Props> = ({ tickers, selectedFx }) => {
-  const [tickerList, setTickerList] = useState(tickers);
-  useEffect(() => {
-    setTickerList(tickers);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedFx]);
-  // 検索値で値を書き換え
-  const search = (searchValue: string) => {
-    const result = tickers
-      .map((ticker) => {
-        if (
-          ticker.ticker.includes(searchValue) ||
-          ticker.sector.includes(searchValue)
-        )
-          return ticker;
-      })
-      .filter((ticker): ticker is Exclude<typeof ticker, undefined> => {
-        return ticker !== undefined;
-      });
-    if (result) {
-      setTickerList(result);
-    } else {
-      setTickerList(tickers);
-    }
-  };
+export const Summary: React.FC<Props> = ({ tickers, selectedFx }) => {
   // 値上がりTOP3
   const dataPriceRateDesc = tickers
     .sort(function (a, b) {
@@ -82,8 +57,39 @@ export const SearchTicker: React.FC<Props> = ({ tickers, selectedFx }) => {
     .slice(0, 3);
   return (
     <>
-      <SearchBar placeholder="銘柄名、セクターを検索" search={search} />
-      <TickerPanel tickerDetail={tickerList} currency={selectedFx} />
+      <h3 className="ml-3">値上がりTOP3</h3>
+      <TickerPanel tickerDetail={dataPriceRateDesc} currency={selectedFx} />
+      <div className="clear-both"></div>
+      <h3 className="ml-3">値下がりTOP3</h3>
+      <TickerPanel tickerDetail={dataPriceRateAsc} currency={selectedFx} />
+      <div className="clear-both"></div>
+      <h3 className="ml-3">含み益（額）TOP3</h3>
+      <TickerPanel
+        tickerDetail={dataBalanceDesc}
+        currency={selectedFx}
+        displayType="balance"
+      />
+      <div className="clear-both"></div>
+      <h3 className="ml-3">含み損（額）TOP3</h3>
+      <TickerPanel
+        tickerDetail={dataBalanceAsc}
+        currency={selectedFx}
+        displayType="balance"
+      />
+      <div className="clear-both"></div>
+      <h3 className="ml-3">含み益（率）TOP3</h3>
+      <TickerPanel
+        tickerDetail={dataBalanceRateDesc}
+        currency={selectedFx}
+        displayType="balanceRate"
+      />
+      <div className="clear-both"></div>
+      <h3 className="ml-3">含み損（率）TOP3</h3>
+      <TickerPanel
+        tickerDetail={dataBalanceRateAsc}
+        currency={selectedFx}
+        displayType="balanceRate"
+      />
       <div className="clear-both"></div>
     </>
   );

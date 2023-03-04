@@ -5,7 +5,7 @@ import { Loading } from "../../components/common/loading/loading";
 import StackedArea from "../../components/graph/StakedArea";
 import PrimaryButton from "../../components/primary-button/primaryButton";
 import { HOOKS_STATE } from "../../constants/hooks";
-import { themeElectronic } from "../../constants/themeColor";
+import { themeForest } from "../../constants/themeColor";
 import { useTickerContext } from "../../contexts/tickersContext";
 import { convertYYYYMMDD } from "../../functions/util/convertYYYYMMDD";
 import { useAssets } from "../../hooks/assets/useAssets";
@@ -77,7 +77,7 @@ export const AssetContent = () => {
           <StackedArea
             xData={xDataList}
             yData={yDataList}
-            themeColor={themeElectronic[0]}
+            themeColor={themeForest[0]}
             background="#343a40"
           />
           <PrimaryButton

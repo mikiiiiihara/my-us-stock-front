@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { themeElectronic } from "../../../constants/themeColor";
+import { themeForest } from "../../../constants/themeColor";
 import SemiCircle from "../../../components/graph/semiCircle";
 import Modal from "../../../components/modal/modal";
 import UpdateForm from "./forms/updateForm";
@@ -30,7 +30,7 @@ const CashContent: FC<Props> = ({ cash, stock }) => {
         <SemiCircle
           value1={cashValue}
           value2={stockValue}
-          themeColor={themeElectronic}
+          themeColor={themeForest}
           background="#343a40"
         />
         <Modal

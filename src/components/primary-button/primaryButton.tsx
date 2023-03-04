@@ -7,6 +7,7 @@ type Props = {
   type?: "submit";
   isForContent?: boolean;
   className?: string;
+  notSelected?: boolean; // 非活性の見た目にしたいときにtrueを指定
   onClick?: (() => Promise<void>) | (() => void);
 };
 const PrimaryButton: React.FC<Props> = ({
@@ -14,13 +15,14 @@ const PrimaryButton: React.FC<Props> = ({
   type,
   isForContent,
   className,
+  notSelected,
   onClick,
 }) => {
   return (
     <Button
-      className={`${styles.primaryButton} ${
-        isForContent ? styles.forContent : undefined
-      } ${className}`}
+      className={`${
+        !notSelected ? styles.primaryButton : styles.primaryButtonNotSelected
+      } ${isForContent ? styles.forContent : undefined} ${className}`}
       onClick={onClick}
       type={type}
     >
