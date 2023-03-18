@@ -13,7 +13,7 @@ export default async function handler(
   const result = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL_CRON}/assets`,
     {
-      user: "mikiwhigh1274@gmail.com",
+      user: `${process.env.NEXT_PUBLIC_ACCOUNT}`,
     }
   );
   console.log(result.data);
