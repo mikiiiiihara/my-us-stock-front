@@ -6,8 +6,8 @@ import { Asset } from "../../types/asset.type";
 export function useAssets() {
   // 取得
   const GET_ASSETS = gql`
-    query GetAssets($user: String!) {
-      getAssets(user: $user) {
+    query GetAssets($user: String!, $day: Int!) {
+      getAssets(user: $user, day: $day) {
         id
         asset
         year
@@ -25,7 +25,7 @@ export function useAssets() {
   const { data: session } = useSession();
   // 資産情報算出
   const { data, loading } = useQuery(GET_ASSETS, {
-    variables: { user: session?.user?.email ?? "none" },
+    variables: { user: session?.user?.email ?? "none", day: 7 },
   });
   // 取得関数
   const getAssets = () => {
