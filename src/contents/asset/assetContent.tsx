@@ -78,10 +78,7 @@ export const AssetContent = () => {
     if (todayAsset != undefined) {
       todayCashUSD = todayAsset.cashUSD * currentUsd;
       todayCrypto =
-        todayAsset.total -
-        -todayAsset.asset -
-        todayAsset.cashJPY -
-        todayCashUSD;
+        todayAsset.total - todayAsset.asset - todayAsset.cashJPY - todayCashUSD;
     }
   }
   return (

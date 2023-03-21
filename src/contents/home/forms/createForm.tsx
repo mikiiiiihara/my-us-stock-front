@@ -130,11 +130,17 @@ const CreateForm: React.FC<Props> = ({ setShowModal }) => {
         <div className="form-group mb-3">
           <label htmlFor="sector">セクター</label>
           <select {...register("sector")} className="form-control">
-            {sectorList.map((sector: { id: number; name: string }) => (
-              <option key={sector.id} value={sector.name}>
-                {sector.name}
-              </option>
-            ))}
+            {sectorList
+              .sort(function (a, b) {
+                if (a.name < b.name) return -1;
+                if (a.name > b.name) return 1;
+                return 0;
+              })
+              .map((sector: { id: number; name: string }) => (
+                <option key={sector.id} value={sector.name}>
+                  {sector.name}
+                </option>
+              ))}
           </select>
         </div>
         <div className="form-group mb-3">
