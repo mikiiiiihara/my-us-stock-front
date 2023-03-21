@@ -9,13 +9,12 @@ import HighchartsMore from "highcharts/highcharts-more";
 import HighchartsReact from "highcharts-react-official";
 
 type Props = {
-  value1: { name: string; value: number };
-  value2: { name: string; value: number };
+  values: { name: string; value: number }[];
   themeColor: string[];
   background: string;
 };
 
-const SemiCircle: FC<Props> = ({ value1, value2, themeColor, background }) => {
+const SemiCircle: FC<Props> = ({ values, themeColor, background }) => {
   if (typeof Highcharts === "object") {
     HighchartsMore(Highcharts);
     exporting(Highcharts);
@@ -62,12 +61,9 @@ const SemiCircle: FC<Props> = ({ value1, value2, themeColor, background }) => {
     series: [
       {
         type: "pie",
-        name: "Cash vs Stock",
+        name: "資産割合",
         innerSize: "50%",
-        data: [
-          [value1.name, value1.value],
-          [value2.name, value2.value],
-        ],
+        data: values.map((value) => [value.name, value.value]),
       },
     ],
   };

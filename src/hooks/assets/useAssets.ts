@@ -9,6 +9,7 @@ export function useAssets() {
     query GetAssets($user: String!, $day: Int!) {
       getAssets(user: $user, day: $day) {
         id
+        total
         asset
         year
         month
@@ -18,6 +19,11 @@ export function useAssets() {
         user
         cashUSD
         cashJPY
+        cashBTC
+        cashETH
+        cashRIPPLE
+        cashBAT
+        cashLTC
       }
     }
   `;
@@ -40,6 +46,7 @@ export function useAssets() {
     mutation UpdateTodayAsset($input: UpdateTodayAssetInput!) {
       updateTodayAsset(input: $input) {
         id
+        total
         asset
         year
         month
@@ -49,6 +56,11 @@ export function useAssets() {
         user
         cashUSD
         cashJPY
+        cashBTC
+        cashETH
+        cashRIPPLE
+        cashBAT
+        cashLTC
       }
     }
   `;
@@ -56,22 +68,37 @@ export function useAssets() {
   // 更新関数
   const executeUpdateTodayAsset = async (
     id: number,
-    asset: number
+    asset: number,
+    cashUSD: number,
+    cashJPY: number,
+    cashBTC: number,
+    cashETH: number,
+    cashRIPPLE: number,
+    cashBAT: number,
+    cashLTC: number
   ): Promise<void> => {
     await UpdateTodayAsset({
       variables: {
         input: {
           id,
           asset,
+          cashUSD,
+          cashJPY,
+          cashBTC,
+          cashETH,
+          cashRIPPLE,
+          cashBAT,
+          cashLTC,
         },
       },
     });
   };
-  // 更新
+  // 追加
   const CREATE_TODAY_ASSET = gql`
     mutation CreateTodayAsset($input: CreateTodayAssetInput!) {
       createTodayAsset(input: $input) {
         id
+        total
         asset
         year
         month
@@ -81,6 +108,11 @@ export function useAssets() {
         user
         cashUSD
         cashJPY
+        cashBTC
+        cashETH
+        cashRIPPLE
+        cashBAT
+        cashLTC
       }
     }
   `;
@@ -94,6 +126,7 @@ export function useAssets() {
               fragment: gql`
                 fragment NewAsset on Asset {
                   id
+                  total
                   asset
                   year
                   month
@@ -103,6 +136,11 @@ export function useAssets() {
                   user
                   cashUSD
                   cashJPY
+                  cashBTC
+                  cashETH
+                  cashRIPPLE
+                  cashBAT
+                  cashLTC
                 }
               `,
             });

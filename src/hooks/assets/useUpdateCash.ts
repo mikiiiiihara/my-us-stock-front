@@ -6,6 +6,7 @@ export function useUpdateCash() {
     mutation UpdateCash($input: UpdateCashInput!) {
       updateCash(input: $input) {
         id
+        total
         asset
         year
         month
@@ -15,6 +16,11 @@ export function useUpdateCash() {
         user
         cashUSD
         cashJPY
+        cashBTC
+        cashETH
+        cashRIPPLE
+        cashBAT
+        cashLTC
       }
     }
   `;
@@ -22,17 +28,27 @@ export function useUpdateCash() {
   const { data: session } = useSession();
   const [updateCash, loading] = useMutation(UPDATE_CASH);
   const executeUpdateCash = async (
-    cashUSD: string,
-    cashJPY: string,
-    priceTotal: number
+    asset: number,
+    cashUSD: number,
+    cashJPY: number,
+    cashBTC: number,
+    cashETH: number,
+    cashRIPPLE: number,
+    cashBAT: number,
+    cashLTC: number
   ): Promise<void> => {
     await updateCash({
       variables: {
         input: {
           user: session?.user?.email,
-          cashUSD: parseFloat(cashUSD),
-          cashJPY: parseInt(cashJPY),
-          asset: priceTotal,
+          asset,
+          cashUSD,
+          cashJPY,
+          cashBTC,
+          cashETH,
+          cashRIPPLE,
+          cashBAT,
+          cashLTC,
         },
       },
     });

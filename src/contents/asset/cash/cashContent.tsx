@@ -7,29 +7,35 @@ import PrimaryButton from "../../../components/primary-button/primaryButton";
 
 type Props = {
   cash: number;
+  crypto: number;
   stock: number;
 };
-const CashContent: FC<Props> = ({ cash, stock }) => {
+const CashContent: FC<Props> = ({ cash, crypto, stock }) => {
   // 画面表示
   const [showUpdModal, setUpdModal] = useState(false);
   const ShowUpdModal = () => {
     setUpdModal(true);
   };
-  const cashValue = {
-    name: "cash",
-    value: cash,
-  };
-  const stockValue = {
-    name: "stock",
-    value: stock,
-  };
+  const values = [
+    {
+      name: "cash",
+      value: cash,
+    },
+    {
+      name: "crypto",
+      value: crypto,
+    },
+    {
+      name: "stock",
+      value: stock,
+    },
+  ];
   return (
     <div className="cash-content">
       <div className="content">
-        <h1>Cash vs Stock</h1>
+        <h1>資産割合</h1>
         <SemiCircle
-          value1={cashValue}
-          value2={stockValue}
+          values={values}
           themeColor={themeForest}
           background="#343a40"
         />

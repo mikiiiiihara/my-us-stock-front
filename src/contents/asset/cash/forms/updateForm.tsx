@@ -14,6 +14,11 @@ type Props = {
 type FormData = {
   cashUSD: string;
   cashJPY: string;
+  cashBTC: string;
+  cashETH: string;
+  cashRIPPLE: string;
+  cashBAT: string;
+  cashLTC: string;
 };
 const UpdateForm: React.FC<Props> = ({ setShowModal, priceTotal }) => {
   const [msg, setMsg] = useState("");
@@ -35,16 +40,35 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, priceTotal }) => {
     (asset) =>
       year === asset.year && month === asset.month && date === asset.date
   );
-  const onSubmit = handleSubmit(async ({ cashUSD, cashJPY }) => {
-    await executeUpdateCash(cashUSD, cashJPY, priceTotal);
-    if (loading) {
-      setMsg("更新中...");
+  const onSubmit = handleSubmit(
+    async ({
+      cashUSD,
+      cashJPY,
+      cashBTC,
+      cashETH,
+      cashRIPPLE,
+      cashBAT,
+      cashLTC,
+    }) => {
+      await executeUpdateCash(
+        priceTotal,
+        parseFloat(cashUSD),
+        parseFloat(cashJPY),
+        parseFloat(cashBTC),
+        parseFloat(cashETH),
+        parseFloat(cashRIPPLE),
+        parseFloat(cashBAT),
+        parseFloat(cashLTC)
+      );
+      if (loading) {
+        setMsg("更新中...");
+      }
+      await new Promise((s) => {
+        setTimeout(s, 300);
+      });
+      closeModal();
     }
-    await new Promise((s) => {
-      setTimeout(s, 300);
-    });
-    closeModal();
-  });
+  );
   return (
     <div className="update-form">
       <h4 className="mb-3">所有現金額を変更</h4>
@@ -70,6 +94,56 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, priceTotal }) => {
             {...register("cashJPY", { required: true })}
             placeholder="例：400,000"
             defaultValue={todayCashData?.cashJPY.toString(10)}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <label htmlFor="getPrice">ビットコイン(BTC)</label>
+          <input
+            type="int"
+            className="form-control"
+            {...register("cashBTC", { required: true })}
+            placeholder="例：0.01"
+            defaultValue={todayCashData?.cashBTC.toString(10)}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <label htmlFor="getPrice">イーサリアム(ETH)</label>
+          <input
+            type="int"
+            className="form-control"
+            {...register("cashETH", { required: true })}
+            placeholder="例：0.4"
+            defaultValue={todayCashData?.cashETH.toString(10)}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <label htmlFor="getPrice">リップル（XRP）</label>
+          <input
+            type="int"
+            className="form-control"
+            {...register("cashRIPPLE", { required: true })}
+            placeholder="例：400"
+            defaultValue={todayCashData?.cashRIPPLE.toString(10)}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <label htmlFor="getPrice">バット（BAT）</label>
+          <input
+            type="int"
+            className="form-control"
+            {...register("cashBAT", { required: true })}
+            placeholder="例：50"
+            defaultValue={todayCashData?.cashBAT.toString(10)}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <label htmlFor="getPrice">ライトコイン（LTC）</label>
+          <input
+            type="int"
+            className="form-control"
+            {...register("cashLTC", { required: true })}
+            placeholder="例：1.2"
+            defaultValue={todayCashData?.cashLTC.toString(10)}
           />
         </div>
         <PrimaryButton content="更新" className="mb-3 w-100" type="submit" />

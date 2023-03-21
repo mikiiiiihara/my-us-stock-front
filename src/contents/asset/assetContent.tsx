@@ -22,6 +22,7 @@ export const AssetContent = () => {
   const date = format(new Date(), "dd");
   let todayAsset;
   let todayCashUSD = 0;
+  let todayCrypto = 0;
   let xDataList: string[] = new Array();
   let yDataList: number[] = new Array();
   // 資産情報取得
@@ -48,7 +49,14 @@ export const AssetContent = () => {
       // update
       await executeUpdateTodayAsset(
         parseInt(todayAsset.id.toString()),
-        tickers.priceTotal
+        tickers.priceTotal,
+        todayAsset.cashUSD,
+        todayAsset.cashJPY,
+        todayAsset.cashBTC,
+        todayAsset.cashETH,
+        todayAsset.cashRIPPLE,
+        todayAsset.cashBAT,
+        todayAsset.cashLTC
       );
     }
   };
@@ -67,6 +75,7 @@ export const AssetContent = () => {
     }
     if (todayAsset != undefined) {
       todayCashUSD = todayAsset.cashUSD * currentUsd;
+      todayCrypto = todayAsset.total - todayAsset.cashJPY - todayCashUSD;
     }
   }
   return (
@@ -88,6 +97,7 @@ export const AssetContent = () => {
         </div>
         <CashContent
           cash={todayCashUSD + (todayAsset?.cashJPY || 0)}
+          crypto={todayCrypto}
           stock={tickers.priceTotal}
         />
       </Center>
