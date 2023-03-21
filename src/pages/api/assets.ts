@@ -16,6 +16,5 @@ export default async function handler(
       user: `${process.env.NEXT_PUBLIC_ACCOUNT}`,
     }
   );
-  console.log(result.data);
   res.status(200).json({ result: result.data });
 }

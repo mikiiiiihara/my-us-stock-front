@@ -11,9 +11,6 @@ type Props = {
   stock: number;
 };
 const CashContent: FC<Props> = ({ cash, crypto, stock }) => {
-  console.log(`cash:${cash}`);
-  console.log(`crypto:${crypto}`);
-  console.log(`stock:${stock}`);
   // 画面表示
   const [showUpdModal, setUpdModal] = useState(false);
   const ShowUpdModal = () => {
