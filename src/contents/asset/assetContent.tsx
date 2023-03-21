@@ -102,7 +102,7 @@ export const AssetContent = () => {
         <CashContent
           cash={todayCashUSD + (todayAsset?.cashJPY || 0)}
           crypto={todayCrypto}
-          stock={tickers.priceTotal}
+          stock={todayAsset?.asset || 0}
         />
       </Center>
     </>
