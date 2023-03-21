@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import React from "react";
+import React, { useState } from "react";
 import { Center } from "../../components/common/center/center";
 import { Loading } from "../../components/common/loading/loading";
 import StackedArea from "../../components/graph/StakedArea";
@@ -11,7 +11,28 @@ import { convertYYYYMMDD } from "../../functions/util/convertYYYYMMDD";
 import { useAssets } from "../../hooks/assets/useAssets";
 import CashContent from "./cash/cashContent";
 
+const DISPLAY_MODE = {
+  oneWeek: 7,
+  oneMonth: 30,
+  threeMonthes: 90,
+};
+
 export const AssetContent = () => {
+  //表示切り替え用
+  const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.oneWeek);
+  // 資産情報取得
+  const {
+    getAssets,
+    changeAssetLength,
+    executeUpdateTodayAsset,
+    executeCreateTodayAsset,
+  } = useAssets();
+  const { assets } = getAssets();
+  // 画面切り替え用
+  const changeDisplay = async (day: number) => {
+    await changeAssetLength(day);
+    setDisplayMode(day);
+  };
   // コンテキストから取得
   const { getTickers, currentUsd } = useTickerContext();
   // 保有株式総額を円建てで取得
@@ -25,10 +46,6 @@ export const AssetContent = () => {
   let todayCrypto = 0;
   let xDataList: string[] = new Array();
   let yDataList: number[] = new Array();
-  // 資産情報取得
-  const { getAssets, executeUpdateTodayAsset, executeCreateTodayAsset } =
-    useAssets();
-  const { assets } = getAssets();
   if (
     tickers === HOOKS_STATE.LOADING ||
     currentUsd === HOOKS_STATE.LOADING ||
@@ -86,6 +103,23 @@ export const AssetContent = () => {
       <Center>
         <div className="content">
           <h1>資産総額推移</h1>
+          <div className="m-3">
+            <PrimaryButton
+              content="3ヶ月"
+              notSelected={displayMode !== DISPLAY_MODE.threeMonthes}
+              onClick={() => changeDisplay(DISPLAY_MODE.threeMonthes)}
+            />
+            <PrimaryButton
+              content="１ヶ月"
+              notSelected={displayMode !== DISPLAY_MODE.oneMonth}
+              onClick={() => changeDisplay(DISPLAY_MODE.oneMonth)}
+            />
+            <PrimaryButton
+              content="１週間"
+              notSelected={displayMode !== DISPLAY_MODE.oneWeek}
+              onClick={() => changeDisplay(DISPLAY_MODE.oneWeek)}
+            />
+          </div>
           <StackedArea
             xData={xDataList}
             yData={yDataList}

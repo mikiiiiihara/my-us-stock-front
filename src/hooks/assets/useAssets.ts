@@ -30,7 +30,7 @@ export function useAssets() {
   // ログイン情報
   const { data: session } = useSession();
   // 資産情報算出
-  const { data, loading } = useQuery(GET_ASSETS, {
+  const { data, loading, refetch } = useQuery(GET_ASSETS, {
     variables: { user: session?.user?.email ?? "none", day: 7 },
   });
   // 取得関数
@@ -40,7 +40,10 @@ export function useAssets() {
       assets: loading ? HOOKS_STATE.LOADING : assets,
     };
   };
-
+  // クエリ表示期間を変更する
+  const changeAssetLength = async (day: number) => {
+    await refetch({ user: session?.user?.email ?? "none", day });
+  };
   // 更新
   const UPDATE_TODAY_ASSET = gql`
     mutation UpdateTodayAsset($input: UpdateTodayAssetInput!) {
@@ -161,5 +164,10 @@ export function useAssets() {
       },
     });
   };
-  return { getAssets, executeUpdateTodayAsset, executeCreateTodayAsset };
+  return {
+    getAssets,
+    changeAssetLength,
+    executeUpdateTodayAsset,
+    executeCreateTodayAsset,
+  };
 }
