@@ -64,8 +64,10 @@ export const AssetContent = () => {
     // for cash content
     for (let value of assets) {
       if (value != undefined) {
+        // X軸：年月日
         const xData = convertYYYYMMDD(value.year, value.month, value.date);
-        const yData = value.asset + value.cashJPY + value.cashUSD * currentUsd;
+        // Y軸：総資産
+        const yData = value.total;
         xDataList.push(xData);
         yDataList.push(Math.round(yData * 1) / 1);
         if (value.year == year && value.month == month && value.date == date) {
@@ -74,6 +76,8 @@ export const AssetContent = () => {
       }
     }
     if (todayAsset != undefined) {
+      console.log("asset is...");
+      console.log(todayAsset);
       todayCashUSD = todayAsset.cashUSD * currentUsd;
       todayCrypto =
         todayAsset.total -
