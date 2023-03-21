@@ -41,7 +41,7 @@ export const HomeContent = () => {
   const balanceTotal =
     Math.round((tickers.priceTotal - tickers.getPriceTotal) * 10) / 10;
   const balanceRateTotal =
-    (Math.round((balanceTotal / tickers.getPriceTotal) * 100) / 100) * 100;
+    (Math.round((balanceTotal / tickers.getPriceTotal) * 1000) / 1000) * 100;
   const dividendTotal = tickers.dividendTotal;
   const pieData = calculateTickerPie(tickerDetail, priceTotal);
   let balanceRateClass = "";
