@@ -10,7 +10,7 @@ type FormData = {
 };
 
 export const StrategyContent = () => {
-  const { getStrategy, updateStrategy, updateLoading } = useStrategy();
+  const { getStrategy, updateStrategy } = useStrategy();
   const data = getStrategy();
   const [msg, setMsg] = useState("");
   const { register, handleSubmit } = useForm<FormData>();
