@@ -41,9 +41,6 @@ h3 {
   width: 94%;
   margin: 0.6rem auto;
   padding: 1.2rem;
-  border: 1.5px solid #4d4d4d;
-  border-radius: 1rem;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04);
 }
 
 .form-control {
