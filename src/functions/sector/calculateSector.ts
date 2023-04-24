@@ -2,10 +2,7 @@ import { PieData } from "../../types/pieData.type";
 import { SectorData } from "../../types/sectorData.type";
 import { TickerDetail } from "../../types/tickerDetail.type";
 
-export const calculateSectors = (
-  tickerDetail: TickerDetail[],
-  priceTotal: number
-): PieData[] => {
+export const calculateSectors = (tickerDetail: TickerDetail[]): PieData[] => {
   // セクター名取得
   let sectorData: SectorData[] = new Array();
   for (let data of tickerDetail) {
@@ -22,10 +19,9 @@ export const calculateSectors = (
   }
   let result: PieData[] = new Array();
   for (let data of sectorData) {
-    const rate = Math.round((data.amount / priceTotal) * 10000) / 100;
     const pieData: PieData = {
       name: data.sector,
-      y: rate,
+      y: data.amount,
     };
     result.push(pieData);
   }

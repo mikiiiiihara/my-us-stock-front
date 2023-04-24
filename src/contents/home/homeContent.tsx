@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Loading } from "../../components/common/loading/loading";
 import { TickerDetail } from "../../types/tickerDetail.type";
-import { calculateTickerPie } from "../../functions/tickers/calculateTickerPie";
-import { themeDefault } from "../../constants/themeColor";
-import Pie from "../../components/graph/pie";
 import CreateForm from "./forms/createForm";
 import UpdateForm from "./forms/updateForm";
 import Modal from "../../components/modal/modal";
@@ -12,9 +9,26 @@ import { useTickerContext } from "../../contexts/tickersContext";
 import PrimaryButton from "../../components/primary-button/primaryButton";
 import { Center } from "../../components/common/center/center";
 import { FxChangeButton } from "../../components/fx-change-button/fxChangeButton";
+import { TickerContent } from "../ticker/tickerContent";
+import { SummaryContent } from "./summary/summaryContent";
+
+const DISPLAY_MODE = {
+  summary: "summary",
+  detail: "detail",
+};
 
 export const HomeContent = () => {
   // 画面表示
+  //表示切り替え用
+  const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.summary);
+  // 銘柄別を表示
+  const changeDisplayToSummary = () => {
+    setDisplayMode(DISPLAY_MODE.summary);
+  };
+  // セクター別を表示
+  const changeDisplayToDetail = () => {
+    setDisplayMode(DISPLAY_MODE.detail);
+  };
   const [showUpdModal, setUpdModal] = useState(false);
   const [showAddModal, setAddModal] = useState(false);
   const ShowUpdModal = () => {
@@ -43,7 +57,6 @@ export const HomeContent = () => {
   const balanceRateTotal =
     (Math.round((balanceTotal / tickers.getPriceTotal) * 1000) / 1000) * 100;
   const dividendTotal = tickers.dividendTotal;
-  const pieData = calculateTickerPie(tickerDetail, priceTotal);
   let balanceRateClass = "";
   if (balanceRateTotal > 0) {
     balanceRateClass = "fc-plus";
@@ -67,7 +80,23 @@ export const HomeContent = () => {
           {dividendTotal.toLocaleString()}
         </p>
         <p>（USDJPY: {currentUsd}）</p>
-        <Pie pieData={pieData} themeColor={themeDefault} background="#343a40" />
+        <div className="m-3">
+          <PrimaryButton
+            content="ポートフォリオ"
+            notSelected={displayMode !== DISPLAY_MODE.summary}
+            onClick={changeDisplayToSummary}
+          />
+          <PrimaryButton
+            content="保有銘柄一覧"
+            notSelected={displayMode !== DISPLAY_MODE.detail}
+            onClick={changeDisplayToDetail}
+          />
+        </div>
+        {displayMode === DISPLAY_MODE.summary ? (
+          <SummaryContent tickerDetail={tickerDetail} />
+        ) : (
+          <TickerContent />
+        )}
         <PrimaryButton
           content="情報を変更"
           onClick={ShowUpdModal}

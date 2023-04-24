@@ -1,11 +1,10 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { useCallback, useContext } from "react";
+import { useCallback } from "react";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { calculateTickerData } from "../../functions/tickers/calculateTickerData";
 import { Ticker } from "../../types/ticker.type";
 import { TickerData } from "../../types/tickerData.type";
 import { useGetUSDJPY } from "../export/useGetUSDJPY";
-import EmailContext from "../../contexts/emailContext";
 
 export const useTickers = () => {
   // 保有株式情報の取得
@@ -29,7 +28,7 @@ export const useTickers = () => {
     }
   `;
   // ログイン情報
-  const { email } = useContext(EmailContext);
+  const email = "mikiwhigh1274@gmail.com";
   // 為替情報取得
   const { currentUsd } = useGetUSDJPY();
   // 保有株式情報取得

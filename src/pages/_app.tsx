@@ -1,26 +1,41 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import { Layout } from "../components/common/layout/layout";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import type { AppContext, AppInitialProps, AppProps } from "next/app";
+import { ApolloProvider } from "@apollo/client";
 import { TickerProvider } from "../contexts/tickersContext";
-import EmailContext from "../contexts/emailContext";
+import { createApolloClient } from "../lib/apolloClient/apollo-client";
+import { parse } from "cookie";
 
-export const client = new ApolloClient({
-  uri: `${process.env.NEXT_PUBLIC_API_URL}`,
-  cache: new InMemoryCache(),
-});
-
-export default function App({ Component, pageProps }: AppProps) {
+function App({
+  Component,
+  pageProps,
+  accessToken,
+  email,
+}: AppProps & { accessToken?: string; email?: string }) {
+  const client = createApolloClient(pageProps.req, accessToken);
   return (
     <ApolloProvider client={client}>
-      <EmailContext.Provider value={{ email: "mikiwhigh1274@gmail.com" }}>
-        <TickerProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </TickerProvider>
-      </EmailContext.Provider>
+      <TickerProvider>
+        <Component {...pageProps} />
+      </TickerProvider>
     </ApolloProvider>
   );
 }
+App.getInitialProps = async (
+  appContext: AppContext
+): Promise<AppInitialProps & { accessToken?: string; email?: string }> => {
+  const pageProps = appContext.Component.getInitialProps
+    ? await appContext.Component.getInitialProps(appContext.ctx)
+    : {};
+
+  let accessToken;
+  let email;
+  if (appContext.ctx.req) {
+    const cookies = parse(appContext.ctx.req.headers.cookie || "");
+    accessToken = cookies["accessToken"];
+    email = cookies["email"];
+  }
+
+  return { pageProps, accessToken, email };
+};
+export default App;

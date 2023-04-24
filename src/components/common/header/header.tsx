@@ -6,14 +6,12 @@ import Image from "next/image";
 import { Button } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
 import { NAVIGATION_LIST } from "../../../constants/navigation";
-import EmailContext from "../../../contexts/emailContext";
-
 type Props = {
   title: string;
 };
 
 const Header: FC<Props> = ({ title }) => {
-  const { email } = useContext(EmailContext);
+  const email = "mikiwhigh1274@gmail.com";
   return (
     <div className={styles.header}>
       <Head>
@@ -49,18 +47,8 @@ const Header: FC<Props> = ({ title }) => {
           </Link>
           <ul className={`navbar-nav mr-auto f-left ${styles.subMenu}`}>
             <li className="nav-item">
-              <Link href={NAVIGATION_LIST.PORTFOLIO} className="nav-link">
-                Portfolio
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link href={NAVIGATION_LIST.ASSET} className="nav-link">
                 Asset
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link href={NAVIGATION_LIST.DIVIDEND} className="nav-link">
-                Dividend
               </Link>
             </li>
             <li className="nav-item">
@@ -85,18 +73,6 @@ const Header: FC<Props> = ({ title }) => {
               <p>Home</p>
             </div>
           </Link>
-          <Link href={NAVIGATION_LIST.PORTFOLIO}>
-            <div className={styles.navSpItem}>
-              <Image
-                src="/portfolio.png"
-                width={36}
-                height={36}
-                style={{ objectFit: "contain" }}
-                alt="logo"
-              />
-              <p>Portfolio</p>
-            </div>
-          </Link>
           <Link href={NAVIGATION_LIST.ASSET}>
             <div className={styles.navSpItem}>
               <Image
@@ -107,18 +83,6 @@ const Header: FC<Props> = ({ title }) => {
                 alt="logo"
               />
               <p>Asset</p>
-            </div>
-          </Link>
-          <Link href={NAVIGATION_LIST.DIVIDEND}>
-            <div className={styles.navSpItem}>
-              <Image
-                src="/dividend.png"
-                width={36}
-                height={36}
-                style={{ objectFit: "contain" }}
-                alt="logo"
-              />
-              <p>Dividend</p>
             </div>
           </Link>
           <Link href={NAVIGATION_LIST.SECTOR}>

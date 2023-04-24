@@ -13,7 +13,7 @@ const DISPLAY_MODE = {
 };
 export const TickerContent = () => {
   //表示切り替え用
-  const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.summary);
+  const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.detail);
   // サマリー画面を表示
   const changeDisplayToSummary = () => {
     setDisplayMode(DISPLAY_MODE.summary);
@@ -43,21 +43,18 @@ export const TickerContent = () => {
     return 0;
   });
   return (
-    <div className="content">
-      <div className="mb-3 d-lg-flex">
-        <h2 className="m-3 mr-auto">保有株一覧</h2>
-        <div className="m-3">
-          <PrimaryButton
-            content="サマリー"
-            notSelected={displayMode !== DISPLAY_MODE.summary}
-            onClick={changeDisplayToSummary}
-          />
-          <PrimaryButton
-            content="一覧"
-            notSelected={displayMode !== DISPLAY_MODE.detail}
-            onClick={changeDisplayToDetail}
-          />
-        </div>
+    <>
+      <div className="m-3">
+        <PrimaryButton
+          content="銘柄別"
+          notSelected={displayMode !== DISPLAY_MODE.detail}
+          onClick={changeDisplayToDetail}
+        />
+        <PrimaryButton
+          content="サマリー"
+          notSelected={displayMode !== DISPLAY_MODE.summary}
+          onClick={changeDisplayToSummary}
+        />
       </div>
       {displayMode === DISPLAY_MODE.summary ? (
         <Summary tickers={tickerDetailValue} selectedFx={fx} />
@@ -65,6 +62,6 @@ export const TickerContent = () => {
         <SearchTicker tickers={tickerDetailValue} selectedFx={fx} />
       )}
       <FxChangeButton currency={fx == "$" ? "$" : "¥"} onClick={changeFx} />
-    </div>
+    </>
   );
 };
