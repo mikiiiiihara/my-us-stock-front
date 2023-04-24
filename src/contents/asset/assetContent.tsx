@@ -125,11 +125,13 @@ export const AssetContent = () => {
             isForContent={true}
           />
         </div>
-        <CashContent
-          cash={todayCashUSD + (todayAsset?.cashJPY || 0)}
-          crypto={todayCrypto}
-          stock={todayAsset?.asset || 0}
-        />
+        <div className="mb-5">
+          <CashContent
+            cash={todayCashUSD + (todayAsset?.cashJPY || 0)}
+            crypto={todayCrypto}
+            stock={todayAsset?.asset || 0}
+          />
+        </div>
       </Center>
     </>
   );
