@@ -1,4 +1,4 @@
-import Header from "../../components/common/header/header";
+import { Header } from "../../components/common/header/header";
 import { AssetContent } from "../../contents/asset/assetContent";
 import { TickerProvider } from "../../contexts/tickersContext";
 

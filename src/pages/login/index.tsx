@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import Header from "../../components/common/header/header";
+import { Header } from "../../components/common/header/header";
 import router from "next/router";
 import PrimaryButton from "../../components/primary-button/primaryButton";
 

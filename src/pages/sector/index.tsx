@@ -1,5 +1,5 @@
 import { GetStaticProps } from "next";
-import Header from "../../components/common/header/header";
+import { Header } from "../../components/common/header/header";
 import { SectorContent } from "../../contents/sector/sectorContent";
 import { gql } from "@apollo/client";
 import { MarketData } from "../../types/marketData.type";

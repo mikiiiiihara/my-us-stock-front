@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import React, { FC } from "react";
 import styles from "./header.module.scss";
 import Head from "next/head";
 import Link from "next/link";
@@ -10,7 +10,7 @@ type Props = {
   title: string;
 };
 
-const Header: FC<Props> = ({ title }) => {
+const HeaderComponent: FC<Props> = ({ title }) => {
   const email = "mikiwhigh1274@gmail.com";
   return (
     <div className={styles.header}>
@@ -103,4 +103,5 @@ const Header: FC<Props> = ({ title }) => {
   );
 };
 
-export default Header;
+HeaderComponent.displayName = "Header";
+export const Header = React.memo(HeaderComponent);
