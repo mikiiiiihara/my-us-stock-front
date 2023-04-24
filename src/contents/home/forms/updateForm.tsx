@@ -34,7 +34,7 @@ interface FormData {
   usdjpy: string;
 }
 
-const UpdateForm: React.FC<Props> = ({
+const UpdateFormComponent: React.FC<Props> = ({
   setShowModal,
   tickers,
   executeDeleteTicker,
@@ -175,5 +175,5 @@ const UpdateForm: React.FC<Props> = ({
     </div>
   );
 };
-
-export default UpdateForm;
+UpdateFormComponent.displayName = "UpdateForm";
+export const UpdateForm = React.memo(UpdateFormComponent);

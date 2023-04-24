@@ -7,7 +7,7 @@ type Props = {
   tickers: TickerDetail[];
   selectedFx: string;
 };
-export const Summary: React.FC<Props> = ({ tickers, selectedFx }) => {
+const SummaryComponent: React.FC<Props> = ({ tickers, selectedFx }) => {
   // 値上がりTOP3
   const dataPriceRateDesc = useTickersSummary(
     tickers,
@@ -83,3 +83,5 @@ export const Summary: React.FC<Props> = ({ tickers, selectedFx }) => {
     </>
   );
 };
+SummaryComponent.displayName = "Summary";
+export const Summary = React.memo(SummaryComponent);

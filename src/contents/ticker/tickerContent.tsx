@@ -14,7 +14,7 @@ const DISPLAY_MODE = {
 type Props = {
   tickers: "loading" | TickerData;
 };
-export const TickerContent: React.FC<Props> = ({ tickers }) => {
+const TickeContentComponent: React.FC<Props> = ({ tickers }) => {
   //表示切り替え用
   const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.detail);
   // サマリー画面を表示
@@ -65,3 +65,5 @@ export const TickerContent: React.FC<Props> = ({ tickers }) => {
     </>
   );
 };
+TickeContentComponent.displayName = "TickerContent";
+export const TickerContent = React.memo(TickeContentComponent);

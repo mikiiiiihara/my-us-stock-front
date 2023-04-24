@@ -7,7 +7,7 @@ export const DISPLAY_TYPE = {
   balance: "balance", // // 金額単位
   balanceRate: "balanceRate", // 率単位
 } as const;
-export type DisplayType = typeof DISPLAY_TYPE[keyof typeof DISPLAY_TYPE];
+export type DisplayType = (typeof DISPLAY_TYPE)[keyof typeof DISPLAY_TYPE];
 
 type Props = {
   data: TickerDetail;
@@ -15,7 +15,11 @@ type Props = {
   displayType?: DisplayType;
 };
 
-export const TickerPanelItem: FC<Props> = ({ data, currency, displayType }) => {
+const TickerPanelItemComponent: FC<Props> = ({
+  data,
+  currency,
+  displayType,
+}) => {
   // モーダル表示切り替え用
   const [modalState, setModalState] = useState(false);
   const changeModal = () => {
@@ -104,3 +108,7 @@ export const TickerPanelItem: FC<Props> = ({ data, currency, displayType }) => {
     </div>
   );
 };
+
+TickerPanelItemComponent.displayName = "TickerPanelItem";
+
+export const TickerPanelItem = React.memo(TickerPanelItemComponent);

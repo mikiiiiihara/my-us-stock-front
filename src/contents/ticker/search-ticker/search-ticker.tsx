@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SearchBar from "../../../components/search-bar/search-bar";
+import { SearchBar } from "../../../components/search-bar/search-bar";
 import { TickerPanel } from "../../../components/tickers/tickerPanel";
 import { TickerDetail } from "../../../types/tickerDetail.type";
 

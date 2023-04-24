@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from "react";
 import { Loading } from "../../components/common/loading/loading";
 import { TickerDetail } from "../../types/tickerDetail.type";
-import CreateForm from "./forms/createForm";
-import UpdateForm from "./forms/updateForm";
+import { CreateForm } from "./forms/createForm";
+import { UpdateForm } from "./forms/updateForm";
 import Modal from "../../components/modal/modal";
 import { HOOKS_STATE } from "../../constants/hooks";
 import PrimaryButton from "../../components/primary-button/primaryButton";

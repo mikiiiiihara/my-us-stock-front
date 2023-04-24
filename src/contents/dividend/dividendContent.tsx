@@ -1,6 +1,5 @@
 import React from "react";
 import { DivData } from "../../types/divData.type";
-import { PieData } from "../../types/pieData.type";
 import { TickerDetail } from "../../types/tickerDetail.type";
 import { calculateDividendCalendar } from "../../functions/dividend/calculateDividendCalendar";
 import { Loading } from "../../components/common/loading/loading";

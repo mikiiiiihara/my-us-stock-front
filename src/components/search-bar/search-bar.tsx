@@ -6,7 +6,7 @@ type Props = {
   search: (searchValue: string) => void;
 };
 
-const SearchBar: React.FC<Props> = ({ placeholder, search }) => {
+const SearchBarComponent: React.FC<Props> = ({ placeholder, search }) => {
   return (
     <input
       type="text"
@@ -17,4 +17,6 @@ const SearchBar: React.FC<Props> = ({ placeholder, search }) => {
   );
 };
 
-export default SearchBar;
+SearchBarComponent.displayName = "SearchBar";
+
+export const SearchBar = React.memo(SearchBarComponent);

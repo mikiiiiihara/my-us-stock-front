@@ -31,7 +31,10 @@ type FormData = {
   usdjpy: string;
 };
 
-const CreateForm: React.FC<Props> = ({ setShowModal, executeCreateTicker }) => {
+const CreateFormComponent: React.FC<Props> = ({
+  setShowModal,
+  executeCreateTicker,
+}) => {
   const [msg, setMsg] = useState("");
   const closeModal = () => {
     setMsg("");
@@ -169,5 +172,5 @@ const CreateForm: React.FC<Props> = ({ setShowModal, executeCreateTicker }) => {
     </div>
   );
 };
-
-export default CreateForm;
+CreateFormComponent.displayName = "CreateForm";
+export const CreateForm = React.memo(CreateFormComponent);
