@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useMemo, useState } from "react";
 import Pie from "../../../components/graph/pie";
 import { themeDefault } from "../../../constants/themeColor";
 import PrimaryButton from "../../../components/primary-button/primaryButton";
@@ -20,17 +20,23 @@ export const SummaryContent: FC<Props> = ({ tickerDetail }) => {
   // 画面表示
   //表示切り替え用
   const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.ticker);
-  // 銘柄別を表示
-  const changeDisplayToTicker = () => {
+  const changeDisplayToTicker = useCallback(() => {
     setDisplayMode(DISPLAY_MODE.ticker);
-  };
-  // セクター別を表示
-  const changeDisplayToSector = () => {
+  }, []);
+
+  const changeDisplayToSector = useCallback(() => {
     setDisplayMode(DISPLAY_MODE.sector);
-  };
-  const pieData = calculateTickerPie(tickerDetail);
-  // セクターデータ計算
-  const sectorData: PieData[] = calculateSectors(tickerDetail);
+  }, []);
+
+  const pieData = useMemo(
+    () => calculateTickerPie(tickerDetail),
+    [tickerDetail]
+  );
+
+  const sectorData: PieData[] = useMemo(
+    () => calculateSectors(tickerDetail),
+    [tickerDetail]
+  );
   return (
     <>
       <div className="m-3">
