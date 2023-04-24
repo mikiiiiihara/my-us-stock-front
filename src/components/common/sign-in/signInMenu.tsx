@@ -8,8 +8,6 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-import { signIn } from "next-auth/react";
 import { Nav } from "react-bootstrap";
 
 const theme = createTheme();
@@ -69,7 +67,8 @@ export const SignInMenu = () => {
               </Typography>
               <Box component="form" noValidate sx={{ mt: 1 }}>
                 <Button
-                  onClick={() => signIn("google")}
+                  // TODO: ログイン機能をAPI側で実装→それを叩くようにする
+                  onClick={() => console.log("googleにサインイン")}
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}

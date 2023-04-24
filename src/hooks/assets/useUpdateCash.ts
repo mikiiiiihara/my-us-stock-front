@@ -1,5 +1,4 @@
 import { gql, useMutation } from "@apollo/client";
-import { useSession } from "next-auth/react";
 
 export function useUpdateCash() {
   const UPDATE_CASH = gql`
@@ -25,7 +24,7 @@ export function useUpdateCash() {
     }
   `;
   // ユーザー情報を取得
-  const { data: session } = useSession();
+  const email = "mikiwhigh1274@gmail.com";
   const [updateCash, loading] = useMutation(UPDATE_CASH);
   const executeUpdateCash = async (
     asset: number,
@@ -40,7 +39,7 @@ export function useUpdateCash() {
     await updateCash({
       variables: {
         input: {
-          user: session?.user?.email,
+          user: email,
           asset,
           cashUSD,
           cashJPY,

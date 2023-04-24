@@ -1,5 +1,4 @@
 import { useQuery, gql, useMutation } from "@apollo/client";
-import { useSession } from "next-auth/react";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { Asset } from "../../types/asset.type";
 
@@ -28,10 +27,10 @@ export function useAssets() {
     }
   `;
   // ログイン情報
-  const { data: session } = useSession();
+  const email = "mikiwhigh1274@gmail.com";
   // 資産情報算出
   const { data, loading, refetch } = useQuery(GET_ASSETS, {
-    variables: { user: session?.user?.email ?? "none", day: 7 },
+    variables: { user: email ?? "none", day: 7 },
   });
   // 取得関数
   const getAssets = () => {
@@ -42,7 +41,7 @@ export function useAssets() {
   };
   // クエリ表示期間を変更する
   const changeAssetLength = async (day: number) => {
-    await refetch({ user: session?.user?.email ?? "none", day });
+    await refetch({ user: email ?? "none", day });
   };
   // 更新
   const UPDATE_TODAY_ASSET = gql`
@@ -158,7 +157,7 @@ export function useAssets() {
     await CreateTodayAsset({
       variables: {
         input: {
-          user: session?.user?.email,
+          user: email,
           asset,
         },
       },

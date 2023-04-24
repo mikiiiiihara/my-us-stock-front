@@ -1,5 +1,4 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { useSession } from "next-auth/react";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { Strategy } from "../../types/strategy.type";
 
@@ -16,9 +15,9 @@ export const useStrategy = () => {
       }
     }
   `;
-  const { data: session } = useSession();
+  const email = "mikiwhigh1274@gmail.com";
   const { data: strategyData, loading: getLoading } = useQuery(GET_STRATEGY, {
-    variables: { user: session?.user?.email ?? "none" },
+    variables: { user: email ?? "none" },
   });
   const data: Strategy = strategyData?.getStrategy;
   // 取得関数
@@ -43,7 +42,7 @@ export const useStrategy = () => {
     await UpdateStrategy({
       variables: {
         input: {
-          user: session?.user?.email,
+          user: email,
           text: text,
         },
       },

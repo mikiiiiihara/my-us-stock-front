@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
-import { signOut, useSession } from "next-auth/react";
 import { NAVIGATION_LIST } from "../../../constants/navigation";
 
 type Props = {
@@ -13,7 +12,7 @@ type Props = {
 };
 
 const Header: FC<Props> = ({ title }) => {
-  const { data: session } = useSession();
+  const email = "mikiwhigh1274@gmail.com";
   return (
     <div className={styles.header}>
       <Head>
@@ -26,9 +25,14 @@ const Header: FC<Props> = ({ title }) => {
         <link rel="icon" href="/icon.png" />
       </Head>
       <div className={styles.myAccount}>
-        <p>{session?.user?.email} </p>
+        <p>{email} </p>
         <br />
-        <Button variant="primary" size="sm" onClick={() => signOut()}>
+        {/* TODO: ログアウト機能をAPI側で実装→それを叩くようにする */}
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={() => console.log("ログアウト")}
+        >
           Sign out
         </Button>
       </div>

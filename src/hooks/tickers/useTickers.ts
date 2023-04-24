@@ -1,5 +1,4 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { useSession } from "next-auth/react";
 import { useCallback } from "react";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { calculateTickerData } from "../../functions/tickers/calculateTickerData";
@@ -29,12 +28,12 @@ export const useTickers = () => {
     }
   `;
   // ログイン情報
-  const { data: session } = useSession();
+  const email = "mikiwhigh1274@gmail.com";
   // 為替情報取得
   const { currentUsd } = useGetUSDJPY();
   // 保有株式情報取得
   const { data, loading: getLoading } = useQuery(GET_TICKERS, {
-    variables: { user: session?.user?.email ?? "none" },
+    variables: { user: email ?? "none" },
   });
   const tickers: Ticker[] = data?.getTickers;
   //保有株式の現在価格を取得
@@ -125,7 +124,7 @@ export const useTickers = () => {
           ticker,
           getPrice,
           quantity,
-          user: session?.user?.email,
+          user: email,
           dividend,
           dividendTime,
           dividendFirstTime,
