@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { Loading } from "../../components/common/loading/loading";
 import { TickerDetail } from "../../types/tickerDetail.type";
 import CreateForm from "./forms/createForm";
@@ -51,7 +51,7 @@ type Props = {
   ) => Promise<void>; // 保有株式情報追加関数
 };
 
-export const HomeContent: React.FC<Props> = ({
+export const HomeContentComponent: React.FC<Props> = ({
   tickers,
   currentUsd,
   executeDeleteTicker,
@@ -64,21 +64,22 @@ export const HomeContent: React.FC<Props> = ({
   //表示切り替え用
   const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.summary);
   // 銘柄別を表示
-  const changeDisplayToSummary = () => {
+  const changeDisplayToSummary = useCallback(() => {
     setDisplayMode(DISPLAY_MODE.summary);
-  };
+  }, []);
   // セクター別を表示
-  const changeDisplayToDetail = () => {
+  const changeDisplayToDetail = useCallback(() => {
     setDisplayMode(DISPLAY_MODE.detail);
-  };
+  }, []);
   const [showUpdModal, setUpdModal] = useState(false);
   const [showAddModal, setAddModal] = useState(false);
-  const ShowUpdModal = () => {
+  const ShowUpdModal = useCallback(() => {
     setUpdModal(true);
-  };
-  const ShowAddModal = () => {
+  }, []);
+  const ShowAddModal = useCallback(() => {
     setAddModal(true);
-  };
+  }, []);
+
   if (tickers === HOOKS_STATE.LOADING)
     return (
       <Center>
@@ -95,12 +96,14 @@ export const HomeContent: React.FC<Props> = ({
   const balanceRateTotal =
     (Math.round((balanceTotal / tickers.getPriceTotal) * 1000) / 1000) * 100;
   const dividendTotal = tickers.dividendTotal;
+
   let balanceRateClass = "";
   if (balanceRateTotal > 0) {
     balanceRateClass = "fc-plus";
   } else if (balanceRateTotal < 0) {
     balanceRateClass = "fc-minus";
   }
+
   return (
     <Center>
       <div className="content">
@@ -171,3 +174,6 @@ export const HomeContent: React.FC<Props> = ({
     </Center>
   );
 };
+HomeContentComponent.displayName = "HomeContent";
+
+export const HomeContent = React.memo(HomeContentComponent);
