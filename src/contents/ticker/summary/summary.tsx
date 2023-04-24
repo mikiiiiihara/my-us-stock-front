@@ -1,6 +1,7 @@
 import React from "react";
 import { TickerPanel } from "../../../components/tickers/tickerPanel";
 import { TickerDetail } from "../../../types/tickerDetail.type";
+import { useTickersSummary } from "../../../hooks/useTickersSummary.ts/useTickersSummary";
 
 type Props = {
   tickers: TickerDetail[];
@@ -8,53 +9,41 @@ type Props = {
 };
 export const Summary: React.FC<Props> = ({ tickers, selectedFx }) => {
   // 値上がりTOP3
-  const dataPriceRateDesc = tickers
-    .sort(function (a, b) {
-      if (a.priceRate > b.priceRate) return -1;
-      if (a.priceRate < b.priceRate) return 1;
-      return 0;
-    })
-    .slice(0, 3);
+  const dataPriceRateDesc = useTickersSummary(
+    tickers,
+    (a, b) => b.priceRate - a.priceRate,
+    3
+  );
   // 値下がりTOP3
-  const dataPriceRateAsc = tickers
-    .sort(function (a, b) {
-      if (a.priceRate < b.priceRate) return -1;
-      if (a.priceRate > b.priceRate) return 1;
-      return 0;
-    })
-    .slice(0, 3);
+  const dataPriceRateAsc = useTickersSummary(
+    tickers,
+    (a, b) => a.priceRate - b.priceRate,
+    3
+  );
   // 含み益（額）TOP3
-  const dataBalanceDesc = tickers
-    .sort(function (a, b) {
-      if (a.balance > b.balance) return -1;
-      if (a.balance < b.balance) return 1;
-      return 0;
-    })
-    .slice(0, 3);
+  const dataBalanceDesc = useTickersSummary(
+    tickers,
+    (a, b) => b.balance - a.balance,
+    3
+  );
   // 含み損（額）TOP3
-  const dataBalanceAsc = tickers
-    .sort(function (a, b) {
-      if (a.balance < b.balance) return -1;
-      if (a.balance > b.balance) return 1;
-      return 0;
-    })
-    .slice(0, 3);
+  const dataBalanceAsc = useTickersSummary(
+    tickers,
+    (a, b) => a.balance - b.balance,
+    3
+  );
   // 含み益（率）TOP3
-  const dataBalanceRateDesc = tickers
-    .sort(function (a, b) {
-      if (a.balanceRate > b.balanceRate) return -1;
-      if (a.balanceRate < b.balanceRate) return 1;
-      return 0;
-    })
-    .slice(0, 3);
+  const dataBalanceRateDesc = useTickersSummary(
+    tickers,
+    (a, b) => b.balanceRate - a.balanceRate,
+    3
+  );
   // 含み益（率）TOP3
-  const dataBalanceRateAsc = tickers
-    .sort(function (a, b) {
-      if (a.balanceRate < b.balanceRate) return -1;
-      if (a.balanceRate > b.balanceRate) return 1;
-      return 0;
-    })
-    .slice(0, 3);
+  const dataBalanceRateAsc = useTickersSummary(
+    tickers,
+    (a, b) => a.balanceRate - b.balanceRate,
+    3
+  );
   return (
     <>
       <h3 className="ml-3">値上がりTOP3</h3>
