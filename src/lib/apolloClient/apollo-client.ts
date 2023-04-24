@@ -41,7 +41,7 @@ export const createApolloClient = (
   const authLink = createAuthLink(req);
 
   return new ApolloClient({
-    ssrMode: true,
+    // ssrMode: true,
     link: ApolloLink.from([errorLink, authLink, httpLink]),
     cache: new InMemoryCache(),
     defaultOptions: {
