@@ -4,7 +4,6 @@ import { PieData } from "../../types/pieData.type";
 import { TickerDetail } from "../../types/tickerDetail.type";
 import { calculateDividendCalendar } from "../../functions/dividend/calculateDividendCalendar";
 import { Loading } from "../../components/common/loading/loading";
-import Pie from "../../components/graph/pie";
 import StackedColumn from "../../components/graph/stackedColumn";
 import { themeDefault } from "../../constants/themeColor";
 import { HOOKS_STATE } from "../../constants/hooks";
@@ -41,12 +40,6 @@ export const DividendContent: React.FC<Props> = ({ tickers }) => {
         </h2>
         <StackedColumn
           divData={divData}
-          themeColor={themeDefault}
-          background="#343a40"
-        />
-        <h2>銘柄別割合</h2>
-        <Pie
-          pieData={pieDataList}
           themeColor={themeDefault}
           background="#343a40"
         />
