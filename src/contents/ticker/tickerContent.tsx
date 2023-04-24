@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Loading } from "../../components/common/loading/loading";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { SearchTicker } from "./search-ticker/search-ticker";
@@ -18,13 +18,13 @@ export const TickerContent: React.FC<Props> = ({ tickers }) => {
   //表示切り替え用
   const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.detail);
   // サマリー画面を表示
-  const changeDisplayToSummary = () => {
+  const changeDisplayToSummary = useCallback(() => {
     setDisplayMode(DISPLAY_MODE.summary);
-  };
+  }, []);
   // 一覧画面を表示
-  const changeDisplayToDetail = () => {
+  const changeDisplayToDetail = useCallback(() => {
     setDisplayMode(DISPLAY_MODE.detail);
-  };
+  }, []);
   // コンテキストから以下を取得
   // (左から順に)画面表示する為替の値、画面表示する為替を切り替える関数、保有株式情報、現在のドル円
   const { fx } = useTickerContext();

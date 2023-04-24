@@ -105,38 +105,41 @@ export const useTickers = () => {
     },
   });
   // 保有株式情報を追加する関数
-  const executeCreateTicker = async (
-    ticker: string,
-    getPrice: number,
-    quantity: number,
-    dividend: number,
-    dividendTime: number,
-    dividendFirstTime: number,
-    sector: string,
-    usdjpy: number,
-    currentPrice: number,
-    priceGets: number,
-    currentRate: number
-  ): Promise<void> => {
-    await CreateTicker({
-      variables: {
-        input: {
-          ticker,
-          getPrice,
-          quantity,
-          user: email,
-          dividend,
-          dividendTime,
-          dividendFirstTime,
-          sector,
-          usdjpy,
-          currentPrice,
-          priceGets,
-          currentRate,
+  const executeCreateTicker = useCallback(
+    async (
+      ticker: string,
+      getPrice: number,
+      quantity: number,
+      dividend: number,
+      dividendTime: number,
+      dividendFirstTime: number,
+      sector: string,
+      usdjpy: number,
+      currentPrice: number,
+      priceGets: number,
+      currentRate: number
+    ): Promise<void> => {
+      await CreateTicker({
+        variables: {
+          input: {
+            ticker,
+            getPrice,
+            quantity,
+            user: email,
+            dividend,
+            dividendTime,
+            dividendFirstTime,
+            sector,
+            usdjpy,
+            currentPrice,
+            priceGets,
+            currentRate,
+          },
         },
-      },
-    });
-  };
+      });
+    },
+    [CreateTicker]
+  );
   // 保有株式情報の更新
   const UPDATE_TICKER = gql`
     mutation UpdateTicker($input: UpdateTickerInput!) {
@@ -159,31 +162,34 @@ export const useTickers = () => {
   `;
   const [UpdateTicker] = useMutation(UPDATE_TICKER);
   // 保有株式情報を更新する関数
-  const executeUpdateTicker = async (
-    id: number,
-    getPrice: number,
-    quantity: number,
-    dividend: number,
-    usdjpy: number,
-    currentPrice: number,
-    priceGets: number,
-    currentRate: number
-  ): Promise<void> => {
-    await UpdateTicker({
-      variables: {
-        input: {
-          id,
-          getPrice,
-          quantity,
-          dividend,
-          usdjpy,
-          currentPrice,
-          priceGets,
-          currentRate,
+  const executeUpdateTicker = useCallback(
+    async (
+      id: number,
+      getPrice: number,
+      quantity: number,
+      dividend: number,
+      usdjpy: number,
+      currentPrice: number,
+      priceGets: number,
+      currentRate: number
+    ): Promise<void> => {
+      await UpdateTicker({
+        variables: {
+          input: {
+            id,
+            getPrice,
+            quantity,
+            dividend,
+            usdjpy,
+            currentPrice,
+            priceGets,
+            currentRate,
+          },
         },
-      },
-    });
-  };
+      });
+    },
+    [UpdateTicker]
+  );
 
   // 保有株式情報の削除
   const DELETE_TICKER = gql`
@@ -220,23 +226,26 @@ export const useTickers = () => {
     },
   });
   // 保有株式情報を更新する関数
-  const executeDeleteTicker = async (
-    id: number,
-    currentPrice: number,
-    priceGets: number,
-    currentRate: number
-  ): Promise<void> => {
-    await DeleteTicker({
-      variables: {
-        input: {
-          id,
-          currentPrice,
-          priceGets,
-          currentRate,
+  const executeDeleteTicker = useCallback(
+    async (
+      id: number,
+      currentPrice: number,
+      priceGets: number,
+      currentRate: number
+    ): Promise<void> => {
+      await DeleteTicker({
+        variables: {
+          input: {
+            id,
+            currentPrice,
+            priceGets,
+            currentRate,
+          },
         },
-      },
-    });
-  };
+      });
+    },
+    [DeleteTicker]
+  );
   return {
     getTickers,
     executeCreateTicker,

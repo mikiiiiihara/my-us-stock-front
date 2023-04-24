@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 import { Loading } from "../../components/common/loading/loading";
 import { TickerDetail } from "../../types/tickerDetail.type";
 import CreateForm from "./forms/createForm";
