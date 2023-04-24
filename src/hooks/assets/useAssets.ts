@@ -1,6 +1,8 @@
 import { useQuery, gql, useMutation } from "@apollo/client";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { Asset } from "../../types/asset.type";
+import { useContext } from "react";
+import EmailContext from "../../contexts/emailContext";
 
 export function useAssets() {
   // 取得
@@ -27,7 +29,7 @@ export function useAssets() {
     }
   `;
   // ログイン情報
-  const email = "mikiwhigh1274@gmail.com";
+  const { email } = useContext(EmailContext);
   // 資産情報算出
   const { data, loading, refetch } = useQuery(GET_ASSETS, {
     variables: { user: email ?? "none", day: 7 },

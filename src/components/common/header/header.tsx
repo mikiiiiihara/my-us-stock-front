@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import styles from "./header.module.scss";
 import Head from "next/head";
 import Link from "next/link";
@@ -6,13 +6,14 @@ import Image from "next/image";
 import { Button } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
 import { NAVIGATION_LIST } from "../../../constants/navigation";
+import EmailContext from "../../../contexts/emailContext";
 
 type Props = {
   title: string;
 };
 
 const Header: FC<Props> = ({ title }) => {
-  const email = "mikiwhigh1274@gmail.com";
+  const { email } = useContext(EmailContext);
   return (
     <div className={styles.header}>
       <Head>

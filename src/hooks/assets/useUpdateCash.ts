@@ -1,4 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
+import { useContext } from "react";
+import EmailContext from "../../contexts/emailContext";
 
 export function useUpdateCash() {
   const UPDATE_CASH = gql`
@@ -24,7 +26,7 @@ export function useUpdateCash() {
     }
   `;
   // ユーザー情報を取得
-  const email = "mikiwhigh1274@gmail.com";
+  const { email } = useContext(EmailContext);
   const [updateCash, loading] = useMutation(UPDATE_CASH);
   const executeUpdateCash = async (
     asset: number,

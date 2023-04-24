@@ -1,24 +1,16 @@
-import React from "react";
-import { Loading } from "../../../components/common/loading/loading";
+import React, { FC } from "react";
 import SectorPanel from "../../../components/sector/sectorPanel";
 import { DISPLAY_SECTOR_LIST } from "../../../constants/displaySectorList";
-import { HOOKS_STATE } from "../../../constants/hooks";
 import { getTickerRealData } from "../../../functions/export/getTickerRealData";
-import { useGetMarketData } from "../../../hooks/export/useGetMarketData";
+import { MarketData } from "../../../types/marketData.type";
 
-export const SectorListContent = () => {
+type Props = {
+  sectors: MarketData[];
+};
+
+export const SectorListContent: FC<Props> = ({ sectors }) => {
   const allSectorList = DISPLAY_SECTOR_LIST;
-  const { marketData } = useGetMarketData(allSectorList);
-  if (marketData === HOOKS_STATE.LOADING)
-    return (
-      <>
-        <div className="content">
-          <h4 className="sector-title">セクター別当落率（降順）</h4>
-          <Loading />
-        </div>
-      </>
-    );
-  const allSectorData = getTickerRealData(allSectorList, marketData);
+  const allSectorData = getTickerRealData(allSectorList, sectors);
   return (
     <div className="content">
       <h4 className="sector-title">セクター別当落率（降順）</h4>

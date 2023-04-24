@@ -1,6 +1,8 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { Strategy } from "../../types/strategy.type";
+import { useContext } from "react";
+import EmailContext from "../../contexts/emailContext";
 
 export const useStrategy = () => {
   // 取得
@@ -15,7 +17,7 @@ export const useStrategy = () => {
       }
     }
   `;
-  const email = "mikiwhigh1274@gmail.com";
+  const { email } = useContext(EmailContext);
   const { data: strategyData, loading: getLoading } = useQuery(GET_STRATEGY, {
     variables: { user: email ?? "none" },
   });
