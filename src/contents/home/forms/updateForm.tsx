@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import PrimaryButton from "../../../components/primary-button/primaryButton";
-import { useTickerContext } from "../../../contexts/tickersContext";
 import { sortTickers } from "../../../functions/tickers/sortTickers";
 
 import { TickerDetail } from "../../../types/tickerDetail.type";
@@ -9,6 +8,22 @@ import { TickerDetail } from "../../../types/tickerDetail.type";
 type Props = {
   setShowModal: Function;
   tickers: TickerDetail[];
+  executeDeleteTicker: (
+    id: number,
+    currentPrice: number,
+    priceGets: number,
+    currentRate: number
+  ) => Promise<void>;
+  executeUpdateTicker: (
+    id: number,
+    getPrice: number,
+    quantity: number,
+    dividend: number,
+    usdjpy: number,
+    currentPrice: number,
+    priceGets: number,
+    currentRate: number
+  ) => Promise<void>;
 };
 
 interface FormData {
@@ -19,7 +34,12 @@ interface FormData {
   usdjpy: string;
 }
 
-const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
+const UpdateForm: React.FC<Props> = ({
+  setShowModal,
+  tickers,
+  executeDeleteTicker,
+  executeUpdateTicker,
+}) => {
   const [msg, setMsg] = useState("");
   // dafault values
   const [getPrice, setGetPrice] = useState("");
@@ -33,7 +53,6 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, tickers }) => {
   const closeModal = () => {
     setShowModal(false);
   };
-  const { executeUpdateTicker, executeDeleteTicker } = useTickerContext();
 
   const onSubmit = handleSubmit(
     async ({ id, getPrice, quantity, dividend, usdjpy }) => {

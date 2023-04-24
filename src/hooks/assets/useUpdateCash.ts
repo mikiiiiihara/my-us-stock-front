@@ -27,7 +27,6 @@ export function useUpdateCash() {
   const email = "mikiwhigh1274@gmail.com";
   const [updateCash, loading] = useMutation(UPDATE_CASH);
   const executeUpdateCash = async (
-    asset: number,
     cashUSD: number,
     cashJPY: number,
     cashBTC: number,
@@ -40,7 +39,6 @@ export function useUpdateCash() {
       variables: {
         input: {
           user: email,
-          asset,
           cashUSD,
           cashJPY,
           cashBTC,

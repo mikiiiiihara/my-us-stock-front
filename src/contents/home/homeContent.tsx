@@ -5,19 +5,61 @@ import CreateForm from "./forms/createForm";
 import UpdateForm from "./forms/updateForm";
 import Modal from "../../components/modal/modal";
 import { HOOKS_STATE } from "../../constants/hooks";
-import { useTickerContext } from "../../contexts/tickersContext";
 import PrimaryButton from "../../components/primary-button/primaryButton";
 import { Center } from "../../components/common/center/center";
-import { FxChangeButton } from "../../components/fx-change-button/fxChangeButton";
 import { TickerContent } from "../ticker/tickerContent";
 import { SummaryContent } from "./summary/summaryContent";
+import { TickerData } from "../../types/tickerData.type";
+import { useTickerContext } from "../../contexts/tickersContext";
 
 const DISPLAY_MODE = {
   summary: "summary",
   detail: "detail",
 };
 
-export const HomeContent = () => {
+type Props = {
+  tickers: "loading" | TickerData;
+  currentUsd: number | "loading";
+  executeDeleteTicker: (
+    id: number,
+    currentPrice: number,
+    priceGets: number,
+    currentRate: number
+  ) => Promise<void>;
+  executeUpdateTicker: (
+    id: number,
+    getPrice: number,
+    quantity: number,
+    dividend: number,
+    usdjpy: number,
+    currentPrice: number,
+    priceGets: number,
+    currentRate: number
+  ) => Promise<void>;
+  executeCreateTicker: (
+    ticker: string,
+    getPrice: number,
+    quantity: number,
+    dividend: number,
+    dividendTime: number,
+    dividendFirstTime: number,
+    sector: string,
+    usdjpy: number,
+    currentPrice: number,
+    priceGets: number,
+    currentRate: number
+  ) => Promise<void>; // 保有株式情報追加関数
+};
+
+export const HomeContent: React.FC<Props> = ({
+  tickers,
+  currentUsd,
+  executeDeleteTicker,
+  executeUpdateTicker,
+  executeCreateTicker,
+}) => {
+  // コンテキストから取得
+  const { fx } = useTickerContext();
   // 画面表示
   //表示切り替え用
   const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.summary);
@@ -37,11 +79,7 @@ export const HomeContent = () => {
   const ShowAddModal = () => {
     setAddModal(true);
   };
-  // コンテキストから取得
-  const { fx, changeFx, getTickers, currentUsd } = useTickerContext();
-  // 保有株式総額を取得
-  const { tickers } = getTickers(fx);
-  if (tickers === HOOKS_STATE.LOADING || currentUsd === HOOKS_STATE.LOADING)
+  if (tickers === HOOKS_STATE.LOADING)
     return (
       <Center>
         <div className="content">
@@ -95,7 +133,7 @@ export const HomeContent = () => {
         {displayMode === DISPLAY_MODE.summary ? (
           <SummaryContent tickerDetail={tickerDetail} />
         ) : (
-          <TickerContent />
+          <TickerContent tickers={tickers} />
         )}
         <PrimaryButton
           content="情報を変更"
@@ -114,16 +152,22 @@ export const HomeContent = () => {
             <UpdateForm
               setShowModal={setUpdModal}
               tickers={tickers.tickerDetail}
+              executeUpdateTicker={executeUpdateTicker}
+              executeDeleteTicker={executeDeleteTicker}
             />
           }
         />
         <Modal
           showFlag={showAddModal}
           setShowModal={setAddModal}
-          content={<CreateForm setShowModal={setAddModal} />}
+          content={
+            <CreateForm
+              setShowModal={setAddModal}
+              executeCreateTicker={executeCreateTicker}
+            />
+          }
         />
       </div>
-      <FxChangeButton currency={fx == "$" ? "$" : "¥"} onClick={changeFx} />
     </Center>
   );
 };

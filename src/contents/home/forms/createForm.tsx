@@ -2,10 +2,22 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import PrimaryButton from "../../../components/primary-button/primaryButton";
 import { sectorList } from "../../../constants/sectorList";
-import { useTickerContext } from "../../../contexts/tickersContext";
 
 type Props = {
   setShowModal: Function;
+  executeCreateTicker: (
+    ticker: string,
+    getPrice: number,
+    quantity: number,
+    dividend: number,
+    dividendTime: number,
+    dividendFirstTime: number,
+    sector: string,
+    usdjpy: number,
+    currentPrice: number,
+    priceGets: number,
+    currentRate: number
+  ) => Promise<void>; // 保有株式情報追加関数
 };
 
 type FormData = {
@@ -19,13 +31,12 @@ type FormData = {
   usdjpy: string;
 };
 
-const CreateForm: React.FC<Props> = ({ setShowModal }) => {
+const CreateForm: React.FC<Props> = ({ setShowModal, executeCreateTicker }) => {
   const [msg, setMsg] = useState("");
   const closeModal = () => {
     setMsg("");
     setShowModal(false);
   };
-  const { executeCreateTicker } = useTickerContext();
   const { register, handleSubmit } = useForm<FormData>();
 
   const onSubmit = handleSubmit(

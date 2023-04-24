@@ -6,10 +6,10 @@ import StackedArea from "../../components/graph/StakedArea";
 import PrimaryButton from "../../components/primary-button/primaryButton";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { themeForest } from "../../constants/themeColor";
-import { useTickerContext } from "../../contexts/tickersContext";
 import { convertYYYYMMDD } from "../../functions/util/convertYYYYMMDD";
 import { useAssets } from "../../hooks/assets/useAssets";
 import CashContent from "./cash/cashContent";
+import { useGetUSDJPY } from "../../hooks/export/useGetUSDJPY";
 
 const DISPLAY_MODE = {
   oneWeek: 7,
@@ -33,10 +33,8 @@ export const AssetContent = () => {
     await changeAssetLength(day);
     setDisplayMode(day);
   };
-  // コンテキストから取得
-  const { getTickers, currentUsd } = useTickerContext();
-  // 保有株式総額を円建てで取得
-  const { tickers } = getTickers("¥");
+  // 為替情報取得
+  const { currentUsd } = useGetUSDJPY();
   // 現在日時取得
   const year = format(new Date(), "yyyy");
   const month = format(new Date(), "MM");
@@ -46,11 +44,7 @@ export const AssetContent = () => {
   let todayCrypto = 0;
   let xDataList: string[] = new Array();
   let yDataList: number[] = new Array();
-  if (
-    tickers === HOOKS_STATE.LOADING ||
-    currentUsd === HOOKS_STATE.LOADING ||
-    assets === HOOKS_STATE.LOADING
-  )
+  if (currentUsd === HOOKS_STATE.LOADING || assets === HOOKS_STATE.LOADING)
     return <Loading />;
   // 当日の資産情報を更新
   const update = async () => {
@@ -61,12 +55,11 @@ export const AssetContent = () => {
     );
     if (todayAsset == null) {
       // create
-      await executeCreateTodayAsset(tickers.priceTotal);
+      await executeCreateTodayAsset();
     } else {
       // update
       await executeUpdateTodayAsset(
         parseInt(todayAsset.id.toString()),
-        tickers.priceTotal,
         todayAsset.cashUSD,
         todayAsset.cashJPY,
         todayAsset.cashBTC,

@@ -2,7 +2,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.css";
 import type { AppContext, AppInitialProps, AppProps } from "next/app";
 import { ApolloProvider } from "@apollo/client";
-import { TickerProvider } from "../contexts/tickersContext";
 import { createApolloClient } from "../lib/apolloClient/apollo-client";
 import { parse } from "cookie";
 
@@ -15,9 +14,7 @@ function App({
   const client = createApolloClient(pageProps.req, accessToken);
   return (
     <ApolloProvider client={client}>
-      <TickerProvider>
-        <Component {...pageProps} />
-      </TickerProvider>
+      <Component {...pageProps} />
     </ApolloProvider>
   );
 }

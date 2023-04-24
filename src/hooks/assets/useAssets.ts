@@ -70,7 +70,6 @@ export function useAssets() {
   // 更新関数
   const executeUpdateTodayAsset = async (
     id: number,
-    asset: number,
     cashUSD: number,
     cashJPY: number,
     cashBTC: number,
@@ -83,7 +82,7 @@ export function useAssets() {
       variables: {
         input: {
           id,
-          asset,
+          user: email,
           cashUSD,
           cashJPY,
           cashBTC,
@@ -97,8 +96,8 @@ export function useAssets() {
   };
   // 追加
   const CREATE_TODAY_ASSET = gql`
-    mutation CreateTodayAsset($input: CreateTodayAssetInput!) {
-      createTodayAsset(input: $input) {
+    mutation CreateTodayAsset($user: String!) {
+      createTodayAsset(user: $user) {
         id
         total
         asset
@@ -153,12 +152,11 @@ export function useAssets() {
     },
   });
   // 新規作成関数
-  const executeCreateTodayAsset = async (asset: number): Promise<void> => {
+  const executeCreateTodayAsset = async (): Promise<void> => {
     await CreateTodayAsset({
       variables: {
         input: {
           user: email,
-          asset,
         },
       },
     });

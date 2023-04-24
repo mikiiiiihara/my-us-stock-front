@@ -51,7 +51,6 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, priceTotal }) => {
       cashLTC,
     }) => {
       await executeUpdateCash(
-        priceTotal,
         parseFloat(cashUSD),
         parseFloat(cashJPY),
         parseFloat(cashBTC),

@@ -8,15 +8,17 @@ import Pie from "../../components/graph/pie";
 import StackedColumn from "../../components/graph/stackedColumn";
 import { themeDefault } from "../../constants/themeColor";
 import { HOOKS_STATE } from "../../constants/hooks";
+import { TickerData } from "../../types/tickerData.type";
 import { useTickerContext } from "../../contexts/tickersContext";
 
-export const DividendContent = () => {
+type Props = {
+  tickers: "loading" | TickerData;
+};
+
+export const DividendContent: React.FC<Props> = ({ tickers }) => {
   // コンテキストから取得
-  const { getTickers, currentUsd } = useTickerContext();
-  // 保有株式総額をドル建てで取得
-  const { tickers } = getTickers("$");
-  if (tickers === HOOKS_STATE.LOADING || currentUsd === HOOKS_STATE.LOADING)
-    return <Loading />;
+  const { fx } = useTickerContext();
+  if (tickers === HOOKS_STATE.LOADING) return <Loading />;
   const tickerDetail: TickerDetail[] = tickers.tickerDetail;
   const dividendTotal = tickers.dividendTotal;
   const divData: DivData[] = calculateDividendCalendar(tickerDetail);
@@ -34,8 +36,8 @@ export const DividendContent = () => {
     <div>
       <div className="content">
         <h2>
-          年配当総額: ${dividendTotal}（¥
-          {(dividendTotal * currentUsd).toLocaleString()}）
+          年配当総額: {fx}
+          {dividendTotal}
         </h2>
         <StackedColumn
           divData={divData}

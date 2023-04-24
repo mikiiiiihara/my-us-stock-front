@@ -241,7 +241,6 @@ export const useTickers = () => {
     getTickers,
     executeCreateTicker,
     executeUpdateTicker,
-    currentUsd,
     executeDeleteTicker,
   };
 };
