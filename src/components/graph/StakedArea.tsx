@@ -1,76 +1,75 @@
-import React from 'react';
+import React from "react";
 import { FC } from "react";
-import Highcharts from 'highcharts';
+import Highcharts from "highcharts";
 import exporting from "highcharts/modules/exporting";
 
-import HighchartsMore from 'highcharts/highcharts-more';
+import HighchartsMore from "highcharts/highcharts-more";
 
-import HighchartsReact from 'highcharts-react-official';
+import HighchartsReact from "highcharts-react-official";
 type Props = {
-  themeColor:string;
+  themeColor: string;
   background: string;
   xData: string[];
   yData: number[];
 };
 
-const StackedArea: FC<Props> = ({
+const StackedAreaComponent: FC<Props> = ({
   themeColor,
   background,
   xData,
-  yData
+  yData,
 }) => {
-  if (typeof Highcharts === 'object') {
-
+  if (typeof Highcharts === "object") {
     HighchartsMore(Highcharts);
     exporting(Highcharts);
-
   }
-  
+
   const options = {
     chart: {
-        type: 'area',
-        backgroundColor: background
+      type: "area",
+      backgroundColor: background,
     },
     title: {
-        text: ''
+      text: "",
     },
     xAxis: {
-        categories: xData,
-        crosshair: true
+      categories: xData,
+      crosshair: true,
     },
     yAxis: {
-        title: {
-            useHTML: true,
-            text: ''
-        }
+      title: {
+        useHTML: true,
+        text: "",
+      },
     },
     tooltip: {
-        shared: true,
-        headerFormat: '<span style="font-size:12px"><b>{point.key}</b></span><br>'
+      shared: true,
+      headerFormat:
+        '<span style="font-size:12px"><b>{point.key}</b></span><br>',
     },
     plotOptions: {
-        area: {
-            stacking: 'normal',
-            color: themeColor,
-            lineColor: themeColor,
-            lineWidth: 1,
-            marker: {
-                lineWidth: 1,
-                lineColor: 'themeColor'
-            }
-        }
+      area: {
+        stacking: "normal",
+        color: themeColor,
+        lineColor: themeColor,
+        lineWidth: 1,
+        marker: {
+          lineWidth: 1,
+          lineColor: "themeColor",
+        },
+      },
     },
-    series: [{
-        name: '資産総額',
-        data: yData
-    }]
-
+    series: [
+      {
+        name: "資産総額",
+        data: yData,
+      },
+    ],
   };
 
   return <HighchartsReact highcharts={Highcharts} options={options} />;
-
 };
 
- 
+StackedAreaComponent.displayName = "StackedArea";
 
-export default StackedArea;
+export const StackedArea = React.memo(StackedAreaComponent);

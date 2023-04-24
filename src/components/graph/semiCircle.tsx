@@ -14,7 +14,7 @@ type Props = {
   background: string;
 };
 
-const SemiCircle: FC<Props> = ({ values, themeColor, background }) => {
+const SemiCircleComponent: FC<Props> = ({ values, themeColor, background }) => {
   if (typeof Highcharts === "object") {
     HighchartsMore(Highcharts);
     exporting(Highcharts);
@@ -71,4 +71,6 @@ const SemiCircle: FC<Props> = ({ values, themeColor, background }) => {
   return <HighchartsReact highcharts={Highcharts} options={options} />;
 };
 
-export default SemiCircle;
+SemiCircleComponent.displayName = "SemiSircle";
+
+export const SemiSircle = React.memo(SemiCircleComponent);

@@ -11,7 +11,11 @@ type Props = {
   themeColor: string[];
   background: string;
 };
-const StackedColumn: FC<Props> = ({ divData, themeColor, background }) => {
+const StackedColumnComponent: FC<Props> = ({
+  divData,
+  themeColor,
+  background,
+}) => {
   // y軸の最大値を自動計算
   let divSum: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (let div of divData) {
@@ -87,4 +91,6 @@ const StackedColumn: FC<Props> = ({ divData, themeColor, background }) => {
   return <HighchartsReact highcharts={Highcharts} options={options} />;
 };
 
-export default StackedColumn;
+StackedColumnComponent.displayName = "StackedColumn";
+
+export const StackedColumn = React.memo(StackedColumnComponent);

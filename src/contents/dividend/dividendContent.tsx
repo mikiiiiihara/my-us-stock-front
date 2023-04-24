@@ -21,16 +21,6 @@ export const DividendContent: React.FC<Props> = ({ tickers }) => {
   const tickerDetail: TickerDetail[] = tickers.tickerDetail;
   const dividendTotal = tickers.dividendTotal;
   const divData: DivData[] = calculateDividendCalendar(tickerDetail);
-  const pieDataList = tickerDetail
-    .sort(function (a, b) {
-      if (a.sumOfDividend > b.sumOfDividend) return -1;
-      if (a.sumOfDividend < b.sumOfDividend) return 1;
-      return 0;
-    })
-    .map((data) => {
-      const pie: PieData = { name: data.ticker, y: data.sumOfDividend };
-      return pie;
-    });
   return (
     <div>
       <div className="content">

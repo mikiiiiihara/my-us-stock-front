@@ -14,7 +14,7 @@ type Props = {
   background: string;
 };
 
-const Pie: FC<Props> = ({ pieData, themeColor, background }) => {
+const PieComponent: FC<Props> = ({ pieData, themeColor, background }) => {
   if (typeof Highcharts === "object") {
     HighchartsMore(Highcharts);
     exporting(Highcharts);
@@ -66,5 +66,6 @@ const Pie: FC<Props> = ({ pieData, themeColor, background }) => {
 
   return <HighchartsReact highcharts={Highcharts} options={options} />;
 };
+PieComponent.displayName = "Pie";
 
-export default Pie;
+export const Pie = React.memo(PieComponent);
