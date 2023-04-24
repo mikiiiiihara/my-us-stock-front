@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useMemo, useState } from "react";
-import Pie from "../../../components/graph/pie";
+import { Pie } from "../../../components/graph/pie";
 import { themeDefault } from "../../../constants/themeColor";
 import PrimaryButton from "../../../components/primary-button/primaryButton";
 import { PieData } from "../../../types/pieData.type";

@@ -71,6 +71,6 @@ const SemiCircleComponent: FC<Props> = ({ values, themeColor, background }) => {
   return <HighchartsReact highcharts={Highcharts} options={options} />;
 };
 
-SemiCircleComponent.displayName = "SemiSircle";
+SemiCircleComponent.displayName = "SemiCircle";
 
-export const SemiSircle = React.memo(SemiCircleComponent);
+export const SemiCircle = React.memo(SemiCircleComponent);

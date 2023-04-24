@@ -4,7 +4,7 @@ import { PieData } from "../../types/pieData.type";
 import { TickerDetail } from "../../types/tickerDetail.type";
 import { calculateDividendCalendar } from "../../functions/dividend/calculateDividendCalendar";
 import { Loading } from "../../components/common/loading/loading";
-import StackedColumn from "../../components/graph/stackedColumn";
+import { StackedColumn } from "../../components/graph/stackedColumn";
 import { themeDefault } from "../../constants/themeColor";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { TickerData } from "../../types/tickerData.type";

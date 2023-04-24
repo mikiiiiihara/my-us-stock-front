@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import React, { useState } from "react";
 import { Center } from "../../components/common/center/center";
 import { Loading } from "../../components/common/loading/loading";
-import StackedArea from "../../components/graph/StakedArea";
+import { StackedArea } from "../../components/graph/StackedArea";
 import PrimaryButton from "../../components/primary-button/primaryButton";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { themeForest } from "../../constants/themeColor";
