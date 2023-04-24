@@ -16,7 +16,7 @@ type Props = {
   tickerDetail: TickerDetail[];
 };
 
-export const SummaryContent: FC<Props> = ({ tickerDetail }) => {
+const SummaryContentComponent: FC<Props> = ({ tickerDetail }) => {
   // 画面表示
   //表示切り替え用
   const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.ticker);
@@ -63,3 +63,7 @@ export const SummaryContent: FC<Props> = ({ tickerDetail }) => {
     </>
   );
 };
+
+SummaryContentComponent.displayName = "SummaryContent";
+
+export const SummaryContent = React.memo(SummaryContentComponent);
