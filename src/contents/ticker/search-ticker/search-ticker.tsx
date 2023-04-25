@@ -7,7 +7,10 @@ type Props = {
   tickers: TickerDetail[];
   selectedFx: string;
 };
-export const SearchTicker: React.FC<Props> = ({ tickers, selectedFx }) => {
+export const SearchTickerComponent: React.FC<Props> = ({
+  tickers,
+  selectedFx,
+}) => {
   const [tickerList, setTickerList] = useState(tickers);
   useEffect(() => {
     setTickerList(tickers);
@@ -88,3 +91,6 @@ export const SearchTicker: React.FC<Props> = ({ tickers, selectedFx }) => {
     </>
   );
 };
+
+SearchTickerComponent.displayName = "SearchTicker";
+export const SearchTicker = React.memo(SearchTickerComponent);

@@ -175,5 +175,4 @@ export const HomeContentComponent: React.FC<Props> = ({
   );
 };
 HomeContentComponent.displayName = "HomeContent";
-
 export const HomeContent = React.memo(HomeContentComponent);
