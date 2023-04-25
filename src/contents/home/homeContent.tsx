@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from "react";
 import { Loading } from "../../components/common/loading/loading";
-import { TickerDetail } from "../../types/tickerDetail.type";
 import { CreateForm } from "./forms/createForm";
 import { UpdateForm } from "./forms/updateForm";
 import { Modal } from "../../components/modal/modal";
@@ -17,7 +16,7 @@ const DISPLAY_MODE = {
   detail: "detail",
 };
 
-type Props = {
+type HomeContentProps = {
   tickers: "loading" | TickerData;
   currentUsd: number | "loading";
   executeDeleteTicker: (
@@ -48,39 +47,33 @@ type Props = {
     currentPrice: number,
     priceGets: number,
     currentRate: number
-  ) => Promise<void>; // 保有株式情報追加関数
+  ) => Promise<void>;
 };
 
-export const HomeContentComponent: React.FC<Props> = ({
+export const HomeContentComponent: React.FC<HomeContentProps> = ({
   tickers,
   currentUsd,
   executeDeleteTicker,
   executeUpdateTicker,
   executeCreateTicker,
 }) => {
-  // コンテキストから取得
   const { fx } = useTickerContext();
-  // 画面表示
-  //表示切り替え用
   const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.summary);
-  // 銘柄別を表示
-  const changeDisplayToSummary = useCallback(() => {
-    setDisplayMode(DISPLAY_MODE.summary);
-  }, []);
-  // セクター別を表示
-  const changeDisplayToDetail = useCallback(() => {
-    setDisplayMode(DISPLAY_MODE.detail);
-  }, []);
+  const changeDisplayToSummary = useCallback(
+    () => setDisplayMode(DISPLAY_MODE.summary),
+    []
+  );
+  const changeDisplayToDetail = useCallback(
+    () => setDisplayMode(DISPLAY_MODE.detail),
+    []
+  );
+
   const [showUpdModal, setUpdModal] = useState(false);
   const [showAddModal, setAddModal] = useState(false);
-  const ShowUpdModal = useCallback(() => {
-    setUpdModal(true);
-  }, []);
-  const ShowAddModal = useCallback(() => {
-    setAddModal(true);
-  }, []);
+  const ShowUpdModal = useCallback(() => setUpdModal(true), []);
+  const ShowAddModal = useCallback(() => setAddModal(true), []);
 
-  if (tickers === HOOKS_STATE.LOADING)
+  if (tickers === HOOKS_STATE.LOADING) {
     return (
       <Center>
         <div className="content">
@@ -89,20 +82,17 @@ export const HomeContentComponent: React.FC<Props> = ({
         </div>
       </Center>
     );
-  const tickerDetail: TickerDetail[] = tickers.tickerDetail;
-  const priceTotal = tickers.priceTotal;
-  const balanceTotal =
-    Math.round((tickers.priceTotal - tickers.getPriceTotal) * 10) / 10;
-  const balanceRateTotal =
-    (Math.round((balanceTotal / tickers.getPriceTotal) * 1000) / 1000) * 100;
-  const dividendTotal = tickers.dividendTotal;
-
-  let balanceRateClass = "";
-  if (balanceRateTotal > 0) {
-    balanceRateClass = "fc-plus";
-  } else if (balanceRateTotal < 0) {
-    balanceRateClass = "fc-minus";
   }
+
+  const { tickerDetail, priceTotal, getPriceTotal, dividendTotal } = tickers;
+  const balanceTotal = Math.round((priceTotal - getPriceTotal) * 10) / 10;
+  const balanceRateTotal = ((balanceTotal / getPriceTotal) * 100).toFixed(2);
+  const balanceRateClass =
+    Number(balanceRateTotal) > 0
+      ? "fc-plus"
+      : Number(balanceRateTotal) < 0
+      ? "fc-minus"
+      : "";
 
   return (
     <Center>
@@ -113,7 +103,7 @@ export const HomeContentComponent: React.FC<Props> = ({
         </h1>
         <p className={balanceRateClass}>
           損益: {fx}
-          {balanceTotal.toLocaleString()}（{balanceRateTotal.toLocaleString()}
+          {balanceTotal.toLocaleString()}（{balanceRateTotal}
           %）
         </p>
         <p>
