@@ -35,14 +35,10 @@ const TickeContentComponent: React.FC<Props> = ({ tickers }) => {
       </div>
     );
   // 一覧表示用の配列をTickerでアルファベット順にソート
-  const tickerDetailValue = tickers.tickerDetail.map((ticker) => {
-    return ticker;
-  });
-  tickerDetailValue.sort(function (a, b) {
-    if (a.ticker < b.ticker) return -1;
-    if (a.ticker > b.ticker) return 1;
-    return 0;
-  });
+  const tickerDetailValue = [...tickers.tickerDetail].sort((a, b) =>
+    a.ticker.localeCompare(b.ticker)
+  );
+
   return (
     <>
       <div className="m-3">
