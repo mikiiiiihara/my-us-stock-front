@@ -71,5 +71,4 @@ const StackedAreaComponent: FC<Props> = ({
 };
 
 StackedAreaComponent.displayName = "StackedArea";
-
 export const StackedArea = React.memo(StackedAreaComponent);

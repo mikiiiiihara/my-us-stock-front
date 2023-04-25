@@ -1,3 +1,4 @@
+import React from "react";
 import { FxChangeButton } from "../../components/fx-change-button/fxChangeButton";
 import { useTickerContext } from "../../contexts/tickersContext";
 import { useGetUSDJPY } from "../../hooks/export/useGetUSDJPY";
@@ -6,7 +7,7 @@ import { DividendContent } from "../dividend/dividendContent";
 import { HomeContent } from "./homeContent";
 import { StrategyContent } from "./strategy/strategyContent";
 
-export default function HomeContainer() {
+const HomeContainerComponent = () => {
   // コンテキストから取得
   const { fx, changeFx } = useTickerContext();
   const {
@@ -33,4 +34,6 @@ export default function HomeContainer() {
       <FxChangeButton currency={fx == "$" ? "$" : "¥"} onClick={changeFx} />
     </>
   );
-}
+};
+HomeContainerComponent.displayName = "HomeContainer";
+export const HomeContainer = React.memo(HomeContainerComponent);

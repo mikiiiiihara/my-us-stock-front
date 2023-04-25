@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useMemo, useState } from "react";
 import { Pie } from "../../../components/graph/pie";
 import { themeDefault } from "../../../constants/themeColor";
-import PrimaryButton from "../../../components/primary-button/primaryButton";
+import { PrimaryButton } from "../../../components/primary-button/primaryButton";
 import { PieData } from "../../../types/pieData.type";
 import { calculateSectors } from "../../../functions/sector/calculateSector";
 import { calculateTickerPie } from "../../../functions/tickers/calculateTickerPie";
@@ -65,5 +65,4 @@ const SummaryContentComponent: FC<Props> = ({ tickerDetail }) => {
 };
 
 SummaryContentComponent.displayName = "SummaryContent";
-
 export const SummaryContent = React.memo(SummaryContentComponent);

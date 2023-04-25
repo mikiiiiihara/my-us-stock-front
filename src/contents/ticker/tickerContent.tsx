@@ -4,7 +4,7 @@ import { HOOKS_STATE } from "../../constants/hooks";
 import { SearchTicker } from "./search-ticker/search-ticker";
 import { useTickerContext } from "../../contexts/tickersContext";
 import { Summary } from "./summary/summary";
-import PrimaryButton from "../../components/primary-button/primaryButton";
+import { PrimaryButton } from "../../components/primary-button/primaryButton";
 import { TickerData } from "../../types/tickerData.type";
 
 const DISPLAY_MODE = {

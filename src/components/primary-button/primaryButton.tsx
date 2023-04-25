@@ -10,7 +10,7 @@ type Props = {
   notSelected?: boolean; // 非活性の見た目にしたいときにtrueを指定
   onClick?: (() => Promise<void>) | (() => void);
 };
-const PrimaryButton: React.FC<Props> = ({
+const PrimaryButtonComponent: React.FC<Props> = ({
   content: content,
   type,
   isForContent,
@@ -31,4 +31,5 @@ const PrimaryButton: React.FC<Props> = ({
   );
 };
 
-export default PrimaryButton;
+PrimaryButtonComponent.displayName = "PrimaryButton";
+export const PrimaryButton = React.memo(PrimaryButtonComponent);

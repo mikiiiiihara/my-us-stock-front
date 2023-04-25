@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Center } from "../../components/common/center/center";
 import { MarketData } from "../../types/marketData.type";
-import SectorPanel from "../../components/sector/sectorPanel";
+import { SectorPanel } from "../../components/sector/sectorPanel";
 import { DISPLAY_SECTOR_LIST } from "../../constants/displaySectorList";
 import { getTickerRealData } from "../../functions/export/getTickerRealData";
 

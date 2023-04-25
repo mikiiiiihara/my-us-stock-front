@@ -8,7 +8,11 @@ type Props = {
   content?: ReactNode;
 };
 
-const Modal: React.FC<Props> = ({ showFlag, setShowModal, content }) => {
+const ModalComponent: React.FC<Props> = ({
+  showFlag,
+  setShowModal,
+  content,
+}) => {
   const closeModal = () => {
     setShowModal(false);
   };
@@ -29,5 +33,5 @@ const Modal: React.FC<Props> = ({ showFlag, setShowModal, content }) => {
     </>
   );
 };
-
-export default Modal;
+ModalComponent.displayName = "Modal";
+export const Modal = React.memo(ModalComponent);

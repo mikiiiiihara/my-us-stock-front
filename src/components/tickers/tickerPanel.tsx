@@ -8,7 +8,7 @@ type Props = {
   displayType?: DisplayType;
 };
 
-export const TickerPanel: FC<Props> = ({
+const TickerPanelComponent: FC<Props> = ({
   tickerDetail,
   currency,
   displayType,
@@ -27,3 +27,5 @@ export const TickerPanel: FC<Props> = ({
     </div>
   );
 };
+TickerPanelComponent.displayName = "TickerPanel";
+export const TickerPanel = React.memo(TickerPanelComponent);

@@ -13,7 +13,7 @@ type Props = {
   tickers: "loading" | TickerData;
 };
 
-export const DividendContent: React.FC<Props> = ({ tickers }) => {
+export const DividendContentComponent: React.FC<Props> = ({ tickers }) => {
   // コンテキストから取得
   const { fx } = useTickerContext();
   if (tickers === HOOKS_STATE.LOADING) return <Loading />;
@@ -36,3 +36,6 @@ export const DividendContent: React.FC<Props> = ({ tickers }) => {
     </div>
   );
 };
+
+DividendContentComponent.displayName = "DividendContent";
+export const DividendContent = React.memo(DividendContentComponent);

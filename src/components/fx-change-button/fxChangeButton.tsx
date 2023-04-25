@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./fx-change-button.module.scss";
-import PrimaryButton from "../primary-button/primaryButton";
+import { PrimaryButton } from "../primary-button/primaryButton";
 import Image from "next/image";
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   onClick: () => void;
 };
 
-export const FxChangeButton: React.FC<Props> = ({ currency, onClick }) => {
+const FxChangeButtonComponent: React.FC<Props> = ({ currency, onClick }) => {
   return (
     <PrimaryButton
       content={
@@ -28,3 +28,6 @@ export const FxChangeButton: React.FC<Props> = ({ currency, onClick }) => {
     />
   );
 };
+
+FxChangeButtonComponent.displayName = "FxChangeButton";
+export const FxChangeButton = React.memo(FxChangeButtonComponent);

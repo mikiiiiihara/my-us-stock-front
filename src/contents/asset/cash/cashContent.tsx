@@ -1,9 +1,9 @@
 import React, { FC, useState } from "react";
 import { themeForest } from "../../../constants/themeColor";
 import { SemiCircle } from "../../../components/graph/semiCircle";
-import Modal from "../../../components/modal/modal";
-import UpdateForm from "./forms/updateForm";
-import PrimaryButton from "../../../components/primary-button/primaryButton";
+import { Modal } from "../../../components/modal/modal";
+import { UpdateForm } from "./forms/updateForm";
+import { PrimaryButton } from "../../../components/primary-button/primaryButton";
 
 type Props = {
   cash: number;

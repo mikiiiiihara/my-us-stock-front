@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Loading } from "../../../../components/common/loading/loading";
-import PrimaryButton from "../../../../components/primary-button/primaryButton";
+import { PrimaryButton } from "../../../../components/primary-button/primaryButton";
 import { HOOKS_STATE } from "../../../../constants/hooks";
 import { useAssets } from "../../../../hooks/assets/useAssets";
 import { useUpdateCash } from "../../../../hooks/assets/useUpdateCash";
@@ -20,7 +20,7 @@ type FormData = {
   cashBAT: string;
   cashLTC: string;
 };
-const UpdateForm: React.FC<Props> = ({ setShowModal, priceTotal }) => {
+const UpdateFormComponent: React.FC<Props> = ({ setShowModal, priceTotal }) => {
   const [msg, setMsg] = useState("");
   const { getAssets } = useAssets();
   const { assets } = getAssets();
@@ -152,4 +152,5 @@ const UpdateForm: React.FC<Props> = ({ setShowModal, priceTotal }) => {
   );
 };
 
-export default UpdateForm;
+UpdateFormComponent.displayName = "UpdateForm";
+export const UpdateForm = React.memo(UpdateFormComponent);

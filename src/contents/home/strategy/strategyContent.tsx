@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Loading } from "../../../components/common/loading/loading";
 import { useStrategy } from "../../../hooks/strategy/useStrategy";
 import { HOOKS_STATE } from "../../../constants/hooks";
-import PrimaryButton from "../../../components/primary-button/primaryButton";
+import { PrimaryButton } from "../../../components/primary-button/primaryButton";
 type FormData = {
   text: string;
 };

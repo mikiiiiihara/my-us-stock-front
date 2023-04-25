@@ -1,7 +1,7 @@
 import { FormEvent } from "react";
 import { Header } from "../../components/common/header/header";
 import router from "next/router";
-import PrimaryButton from "../../components/primary-button/primaryButton";
+import { PrimaryButton } from "../../components/primary-button/primaryButton";
 
 export default function login() {
   const handleSubmit = async (e: FormEvent) => {

@@ -5,7 +5,7 @@ import { TickerRealData } from "../../types/tickerRealData.type";
 interface Props {
   data: TickerRealData;
 }
-const SectorPanelItem: React.FC<{ data: TickerRealData }> = ({
+const SectorPanelItemComponent: React.FC<{ data: TickerRealData }> = ({
   data,
 }: Props) => {
   //現在価格：損益率
@@ -24,4 +24,5 @@ const SectorPanelItem: React.FC<{ data: TickerRealData }> = ({
   );
 };
 
-export default SectorPanelItem;
+SectorPanelItemComponent.displayName = "SectorPanelItem";
+export const SectorPanelItem = React.memo(SectorPanelItemComponent);

@@ -110,5 +110,4 @@ const TickerPanelItemComponent: FC<Props> = ({
 };
 
 TickerPanelItemComponent.displayName = "TickerPanelItem";
-
 export const TickerPanelItem = React.memo(TickerPanelItemComponent);

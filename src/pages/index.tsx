@@ -1,5 +1,5 @@
 import { Header } from "../components/common/header/header";
-import HomeContainer from "../contents/home/homeContainer";
+import { HomeContainer } from "../contents/home/homeContainer";
 import { TickerProvider } from "../contexts/tickersContext";
 
 export default function Home() {

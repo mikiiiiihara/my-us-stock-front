@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import PrimaryButton from "../../../components/primary-button/primaryButton";
+import { PrimaryButton } from "../../../components/primary-button/primaryButton";
 import { sortTickers } from "../../../functions/tickers/sortTickers";
 
 import { TickerDetail } from "../../../types/tickerDetail.type";

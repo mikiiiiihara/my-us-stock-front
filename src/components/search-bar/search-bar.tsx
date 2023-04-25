@@ -18,5 +18,4 @@ const SearchBarComponent: React.FC<Props> = ({ placeholder, search }) => {
 };
 
 SearchBarComponent.displayName = "SearchBar";
-
 export const SearchBar = React.memo(SearchBarComponent);
