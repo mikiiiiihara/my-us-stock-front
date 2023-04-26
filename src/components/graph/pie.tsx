@@ -1,9 +1,7 @@
 import React from "react";
 import { FC } from "react";
 import Highcharts from "highcharts";
-
 import HighchartsMore from "highcharts/highcharts-more";
-
 import HighchartsReact from "highcharts-react-official";
 import { PieData } from "../../types/pieData.type";
 
@@ -29,6 +27,7 @@ const PieComponent: FC<Props> = ({ pieData, themeColor, background }) => {
     title: {
       text: "",
     },
+    exporting: { enabled: false },
     tooltip: {
       pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
     },
@@ -65,5 +64,4 @@ const PieComponent: FC<Props> = ({ pieData, themeColor, background }) => {
   return <HighchartsReact highcharts={Highcharts} options={options} />;
 };
 PieComponent.displayName = "Pie";
-
 export const Pie = React.memo(PieComponent);

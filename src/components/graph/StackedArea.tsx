@@ -1,9 +1,7 @@
 import React from "react";
 import { FC } from "react";
 import Highcharts from "highcharts";
-
 import HighchartsMore from "highcharts/highcharts-more";
-
 import HighchartsReact from "highcharts-react-official";
 type Props = {
   themeColor: string;
@@ -30,6 +28,7 @@ const StackedAreaComponent: FC<Props> = ({
     title: {
       text: "",
     },
+    exporting: { enabled: false },
     xAxis: {
       categories: xData,
       crosshair: true,

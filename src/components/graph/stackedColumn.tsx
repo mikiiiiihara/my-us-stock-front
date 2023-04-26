@@ -39,6 +39,7 @@ const StackedColumnComponent: FC<Props> = ({
     title: {
       text: "",
     },
+    exporting: { enabled: false },
     xAxis: {
       categories: [
         "Jan",

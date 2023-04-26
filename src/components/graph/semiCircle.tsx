@@ -25,6 +25,7 @@ const SemiCircleComponent: FC<Props> = ({ values, themeColor, background }) => {
       plotShadow: false,
     },
     colors: themeColor,
+    exporting: { enabled: false },
     title: {
       text: "",
       align: "center",
