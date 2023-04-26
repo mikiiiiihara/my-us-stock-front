@@ -117,7 +117,7 @@ const CreateFormComponent: React.FC<Props> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="dividendTime">配当回数/年</label>
-          <p className="sub-sentence text-secondary">
+          <p className="text-muted small text-secondary">
             ※米国株の場合は主に年４回（その場合4を入力）
           </p>
           <input
@@ -129,7 +129,7 @@ const CreateFormComponent: React.FC<Props> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="dividendFirstTime">初回配当権利月</label>
-          <p className="sub-sentence text-secondary">
+          <p className="text-muted small text-secondary">
             ※AAPL:2/5/8/11月が配当権利月なため、
             <br />
             2を入力

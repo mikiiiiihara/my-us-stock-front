@@ -98,7 +98,7 @@ const UpdateFormComponent: React.FC<Props> = ({
   return (
     <div>
       <h4 className="mb-3">Update ticker Price</h4>
-      <p className="sub-sentence text-secondary">
+      <p className="text-muted small text-secondary">
         買い増し・売却による取得価格・株数の変更
       </p>
       <form onSubmit={onSubmit}>

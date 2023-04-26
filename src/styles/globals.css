@@ -7,12 +7,10 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-
 a {
   color: inherit;
   text-decoration: none;
 }
-
 p,
 h1,
 h2,
@@ -20,29 +18,14 @@ h3 {
   margin: 0;
   padding: 0;
 }
-
 * {
   box-sizing: border-box;
 }
-.wrapper {
-  padding-bottom: 6rem;
-}
-.f-left {
-  float: left;
-}
-.fc-minus {
-  color: #fc6868;
-}
-.fc-plus {
-  color: rgb(82, 231, 171);
-}
-
 .content {
   width: 94%;
   margin: 0.6rem auto;
   padding: 1.2rem;
 }
-
 .form-control {
   background-color: #343a40;
   color: white;
@@ -58,10 +41,6 @@ h3 {
 
 .clear-both {
   clear: left;
-}
-
-.sub-sentence {
-  font-size: 0.75rem;
 }
 
 @media (max-width: 992px) {

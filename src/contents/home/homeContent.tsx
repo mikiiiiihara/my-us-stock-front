@@ -89,9 +89,9 @@ export const HomeContentComponent: React.FC<HomeContentProps> = ({
   const balanceRateTotal = ((balanceTotal / getPriceTotal) * 100).toFixed(2);
   const balanceRateClass =
     Number(balanceRateTotal) > 0
-      ? "fc-plus"
+      ? "text-success"
       : Number(balanceRateTotal) < 0
-      ? "fc-minus"
+      ? "text-danger"
       : "";
 
   return (

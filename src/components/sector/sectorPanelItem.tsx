@@ -12,9 +12,9 @@ const SectorPanelItemComponent: React.FC<{ data: TickerRealData }> = ({
   const rate = data.dp;
   let rateClass = "";
   if (rate > 0) {
-    rateClass = "fc-plus";
+    rateClass = "text-success";
   } else if (rate < 0) {
-    rateClass = "fc-minus";
+    rateClass = "text-danger";
   }
   return (
     <div className={styles.sectorPanelItem}>

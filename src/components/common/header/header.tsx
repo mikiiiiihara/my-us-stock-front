@@ -41,11 +41,11 @@ const HeaderComponent: FC<Props> = ({ title }) => {
         <div className="container-xl">
           <Link
             href={NAVIGATION_LIST.HOME}
-            className={`navbar-brand f-left ${styles.mainMenu}`}
+            className={`navbar-brand float-left ${styles.mainMenu}`}
           >
             My US Stock Portfolio
           </Link>
-          <ul className={`navbar-nav mr-auto f-left ${styles.subMenu}`}>
+          <ul className={`navbar-nav mr-auto float-left ${styles.subMenu}`}>
             <li className="nav-item">
               <Link href={NAVIGATION_LIST.ASSET} className="nav-link">
                 Asset

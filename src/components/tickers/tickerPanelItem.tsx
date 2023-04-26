@@ -46,7 +46,7 @@ const TickerPanelItemComponent: FC<Props> = ({
           {currency}
           {(Math.round(data.price * 10) / 10).toLocaleString()}
         </p>
-        <p className={rate > 0 ? "fc-plus" : "fc-minus"}>
+        <p className={rate > 0 ? "text-success" : "text-danger"}>
           {rate}
           {displayType == "balance" ? "" : "%"}
         </p>
@@ -66,7 +66,7 @@ const TickerPanelItemComponent: FC<Props> = ({
               </div>
               <div className={`${styles.baseInfo} mb-3 ${styles.baseInfoRate}`}>
                 <p></p>
-                <p className={rate > 0 ? "fc-plus" : "fc-minus"}>
+                <p className={rate > 0 ? "text-success" : "text-danger"}>
                   {rate}
                   {displayType == "balance" ? "" : "%"}
                 </p>
@@ -87,7 +87,7 @@ const TickerPanelItemComponent: FC<Props> = ({
               </p>
               <p className={styles.modalText}>
                 損益額：
-                <span className={balance > 0 ? "fc-plus" : "fc-minus"}>
+                <span className={balance > 0 ? "text-success" : "text-danger"}>
                   {currency}
                   {balance.toLocaleString()}（{data.balanceRate}%）
                 </span>

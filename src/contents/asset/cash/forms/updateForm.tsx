@@ -20,7 +20,7 @@ type FormData = {
   cashBAT: string;
   cashLTC: string;
 };
-const UpdateFormComponent: React.FC<Props> = ({ setShowModal, priceTotal }) => {
+const UpdateFormComponent: React.FC<Props> = ({ setShowModal }) => {
   const [msg, setMsg] = useState("");
   const { getAssets } = useAssets();
   const { assets } = getAssets();
@@ -71,7 +71,7 @@ const UpdateFormComponent: React.FC<Props> = ({ setShowModal, priceTotal }) => {
   return (
     <div className="update-form">
       <h4 className="mb-3">所有現金額を変更</h4>
-      <p className="sub-sentence text-secondary">
+      <p className="text-muted small text-secondary">
         買い増し・売却による取得価格・株数の変更
       </p>
       <form onSubmit={onSubmit}>
