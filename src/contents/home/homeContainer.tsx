@@ -3,7 +3,6 @@ import { FxChangeButton } from "../../components/fx-change-button/fxChangeButton
 import { useTickerContext } from "../../contexts/tickersContext";
 import { useGetUSDJPY } from "../../hooks/export/useGetUSDJPY";
 import { useTickers } from "../../hooks/tickers/useTickers";
-import { DividendContent } from "../dividend/dividendContent";
 import { HomeContent } from "./homeContent";
 import { StrategyContent } from "./strategy/strategyContent";
 
@@ -30,7 +29,6 @@ const HomeContainerComponent = () => {
         executeCreateTicker={executeCreateTicker}
       />
       <StrategyContent />
-      <DividendContent tickers={tickers} />
       <FxChangeButton currency={fx == "$" ? "$" : "¥"} onClick={changeFx} />
     </>
   );
