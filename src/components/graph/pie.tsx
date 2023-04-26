@@ -41,7 +41,7 @@ const PieComponent: FC<Props> = ({ pieData, themeColor, background }) => {
     },
     plotOptions: {
       pie: {
-        allowPointSelect: true,
+        allowPointSelect: false,
         cursor: "pointer",
         colors: themeColor,
         dataLabels: {
