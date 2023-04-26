@@ -51,15 +51,11 @@ const SummaryContentComponent: FC<Props> = ({ tickerDetail }) => {
           onClick={changeDisplayToSector}
         />
       </div>
-      {displayMode === DISPLAY_MODE.ticker ? (
-        <Pie pieData={pieData} themeColor={themeDefault} background="#343a40" />
-      ) : (
-        <Pie
-          pieData={sectorData}
-          themeColor={themeDefault}
-          background="#343a40"
-        />
-      )}
+      <Pie
+        pieData={displayMode === DISPLAY_MODE.ticker ? pieData : sectorData}
+        themeColor={themeDefault}
+        background="#343a40"
+      />
     </>
   );
 };
