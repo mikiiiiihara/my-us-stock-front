@@ -1,5 +1,5 @@
 import { Header } from "../components/common/header/header";
-import { HomeContainer } from "../contents/home/homeContainer";
+import { HomeContent } from "../contents/home/homeContent";
 import { TickerProvider } from "../contexts/tickersContext";
 
 export default function Home() {
@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <TickerProvider>
         <Header title="My US Stock Portfolio | Home" />
-        <HomeContainer />
+        <HomeContent />
       </TickerProvider>
     </>
   );

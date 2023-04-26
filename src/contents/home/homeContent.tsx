@@ -8,56 +8,29 @@ import { PrimaryButton } from "../../components/primary-button/primaryButton";
 import { Center } from "../../components/common/center/center";
 import { TickerContent } from "../ticker/tickerContent";
 import { SummaryContent } from "./summary/summaryContent";
-import { TickerData } from "../../types/tickerData.type";
 import { useTickerContext } from "../../contexts/tickersContext";
+import { StrategyContent } from "./strategy/strategyContent";
+import { FxChangeButton } from "../../components/fx-change-button/fxChangeButton";
+import { useTickers } from "../../hooks/tickers/useTickers";
+import { useGetUSDJPY } from "../../hooks/export/useGetUSDJPY";
 
 const DISPLAY_MODE = {
   summary: "summary",
   detail: "detail",
 };
 
-type HomeContentProps = {
-  tickers: "loading" | TickerData;
-  currentUsd: number | "loading";
-  executeDeleteTicker: (
-    id: number,
-    currentPrice: number,
-    priceGets: number,
-    currentRate: number
-  ) => Promise<void>;
-  executeUpdateTicker: (
-    id: number,
-    getPrice: number,
-    quantity: number,
-    dividend: number,
-    usdjpy: number,
-    currentPrice: number,
-    priceGets: number,
-    currentRate: number
-  ) => Promise<void>;
-  executeCreateTicker: (
-    ticker: string,
-    getPrice: number,
-    quantity: number,
-    dividend: number,
-    dividendTime: number,
-    dividendFirstTime: number,
-    sector: string,
-    usdjpy: number,
-    currentPrice: number,
-    priceGets: number,
-    currentRate: number
-  ) => Promise<void>;
-};
-
-export const HomeContentComponent: React.FC<HomeContentProps> = ({
-  tickers,
-  currentUsd,
-  executeDeleteTicker,
-  executeUpdateTicker,
-  executeCreateTicker,
-}) => {
-  const { fx } = useTickerContext();
+export const HomeContentComponent = () => {
+  const { fx, changeFx } = useTickerContext();
+  const {
+    getTickers,
+    executeCreateTicker,
+    executeUpdateTicker,
+    executeDeleteTicker,
+  } = useTickers();
+  // 為替情報取得
+  const { currentUsd } = useGetUSDJPY();
+  // 保有株式総額を取得
+  const { tickers } = getTickers(fx);
   const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.summary);
   const changeDisplayToSummary = useCallback(
     () => setDisplayMode(DISPLAY_MODE.summary),
@@ -95,73 +68,77 @@ export const HomeContentComponent: React.FC<HomeContentProps> = ({
       : "";
 
   return (
-    <Center>
-      <div className="content">
-        <h1>
-          保有株式総額: {fx}
-          {priceTotal.toLocaleString()}
-        </h1>
-        <p className={balanceRateClass}>
-          損益: {fx}
-          {balanceTotal.toLocaleString()}（{balanceRateTotal}
-          %）
-        </p>
-        <p>
-          年配当金総額： {fx}
-          {dividendTotal.toLocaleString()}
-        </p>
-        <p>（USDJPY: {currentUsd}）</p>
-        <div className="m-3">
+    <>
+      <Center>
+        <div className="content">
+          <h1>
+            保有株式総額: {fx}
+            {priceTotal.toLocaleString()}
+          </h1>
+          <p className={balanceRateClass}>
+            損益: {fx}
+            {balanceTotal.toLocaleString()}（{balanceRateTotal}
+            %）
+          </p>
+          <p>
+            年配当金総額： {fx}
+            {dividendTotal.toLocaleString()}
+          </p>
+          <p>（USDJPY: {currentUsd}）</p>
+          <div className="m-3">
+            <PrimaryButton
+              content="ポートフォリオ"
+              notSelected={displayMode !== DISPLAY_MODE.summary}
+              onClick={changeDisplayToSummary}
+            />
+            <PrimaryButton
+              content="保有銘柄一覧"
+              notSelected={displayMode !== DISPLAY_MODE.detail}
+              onClick={changeDisplayToDetail}
+            />
+          </div>
+          {displayMode === DISPLAY_MODE.summary ? (
+            <SummaryContent tickerDetail={tickerDetail} />
+          ) : (
+            <TickerContent tickers={tickers} />
+          )}
           <PrimaryButton
-            content="ポートフォリオ"
-            notSelected={displayMode !== DISPLAY_MODE.summary}
-            onClick={changeDisplayToSummary}
+            content="情報を変更"
+            onClick={ShowUpdModal}
+            isForContent={true}
           />
           <PrimaryButton
-            content="保有銘柄一覧"
-            notSelected={displayMode !== DISPLAY_MODE.detail}
-            onClick={changeDisplayToDetail}
+            content="銘柄を追加"
+            onClick={ShowAddModal}
+            isForContent={true}
+          />
+          <Modal
+            showFlag={showUpdModal}
+            setShowModal={setUpdModal}
+            content={
+              <UpdateForm
+                setShowModal={setUpdModal}
+                tickers={tickers.tickerDetail}
+                executeUpdateTicker={executeUpdateTicker}
+                executeDeleteTicker={executeDeleteTicker}
+              />
+            }
+          />
+          <Modal
+            showFlag={showAddModal}
+            setShowModal={setAddModal}
+            content={
+              <CreateForm
+                setShowModal={setAddModal}
+                executeCreateTicker={executeCreateTicker}
+              />
+            }
           />
         </div>
-        {displayMode === DISPLAY_MODE.summary ? (
-          <SummaryContent tickerDetail={tickerDetail} />
-        ) : (
-          <TickerContent tickers={tickers} />
-        )}
-        <PrimaryButton
-          content="情報を変更"
-          onClick={ShowUpdModal}
-          isForContent={true}
-        />
-        <PrimaryButton
-          content="銘柄を追加"
-          onClick={ShowAddModal}
-          isForContent={true}
-        />
-        <Modal
-          showFlag={showUpdModal}
-          setShowModal={setUpdModal}
-          content={
-            <UpdateForm
-              setShowModal={setUpdModal}
-              tickers={tickers.tickerDetail}
-              executeUpdateTicker={executeUpdateTicker}
-              executeDeleteTicker={executeDeleteTicker}
-            />
-          }
-        />
-        <Modal
-          showFlag={showAddModal}
-          setShowModal={setAddModal}
-          content={
-            <CreateForm
-              setShowModal={setAddModal}
-              executeCreateTicker={executeCreateTicker}
-            />
-          }
-        />
-      </div>
-    </Center>
+      </Center>
+      <StrategyContent />
+      <FxChangeButton currency={fx == "$" ? "$" : "¥"} onClick={changeFx} />
+    </>
   );
 };
 HomeContentComponent.displayName = "HomeContent";
