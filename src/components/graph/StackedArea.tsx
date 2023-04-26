@@ -1,7 +1,6 @@
 import React from "react";
 import { FC } from "react";
 import Highcharts from "highcharts";
-import exporting from "highcharts/modules/exporting";
 
 import HighchartsMore from "highcharts/highcharts-more";
 
@@ -21,7 +20,6 @@ const StackedAreaComponent: FC<Props> = ({
 }) => {
   if (typeof Highcharts === "object") {
     HighchartsMore(Highcharts);
-    exporting(Highcharts);
   }
 
   const options = {
