@@ -8,21 +8,6 @@
   color: gray;
   border-color: rgb(82, 231, 171);
 }
-.primaryButton,
-.primaryButtonNotSelected {
-  &:hover,
-  &:active,
-  &:focus,
-  &:target,
-  &:visited {
-    background-color: rgb(122, 255, 202);
-  }
-  &:active {
-    background-color: rgb(28, 132, 90) !important;
-    border-color: rgb(82, 231, 171);
-  }
-}
-
 .forContent {
   width: 46%;
   margin: 0 2%;

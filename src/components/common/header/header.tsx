@@ -39,10 +39,7 @@ const HeaderComponent: FC<Props> = ({ title }) => {
         className={`${styles.navbar} navbar-expand-lg navbar-dark bg-dark d-none-tb`}
       >
         <div className="container-xl">
-          <Link
-            href={NAVIGATION_LIST.HOME}
-            className={`navbar-brand float-left ${styles.mainMenu}`}
-          >
+          <Link href={NAVIGATION_LIST.HOME} className="navbar-brand float-left">
             My US Stock Portfolio
           </Link>
           <ul className={`navbar-nav mr-auto float-left ${styles.subMenu}`}>

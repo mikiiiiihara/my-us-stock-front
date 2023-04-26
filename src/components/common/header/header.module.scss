@@ -3,18 +3,10 @@ $headerBoxShadow: 0 0 8px 0 rgba(255, 255, 255, 0.04);
 $headerBreakpoint: 820px;
 
 .header {
-  .mainMenu {
-    margin-bottom: 0.4rem;
-  }
-
   .navbar {
     border-bottom: 2px solid $headerBorderColor;
     box-shadow: $headerBoxShadow;
-    > .container-xl {
-      display: block !important;
-    }
   }
-
   .myAccount {
     color: white;
     font-size: 0.8rem;
@@ -29,17 +21,9 @@ $headerBreakpoint: 820px;
       margin-bottom: 0;
     }
   }
-
-  .subMenu li {
-    @media (max-width: 992px) {
-      margin: 0.4rem;
-    }
-  }
-
   .navSp {
     display: none;
   }
-
   @media (max-width: $headerBreakpoint) {
     .myAccount {
       --bs-bg-opacity: 1;
@@ -49,7 +33,6 @@ $headerBreakpoint: 820px;
       padding: 0.8rem;
       text-align: left;
     }
-
     .navSp {
       display: block;
       position: fixed;
@@ -61,12 +44,10 @@ $headerBreakpoint: 820px;
       border: 2px solid $headerBorderColor;
       box-shadow: $headerBoxShadow;
     }
-
     .navSpContent {
       width: 98%;
       margin: 0 auto;
     }
-
     .navSpItem {
       width: 31%;
       font-size: 0.8rem;
