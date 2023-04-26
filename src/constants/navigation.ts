@@ -5,8 +5,6 @@
  */
 export const NAVIGATION_LIST = {
   HOME: "/",
-  PORTFOLIO: "/portfolio",
   ASSET: "/asset",
-  DIVIDEND: "/dividend",
   SECTOR: "/sector",
 } as const;
