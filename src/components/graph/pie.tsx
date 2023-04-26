@@ -1,7 +1,6 @@
 import React from "react";
 import { FC } from "react";
 import Highcharts from "highcharts";
-import HighchartsMore from "highcharts/highcharts-more";
 import HighchartsReact from "highcharts-react-official";
 import { PieData } from "../../types/pieData.type";
 
@@ -12,10 +11,6 @@ type Props = {
 };
 
 const PieComponent: FC<Props> = ({ pieData, themeColor, background }) => {
-  if (typeof Highcharts === "object") {
-    HighchartsMore(Highcharts);
-  }
-
   const options = {
     chart: {
       backgroundColor: background,

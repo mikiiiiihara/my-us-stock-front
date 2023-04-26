@@ -1,8 +1,6 @@
 import React from "react";
 import { FC } from "react";
 import Highcharts from "highcharts";
-import exporting from "highcharts/modules/exporting";
-import HighchartsMore from "highcharts/highcharts-more";
 import HighchartsReact from "highcharts-react-official";
 import { DivData } from "../../types/divData.type";
 
@@ -25,10 +23,6 @@ const StackedColumnComponent: FC<Props> = ({
   }
   const max = Math.max(...divSum);
   const setMax = Math.round(max * 1) / 1 + 3;
-  if (typeof Highcharts === "object") {
-    HighchartsMore(Highcharts);
-    exporting(Highcharts);
-  }
 
   const options = {
     chart: {

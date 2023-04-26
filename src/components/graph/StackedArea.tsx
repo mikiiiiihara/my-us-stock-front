@@ -1,7 +1,6 @@
 import React from "react";
 import { FC } from "react";
 import Highcharts from "highcharts";
-import HighchartsMore from "highcharts/highcharts-more";
 import HighchartsReact from "highcharts-react-official";
 type Props = {
   themeColor: string;
@@ -16,10 +15,6 @@ const StackedAreaComponent: FC<Props> = ({
   xData,
   yData,
 }) => {
-  if (typeof Highcharts === "object") {
-    HighchartsMore(Highcharts);
-  }
-
   const options = {
     chart: {
       type: "area",

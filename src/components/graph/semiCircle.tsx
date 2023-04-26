@@ -1,9 +1,6 @@
 import React from "react";
 import { FC } from "react";
 import Highcharts from "highcharts";
-
-import HighchartsMore from "highcharts/highcharts-more";
-
 import HighchartsReact from "highcharts-react-official";
 
 type Props = {
@@ -13,10 +10,6 @@ type Props = {
 };
 
 const SemiCircleComponent: FC<Props> = ({ values, themeColor, background }) => {
-  if (typeof Highcharts === "object") {
-    HighchartsMore(Highcharts);
-  }
-
   const options = {
     chart: {
       backgroundColor: background,
