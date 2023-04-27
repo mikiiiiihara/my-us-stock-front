@@ -19,6 +19,7 @@
     "date-fns": "^2.29.3",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.5",
+    "fast-safe-stringify": "^2.1.1",
     "graphql": "^16.6.0",
     "highcharts": "^10.3.1",
     "highcharts-react-official": "^3.1.0",

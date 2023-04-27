@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
+import safeStringify from "fast-safe-stringify";
 
 export default async function handler(
   req: NextApiRequest,
@@ -19,10 +20,8 @@ export default async function handler(
       Location: response.request.res.responseUrl,
     });
     res.end();
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while processing your request." });
+    res.status(500).json({ message: safeStringify(error) });
   }
 }
