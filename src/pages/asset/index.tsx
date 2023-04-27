@@ -1,14 +1,31 @@
+import { GetServerSideProps } from "next";
 import { Header } from "../../components/common/header/header";
 import { AssetContent } from "../../contents/asset/assetContent";
-import { TickerProvider } from "../../contexts/tickersContext";
+import { parse } from "cookie";
+import { createApolloClient } from "../../lib/apolloClient/apollo-client";
+import { ApolloProvider } from "@apollo/client";
 
-export default function Asset() {
+const Asset: React.FC<{ accessToken: string }> = ({ accessToken }) => {
+  const client = createApolloClient({ req: null, res: null, accessToken });
   return (
     <>
-      <TickerProvider>
+      <ApolloProvider client={client}>
         <Header title="My US Stock Portfolio | Asset" />
         <AssetContent />
-      </TickerProvider>
+      </ApolloProvider>
     </>
   );
-}
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = parse(context.req.headers.cookie || "");
+  const accessToken = cookies["accessToken"] || null;
+
+  return {
+    props: {
+      accessToken,
+    },
+  };
+};
+
+export default Asset;

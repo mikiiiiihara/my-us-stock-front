@@ -2,53 +2,44 @@
 import {
   ApolloClient,
   InMemoryCache,
-  HttpLink,
   ApolloLink,
+  createHttpLink,
 } from "@apollo/client";
 import fetch from "isomorphic-fetch";
-import { IncomingMessage } from "http";
+import { IncomingMessage, ServerResponse } from "http";
+import { onError } from "@apollo/client/link/error";
 import { errorLink } from "./links/error-link";
-import { createAuthLink } from "./links/create-auth-link";
 
-export const createApolloClient = (
-  req?: IncomingMessage,
-  accessToken?: string
-) => {
-  const httpLink = new HttpLink({
+// UseApolloClientOptions タイプを定義
+export type CreateApolloClientOptions = {
+  req: IncomingMessage | null;
+  res: ServerResponse | null;
+  accessToken?: string;
+};
+
+export const createApolloClient = (options: CreateApolloClientOptions) => {
+  const { req, res, accessToken } = options;
+  const authLink = new ApolloLink((operation, forward) => {
+    if (accessToken) {
+      operation.setContext({
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+    }
+    return forward(operation);
+  });
+  const httpLink = createHttpLink({
     uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`, // GraphQL API エンドポイントを指定してください
     credentials: "same-origin",
-    headers: {
-      // アプリ起動時→ログイン→取得したアクセストークンを、GraphQLリクエストヘッダーにデフォルトで設定する。
-      Authorization: `Bearer ${accessToken}`,
-    },
-    fetch: (input: RequestInfo, init?: RequestInit) => {
-      if (req) {
-        const cookie = req.headers.cookie || "";
-        if (init) {
-          init.headers = { ...init.headers, Cookie: cookie };
-        } else {
-          init = {
-            headers: {
-              Cookie: cookie,
-            },
-          };
-        }
-      }
-      return fetch(input, init);
-    },
+    fetch,
   });
-
-  const authLink = createAuthLink(req);
-
-  return new ApolloClient({
+  const cache = new InMemoryCache();
+  const client = new ApolloClient({
+    link: authLink.concat(errorLink).concat(httpLink),
+    cache: cache,
     ssrMode: true,
-    link: ApolloLink.from([errorLink, authLink, httpLink]),
-    cache: new InMemoryCache(),
-    defaultOptions: {
-      watchQuery: {
-        nextFetchPolicy: "cache-first",
-      },
-    },
-    ssrForceFetchDelay: 60000,
   });
+
+  return client;
 };

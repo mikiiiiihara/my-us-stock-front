@@ -59,7 +59,7 @@ const Sector: React.FC<SSGProps> = (props) => {
 //getStaticPropsはビルドに実行される
 //GetStaticProps<SSGProps>はSSGPropsを引数にとるgetStaticPropsの型
 export const getStaticProps: GetStaticProps<SSGProps> = async (context) => {
-  const client = createApolloClient();
+  const client = createApolloClient({ req: null, res: null, accessToken: "" });
   const { data } = await client.query<Response>({ query: GET_SECTORS });
   return {
     //ここで返したpropsを元にページコンポーネントを描画する
