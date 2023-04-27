@@ -20,7 +20,7 @@ export default async function handler(
     });
     res.end();
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res
       .status(500)
       .json({ message: "An error occurred while processing your request." });

@@ -10,7 +10,7 @@ export default function login() {
     try {
       router.push("/api/login");
     } catch (error) {
-      console.error("Login error:", error);
+      console.error(error);
     }
   };
   return (
