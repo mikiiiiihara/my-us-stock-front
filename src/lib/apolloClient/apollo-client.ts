@@ -30,7 +30,8 @@ export const createApolloClient = (options: CreateApolloClientOptions) => {
     return forward(operation);
   });
   const httpLink = createHttpLink({
-    uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`, // GraphQL API エンドポイントを指定してください
+    // uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`, // GraphQL API エンドポイントを指定してください
+    uri: "https://my-us-stock-km5gk6oanq-an.a.run.app/graphql",
     credentials: "same-origin",
     fetch,
   });
