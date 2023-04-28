@@ -1,5 +1,6 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
+import safeStringify from "fast-safe-stringify";
 
 const googleAuthRedirect = async (
   req: NextApiRequest,
@@ -30,9 +31,7 @@ const googleAuthRedirect = async (
     });
     res.end();
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "An error occurred while processing your request." });
+    res.status(500).json({ message: safeStringify(error) });
   }
 };
 
