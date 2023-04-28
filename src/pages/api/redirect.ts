@@ -8,7 +8,8 @@ const googleAuthRedirect = async (
 ) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/redirect`,
+      // `${process.env.NEXT_PUBLIC_API_URL}/auth/redirect`,
+      "https://my-us-stock-km5gk6oanq-an.a.run.app/auth/redirect",
       {
         headers: req.headers,
         maxRedirects: 0,

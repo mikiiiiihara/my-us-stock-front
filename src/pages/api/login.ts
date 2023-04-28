@@ -9,7 +9,8 @@ export default async function handler(
 ) {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth`,
+      // `${process.env.NEXT_PUBLIC_API_URL}/auth`,
+      "https://my-us-stock-km5gk6oanq-an.a.run.app/auth",
       {
         headers: req.headers,
       }
