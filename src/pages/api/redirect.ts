@@ -25,7 +25,7 @@ const googleAuthRedirect = async (
         credentials: "include",
       }
     );
-    console.log(response);
+    console.log(response.url);
 
     if (!response.ok && response.status !== 302) {
       throw new Error(`Request failed with status code ${response.status}`);
