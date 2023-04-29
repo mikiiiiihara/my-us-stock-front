@@ -6,10 +6,6 @@ const googleAuthRedirect = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  console.log("res:");
-  console.log(req.headers);
-  console.log("req:");
-  console.log(res);
   try {
     // Filter out problematic headers
     const filteredHeaders = Object.fromEntries(
@@ -17,8 +13,6 @@ const googleAuthRedirect = async (
         ([key, value]) => key.toLowerCase() !== "set-cookie"
       )
     );
-    console.log("filteredHeaders:");
-    console.log(filteredHeaders);
     const response = await fetch(
       "https://my-us-stock-km5gk6oanq-an.a.run.app/auth/redirect",
       {
@@ -30,7 +24,6 @@ const googleAuthRedirect = async (
         credentials: "include",
       }
     );
-    console.log(response.url);
 
     if (!response.ok && response.status !== 302) {
       throw new Error(`Request failed with status code ${response.status}`);
