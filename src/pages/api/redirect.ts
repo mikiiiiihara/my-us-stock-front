@@ -1,4 +1,4 @@
-import axios from "axios";
+import fetch from "node-fetch";
 import { NextApiRequest, NextApiResponse } from "next";
 import safeStringify from "fast-safe-stringify";
 
@@ -7,19 +7,30 @@ const googleAuthRedirect = async (
   res: NextApiResponse
 ) => {
   try {
-    const response = await axios.get(
-      // `${process.env.NEXT_PUBLIC_API_URL}/auth/redirect`,
+    // Filter out problematic headers
+    const filteredHeaders = Object.fromEntries(
+      Object.entries(req.headers).filter(
+        ([key, value]) => key.toLowerCase() !== "set-cookie"
+      )
+    );
+
+    const response = await fetch(
       "https://my-us-stock-km5gk6oanq-an.a.run.app/auth/redirect",
       {
-        headers: req.headers,
-        maxRedirects: 0,
-        validateStatus: (status) =>
-          status === 302 || (status >= 200 && status < 300),
+        headers: {
+          ...filteredHeaders,
+          "Content-Type": "application/json",
+        },
+        redirect: "manual",
       }
     );
 
+    if (!response.ok && response.status !== 302) {
+      throw new Error(`Request failed with status code ${response.status}`);
+    }
+
     // Get cookies from the response
-    const cookies = response.headers["set-cookie"];
+    const cookies = response.headers.get("set-cookie");
 
     if (cookies) {
       // Set cookies on the client side

@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
+import fetch from "node-fetch";
 import safeStringify from "fast-safe-stringify";
 
 export default async function handler(
@@ -8,17 +8,25 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const response = await axios.get(
-      // `${process.env.NEXT_PUBLIC_API_URL}/auth`,
+    // Filter out problematic headers
+    const filteredHeaders = Object.fromEntries(
+      Object.entries(req.headers).filter(
+        ([key, value]) => key.toLowerCase() !== "set-cookie"
+      )
+    );
+    const response = await fetch(
       "https://my-us-stock-km5gk6oanq-an.a.run.app/auth",
       {
-        headers: req.headers,
+        headers: {
+          ...filteredHeaders,
+          "Content-Type": "application/json",
+        },
       }
     );
 
     // Redirect to Google's login page
     res.writeHead(302, {
-      Location: response.request.res.responseUrl,
+      Location: response.url,
     });
     res.end();
   } catch (error: any) {
