@@ -13,28 +13,13 @@ export default async function handler(
         ([key, value]) => key.toLowerCase() !== "set-cookie"
       )
     );
-    const response = await fetch(
-      "https://my-us-stock-km5gk6oanq-an.a.run.app/auth",
-      {
-        headers: {
-          ...filteredHeaders,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
     // Get the redirect location from the response headers or response.url
-    const redirectLocation = response.url;
-    if (redirectLocation != null) {
-      // Redirect to Google's login page
-      res.writeHead(302, {
-        Location: redirectLocation,
-      });
-      res.end();
-    } else {
-      // If the location header is not found, return an error
-      res.status(500).json({ message: "Redirect location not found" });
-    }
+    // Redirect to Google's login page
+    res.writeHead(302, {
+      // Location: redirectLocation,
+      Location: "https://my-us-stock-km5gk6oanq-an.a.run.app/auth",
+    });
+    res.end();
   } catch (error: any) {
     console.log(error);
     res.status(500).json({ message: safeStringify(error) });
