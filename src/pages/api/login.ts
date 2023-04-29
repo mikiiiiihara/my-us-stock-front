@@ -1,4 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import fetch from "node-fetch";
 import safeStringify from "fast-safe-stringify";
@@ -24,11 +23,19 @@ export default async function handler(
       }
     );
 
-    // Redirect to Google's login page
-    res.writeHead(302, {
-      Location: response.url,
-    });
-    res.end();
+    // Get the redirect location from the response headers
+    const redirectLocation = response.headers.get("location");
+
+    if (redirectLocation) {
+      // Redirect to Google's login page
+      res.writeHead(302, {
+        Location: redirectLocation,
+      });
+      res.end();
+    } else {
+      // If the location header is not found, return an error
+      res.status(500).json({ message: "Redirect location not found" });
+    }
   } catch (error: any) {
     console.log(error);
     res.status(500).json({ message: safeStringify(error) });

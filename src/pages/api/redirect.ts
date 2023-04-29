@@ -29,6 +29,9 @@ const googleAuthRedirect = async (
       throw new Error(`Request failed with status code ${response.status}`);
     }
 
+    // Get the redirect location from the response headers
+    const redirectLocation = response.headers.get("location");
+
     // Get cookies from the response
     const cookies = response.headers.get("set-cookie");
 
@@ -37,12 +40,17 @@ const googleAuthRedirect = async (
       res.setHeader("Set-Cookie", cookies);
     }
 
-    // Redirect to a success page or home page
-    res.writeHead(302, {
-      Location: "/",
-    });
-    res.end();
-  } catch (error) {
+    if (redirectLocation) {
+      // Redirect to a success page or home page
+      res.writeHead(302, {
+        Location: redirectLocation,
+      });
+      res.end();
+    } else {
+      // If the location header is not found, return an error
+      res.status(500).json({ message: "Redirect location not found" });
+    }
+  } catch (error: any) {
     res.status(500).json({ message: safeStringify(error) });
   }
 };
