@@ -30,7 +30,7 @@ const googleAuthRedirect = async (
     }
 
     // Get the redirect location from the response headers
-    const redirectLocation = response.headers.get("location");
+    const redirectLocation = response.url;
 
     // Get cookies from the response
     const cookies = response.headers.get("set-cookie");
@@ -40,7 +40,7 @@ const googleAuthRedirect = async (
       res.setHeader("Set-Cookie", cookies);
     }
 
-    if (redirectLocation) {
+    if (redirectLocation != null) {
       // Redirect to a success page or home page
       res.writeHead(302, {
         Location: redirectLocation,
