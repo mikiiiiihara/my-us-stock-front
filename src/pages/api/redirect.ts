@@ -24,6 +24,9 @@ const googleAuthRedirect = async (
         redirect: "manual",
       }
     );
+    console.log("response.headers:");
+    console.log(response.headers);
+    console.log(response.headers.get("set-cookie"));
 
     if (!response.ok && response.status !== 302) {
       throw new Error(`Request failed with status code ${response.status}`);
@@ -43,7 +46,7 @@ const googleAuthRedirect = async (
     if (redirectLocation != null) {
       // Redirect to a success page or home page
       res.writeHead(302, {
-        Location: redirectLocation,
+        Location: "/",
       });
       res.end();
     } else {
