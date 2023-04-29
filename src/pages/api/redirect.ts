@@ -6,6 +6,10 @@ const googleAuthRedirect = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
+  console.log("res:");
+  console.log(req.headers);
+  console.log("req:");
+  console.log(res);
   try {
     // Filter out problematic headers
     const filteredHeaders = Object.fromEntries(
@@ -13,7 +17,8 @@ const googleAuthRedirect = async (
         ([key, value]) => key.toLowerCase() !== "set-cookie"
       )
     );
-
+    console.log("filteredHeaders:");
+    console.log(filteredHeaders);
     const response = await fetch(
       "https://my-us-stock-km5gk6oanq-an.a.run.app/auth/redirect",
       {
