@@ -24,9 +24,6 @@ const googleAuthRedirect = async (
         redirect: "manual",
       }
     );
-    console.log("response.headers:");
-    console.log(response.headers);
-    console.log(response.headers.get("set-cookie"));
 
     if (!response.ok && response.status !== 302) {
       throw new Error(`Request failed with status code ${response.status}`);
@@ -41,7 +38,7 @@ const googleAuthRedirect = async (
     }
     // Redirect to a success page or home page
     res.writeHead(302, {
-      Location: "/",
+      Location: "https://my-us-stock-portfolio-wqqgxxymjq-an.a.run.app",
     });
     res.end();
   } catch (error: any) {
