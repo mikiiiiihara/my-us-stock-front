@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch from "isomorphic-unfetch";
 import { NextApiRequest, NextApiResponse } from "next";
 import safeStringify from "fast-safe-stringify";
 
@@ -22,6 +22,7 @@ const googleAuthRedirect = async (
           "Content-Type": "application/json",
         },
         redirect: "manual",
+        credentials: "include",
       }
     );
 
@@ -36,9 +37,10 @@ const googleAuthRedirect = async (
       // Set cookies on the client side
       res.setHeader("Set-Cookie", cookies);
     }
+
     // Redirect to a success page or home page
     res.writeHead(302, {
-      Location: "https://my-us-stock-portfolio-wqqgxxymjq-an.a.run.app",
+      Location: "/",
     });
     res.end();
   } catch (error: any) {
