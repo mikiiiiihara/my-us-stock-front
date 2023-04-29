@@ -25,7 +25,7 @@ export default async function handler(
 
     // Get the redirect location from the response headers or response.url
     const redirectLocation = response.headers.get("location") || response.url;
-    console.log(response);
+    console.log(response.url);
     if (redirectLocation) {
       // Redirect to Google's login page
       res.writeHead(302, {
