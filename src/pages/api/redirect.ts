@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 async function redirect(req: NextApiRequest, res: NextApiResponse) {
   try {
+    console.log(req);
     // NestJSから設定されたCookieが存在する場合、それを使用
     if (req.headers["set-cookie"]) {
       res.setHeader("Set-Cookie", req.headers["set-cookie"]);
