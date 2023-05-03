@@ -7,7 +7,6 @@ import {
 } from "@apollo/client";
 import fetch from "isomorphic-fetch";
 import { IncomingMessage, ServerResponse } from "http";
-import { onError } from "@apollo/client/link/error";
 import { errorLink } from "./links/error-link";
 
 // UseApolloClientOptions タイプを定義
