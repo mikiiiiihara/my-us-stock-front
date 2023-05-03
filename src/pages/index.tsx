@@ -5,8 +5,11 @@ import { TickerProvider } from "../contexts/tickersContext";
 import { parse } from "cookie";
 import { createApolloClient } from "../lib/apolloClient/apollo-client";
 import { ApolloProvider } from "@apollo/client";
+import Cookies from "js-cookie";
 
 const Home: React.FC<{ accessToken: string }> = ({ accessToken }) => {
+  const token = Cookies.get("accessToken");
+  console.log(token);
   const client = createApolloClient({ req: null, res: null, accessToken });
   return (
     <>
