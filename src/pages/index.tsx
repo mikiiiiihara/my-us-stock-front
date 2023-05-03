@@ -1,14 +1,11 @@
-import { GetServerSideProps } from "next";
 import { Header } from "../components/common/header/header";
 import { HomeContent } from "../contents/home/homeContent";
 import { TickerProvider } from "../contexts/tickersContext";
-import { parse } from "cookie";
 import { createApolloClient } from "../lib/apolloClient/apollo-client";
 import { ApolloProvider } from "@apollo/client";
 
-const Home: React.FC<{ accessToken: string }> = ({ accessToken }) => {
-  console.log(accessToken);
-  const client = createApolloClient({ req: null, res: null, accessToken });
+const Home = () => {
+  const client = createApolloClient({ req: null, res: null });
   return (
     <>
       <ApolloProvider client={client}>
@@ -20,16 +17,4 @@ const Home: React.FC<{ accessToken: string }> = ({ accessToken }) => {
     </>
   );
 };
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cookies = parse(context.req.headers.cookie || "");
-  const accessToken = cookies["accessToken"] || null;
-  console.log("serverside:");
-  console.log(context.req.headers.cookie);
-  return {
-    props: {
-      accessToken,
-    },
-  };
-};
-
 export default Home;
