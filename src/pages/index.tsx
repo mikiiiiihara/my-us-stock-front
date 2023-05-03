@@ -7,8 +7,6 @@ import { createApolloClient } from "../lib/apolloClient/apollo-client";
 import { ApolloProvider } from "@apollo/client";
 
 const Home: React.FC<{ accessToken: string }> = ({ accessToken }) => {
-  console.log("clientside:");
-  console.log(accessToken);
   const client = createApolloClient({ req: null, res: null, accessToken });
   return (
     <>
@@ -25,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = parse(context.req.headers.cookie || "");
   const accessToken = cookies["accessToken"] || null;
   console.log("serverside:");
-  console.log(accessToken);
+  console.log(context.req);
   return {
     props: {
       accessToken,
