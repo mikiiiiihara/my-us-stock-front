@@ -13,7 +13,7 @@ export const Layout: FC<Props> = ({ children }) => {
     <>
       <PrimaryButton
         content="googleログイン"
-        onClick={signIn}
+        onClick={() => signIn("google")}
         isForContent={true}
       />
     </>
