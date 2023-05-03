@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = parse(context.req.headers.cookie || "");
   const accessToken = cookies["accessToken"] || null;
   console.log("serverside:");
-  console.log(context.req);
+  console.log(context.req.headers);
   return {
     props: {
       accessToken,
