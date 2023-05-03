@@ -5,11 +5,9 @@ import { TickerProvider } from "../contexts/tickersContext";
 import { parse } from "cookie";
 import { createApolloClient } from "../lib/apolloClient/apollo-client";
 import { ApolloProvider } from "@apollo/client";
-import Cookies from "js-cookie";
 
 const Home: React.FC<{ accessToken: string }> = ({ accessToken }) => {
-  const token = Cookies.get("accessToken");
-  console.log(token);
+  console.log(accessToken);
   const client = createApolloClient({ req: null, res: null, accessToken });
   return (
     <>
@@ -27,8 +25,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const accessToken = cookies["accessToken"] || null;
   console.log("serverside:");
   console.log(context.req.headers.cookie);
-  const token = Cookies.get("accessToken");
-  console.log(token);
   return {
     props: {
       accessToken,
