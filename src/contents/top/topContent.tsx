@@ -29,7 +29,7 @@ export const TopContentComponent = () => {
   });
   return (
     <>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="w-75" style={{ margin: "0 auto" }}>
         <div className="form-group mb-3">
           <label htmlFor="email">メール</label>
           <input
