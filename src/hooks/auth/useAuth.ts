@@ -17,13 +17,8 @@ const GET_USER = gql`
 `;
 
 const LOGIN = gql`
-  mutation login {
-    login(
-      loginUserInput: {
-        email: "mikiwhigh1274@gmail.com"
-        password: "vQBk4H.BBiwy"
-      }
-    ) {
+  mutation login($input: LoginUserInput!) {
+    login(loginUserInput: $input) {
       accessToken
       refreshToken
     }
@@ -41,8 +36,15 @@ export const useAuth = () => {
   const [login, { data }] = useMutation<{
     login: Token;
   }>(LOGIN);
-  const requestLogin = async () => {
-    await login();
+  const requestLogin = async (email: string, password: string) => {
+    await login({
+      variables: {
+        input: {
+          email,
+          password,
+        },
+      },
+    });
     router.push("/home");
   };
   useEffect(() => {

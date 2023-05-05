@@ -12,9 +12,9 @@ type FormData = {
 export const TopContentComponent = () => {
   const router = useRouter();
   const { requestLogin } = useAuth();
-  const executeLogin = async () => {
+  const executeLogin = async (email: string, password: string) => {
     try {
-      await requestLogin();
+      await requestLogin(email, password);
     } catch (error) {
       console.log("Loginをcatch!");
     }
@@ -25,7 +25,7 @@ export const TopContentComponent = () => {
   const { register, handleSubmit } = useForm<FormData>();
 
   const onSubmit = handleSubmit(async ({ email, password }) => {
-    await executeLogin();
+    await executeLogin(email, password);
   });
   return (
     <>
