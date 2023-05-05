@@ -5,20 +5,17 @@ import { Strategy } from "../../types/strategy.type";
 export const useStrategy = () => {
   // 取得
   const GET_STRATEGY = gql`
-    query getStrategy($user: String!) {
-      getStrategy(user: $user) {
+    query getStrategy {
+      getStrategy {
         id
         text
-        user
         addDate
         updDate
       }
     }
   `;
   const email = "mikiwhigh1274@gmail.com";
-  const { data: strategyData, loading: getLoading } = useQuery(GET_STRATEGY, {
-    variables: { user: email ?? "none" },
-  });
+  const { data: strategyData, loading: getLoading } = useQuery(GET_STRATEGY);
   const data: Strategy = strategyData?.getStrategy;
   // 取得関数
   const getStrategy = () => {
@@ -30,7 +27,6 @@ export const useStrategy = () => {
       updateStrategy(input: $input) {
         id
         text
-        user
         addDate
         updDate
       }
@@ -42,7 +38,6 @@ export const useStrategy = () => {
     await UpdateStrategy({
       variables: {
         input: {
-          user: email,
           text: text,
         },
       },

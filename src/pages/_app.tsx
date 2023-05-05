@@ -1,17 +1,21 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.css";
 import { AppProps } from "next/app";
-import { Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
 import { Layout } from "../components/common/layout/layout";
+import { createApolloClient } from "../lib/apolloClient/apollo-client";
+import { TickerProvider } from "../contexts/tickersContext";
+import { ApolloProvider } from "@apollo/client";
 
-function App({ Component, pageProps }: AppProps<{ session: Session }>) {
+function App({ Component, pageProps }: AppProps) {
+  const client = createApolloClient();
   return (
-    <SessionProvider session={pageProps.session}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </SessionProvider>
+    <ApolloProvider client={client}>
+      <TickerProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </TickerProvider>
+    </ApolloProvider>
   );
 }
 export default App;

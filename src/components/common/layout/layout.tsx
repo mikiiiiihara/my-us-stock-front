@@ -1,19 +1,17 @@
-import { signIn, useSession } from "next-auth/react";
 import React, { FC, ReactNode } from "react";
 import { PrimaryButton } from "../../primary-button/primaryButton";
 type Props = {
   children: ReactNode;
 };
 export const Layout: FC<Props> = ({ children }) => {
-  const { data: session, status } = useSession();
-  if (status == "loading") return <></>;
-  return session ? (
+  const email = "mikiwhigh1274@gmail.com";
+  return email ? (
     <div className="wrapper">{children}</div>
   ) : (
     <>
       <PrimaryButton
         content="googleログイン"
-        onClick={() => signIn("google")}
+        onClick={() => console.log("signIn with google")}
         isForContent={true}
       />
     </>

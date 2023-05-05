@@ -12,7 +12,6 @@ export function useUpdateCash() {
         date
         addDate
         updDate
-        user
         cashUSD
         cashJPY
         cashBTC
@@ -38,7 +37,6 @@ export function useUpdateCash() {
     await updateCash({
       variables: {
         input: {
-          user: email,
           cashUSD,
           cashJPY,
           cashBTC,

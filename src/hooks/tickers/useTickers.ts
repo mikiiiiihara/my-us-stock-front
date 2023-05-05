@@ -9,13 +9,12 @@ import { useGetUSDJPY } from "../export/useGetUSDJPY";
 export const useTickers = () => {
   // 保有株式情報の取得
   const GET_TICKERS = gql`
-    query GetTickers($user: String!) {
-      getTickers(user: $user) {
+    query GetTickers {
+      getTickers {
         id
         ticker
         getPrice
         quantity
-        user
         dividend
         dividendTime
         dividendFirstTime
@@ -32,9 +31,7 @@ export const useTickers = () => {
   // 為替情報取得
   const { currentUsd } = useGetUSDJPY();
   // 保有株式情報取得
-  const { data, loading: getLoading } = useQuery(GET_TICKERS, {
-    variables: { user: email ?? "none" },
-  });
+  const { data, loading: getLoading } = useQuery(GET_TICKERS);
   const tickers: Ticker[] = data?.getTickers;
   //保有株式の現在価格を取得
   const tickerList: string[] = [];
@@ -60,7 +57,6 @@ export const useTickers = () => {
         ticker
         getPrice
         quantity
-        user
         dividend
         dividendTime
         dividendFirstTime
@@ -86,7 +82,6 @@ export const useTickers = () => {
                   ticker
                   getPrice
                   quantity
-                  user
                   dividend
                   dividendTime
                   dividendFirstTime
@@ -125,7 +120,6 @@ export const useTickers = () => {
             ticker,
             getPrice,
             quantity,
-            user: email,
             dividend,
             dividendTime,
             dividendFirstTime,
@@ -148,7 +142,6 @@ export const useTickers = () => {
         ticker
         getPrice
         quantity
-        user
         dividend
         dividendTime
         dividendFirstTime
@@ -199,7 +192,6 @@ export const useTickers = () => {
         ticker
         getPrice
         quantity
-        user
         dividend
         dividendTime
         dividendFirstTime

@@ -6,13 +6,12 @@ import Image from "next/image";
 import { Button } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
 import { NAVIGATION_LIST } from "../../../constants/navigation";
-import { signOut, useSession } from "next-auth/react";
 type Props = {
   title: string;
 };
 
 const HeaderComponent: FC<Props> = ({ title }) => {
-  const { data: session } = useSession();
+  const email = "mikiwhigh1274@gmail.com";
   return (
     <div className={styles.header}>
       <Head>
@@ -25,10 +24,14 @@ const HeaderComponent: FC<Props> = ({ title }) => {
         <link rel="icon" href="/icon.png" />
       </Head>
       <div className={styles.myAccount}>
-        <p>{session?.user?.email} </p>
+        <p>{email} </p>
         <br />
         {/* TODO: ログアウト機能をAPI側で実装→それを叩くようにする */}
-        <Button variant="primary" size="sm" onClick={() => signOut()}>
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={() => console.log("signOut")}
+        >
           Sign out
         </Button>
       </div>

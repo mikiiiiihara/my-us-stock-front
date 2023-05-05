@@ -5,8 +5,8 @@ import { Asset } from "../../types/asset.type";
 export function useAssets() {
   // 取得
   const GET_ASSETS = gql`
-    query GetAssets($user: String!, $day: Int!) {
-      getAssets(user: $user, day: $day) {
+    query GetAssets($day: Int!) {
+      getAssets(day: $day) {
         id
         total
         asset
@@ -15,7 +15,6 @@ export function useAssets() {
         date
         addDate
         updDate
-        user
         cashUSD
         cashJPY
         cashBTC
@@ -30,7 +29,7 @@ export function useAssets() {
   const email = "mikiwhigh1274@gmail.com";
   // 資産情報算出
   const { data, loading, refetch } = useQuery(GET_ASSETS, {
-    variables: { user: email ?? "none", day: 7 },
+    variables: { day: 7 },
   });
   // 取得関数
   const getAssets = () => {
@@ -41,7 +40,7 @@ export function useAssets() {
   };
   // クエリ表示期間を変更する
   const changeAssetLength = async (day: number) => {
-    await refetch({ user: email ?? "none", day });
+    await refetch({ day });
   };
   // 更新
   const UPDATE_TODAY_ASSET = gql`
@@ -55,7 +54,6 @@ export function useAssets() {
         date
         addDate
         updDate
-        user
         cashUSD
         cashJPY
         cashBTC
@@ -82,7 +80,6 @@ export function useAssets() {
       variables: {
         input: {
           id,
-          user: email,
           cashUSD,
           cashJPY,
           cashBTC,
@@ -96,8 +93,8 @@ export function useAssets() {
   };
   // 追加
   const CREATE_TODAY_ASSET = gql`
-    mutation CreateTodayAsset($user: String!) {
-      createTodayAsset(user: $user) {
+    mutation CreateTodayAsset {
+      createTodayAsset {
         id
         total
         asset
@@ -106,7 +103,6 @@ export function useAssets() {
         date
         addDate
         updDate
-        user
         cashUSD
         cashJPY
         cashBTC
@@ -134,7 +130,6 @@ export function useAssets() {
                   date
                   addDate
                   updDate
-                  user
                   cashUSD
                   cashJPY
                   cashBTC
@@ -153,13 +148,7 @@ export function useAssets() {
   });
   // 新規作成関数
   const executeCreateTodayAsset = async (): Promise<void> => {
-    await CreateTodayAsset({
-      variables: {
-        input: {
-          user: email,
-        },
-      },
-    });
+    await CreateTodayAsset();
   };
   return {
     getAssets,

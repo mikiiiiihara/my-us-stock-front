@@ -7,7 +7,6 @@ export type Asset = {
   date: string;
   addDate: string;
   updDate: string;
-  user: string;
   cashUSD: number;
   cashJPY: number;
   cashBTC: number;

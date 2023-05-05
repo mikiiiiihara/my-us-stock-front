@@ -4,7 +4,6 @@ export type Ticker = {
   price: number;
   getPrice: number;
   quantity: number;
-  user: string;
   dividend: number;
   dividendTime: number;
   dividendFirstTime: number;
