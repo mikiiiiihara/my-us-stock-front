@@ -26,8 +26,6 @@ export const useTickers = () => {
       }
     }
   `;
-  // ログイン情報
-  const email = "mikiwhigh1274@gmail.com";
   // 為替情報取得
   const { currentUsd } = useGetUSDJPY();
   // 保有株式情報取得

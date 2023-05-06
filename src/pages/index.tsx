@@ -11,7 +11,7 @@ const Top = () => {
   if (user !== HOOKS_STATE.LOADING && user != null) router.push("/home");
   return (
     <>
-      <Header title="My US Stock Portfolio | Top" />
+      <Header title="My US Stock Portfolio | Top" isLogined={false} />
       <TopContent />
     </>
   );

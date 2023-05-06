@@ -3,7 +3,11 @@ import { setContext } from "@apollo/client/link/context";
 import Cookies from "js-cookie";
 
 const isRefreshRequest = (operation: GraphQLRequest) => {
-  return operation.operationName === "refreshToken";
+  // ヘッダーにrefreshTokenを使う場合true
+  return (
+    operation.operationName === "refreshToken" ||
+    operation.operationName === "logout"
+  );
 };
 // Returns accesstoken if opoeration is not a refresh token request
 const returnTokenDependingOnOperation = (operation: GraphQLRequest) => {

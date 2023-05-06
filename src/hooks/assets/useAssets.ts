@@ -25,8 +25,6 @@ export function useAssets() {
       }
     }
   `;
-  // ログイン情報
-  const email = "mikiwhigh1274@gmail.com";
   // 資産情報算出
   const { data, loading, refetch } = useQuery(GET_ASSETS, {
     variables: { day: 7 },

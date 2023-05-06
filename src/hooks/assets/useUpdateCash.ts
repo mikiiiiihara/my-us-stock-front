@@ -22,8 +22,6 @@ export function useUpdateCash() {
       }
     }
   `;
-  // ユーザー情報を取得
-  const email = "mikiwhigh1274@gmail.com";
   const [updateCash, loading] = useMutation(UPDATE_CASH);
   const executeUpdateCash = async (
     cashUSD: number,

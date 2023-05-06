@@ -6,12 +6,22 @@ import Image from "next/image";
 import { Button } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
 import { NAVIGATION_LIST } from "../../../constants/navigation";
+import { useAuth } from "../../../hooks/auth/useAuth";
+import { useRouter } from "next/router";
 type Props = {
   title: string;
+  userName?: string;
+  isLogined: boolean;
 };
 
-const HeaderComponent: FC<Props> = ({ title }) => {
-  const email = "mikiwhigh1274@gmail.com";
+const HeaderComponent: FC<Props> = ({ title, userName, isLogined }) => {
+  const { executeLogout } = useAuth();
+  const router = useRouter();
+  const logout = async () => {
+    await executeLogout();
+    // router.push("/");
+    router.reload();
+  };
   return (
     <div className={styles.header}>
       <Head>
@@ -23,18 +33,17 @@ const HeaderComponent: FC<Props> = ({ title }) => {
         />
         <link rel="icon" href="/icon.png" />
       </Head>
-      <div className={styles.myAccount}>
-        <p>{email} </p>
-        <br />
-        {/* TODO: ログアウト機能をAPI側で実装→それを叩くようにする */}
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={() => console.log("signOut")}
-        >
-          Sign out
-        </Button>
-      </div>
+      {isLogined ? (
+        <div className={styles.myAccount}>
+          <p>{userName ?? ""} </p>
+          <br />
+          <Button variant="primary" size="sm" onClick={logout}>
+            Sign out
+          </Button>
+        </div>
+      ) : (
+        <></>
+      )}
       <Nav
         className={`${styles.navbar} navbar-expand-lg navbar-dark bg-dark d-none-tb`}
       >

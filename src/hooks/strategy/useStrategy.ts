@@ -14,7 +14,6 @@ export const useStrategy = () => {
       }
     }
   `;
-  const email = "mikiwhigh1274@gmail.com";
   const { data: strategyData, loading: getLoading } = useQuery(GET_STRATEGY);
   const data: Strategy = strategyData?.getStrategy;
   // 取得関数

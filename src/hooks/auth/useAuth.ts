@@ -25,6 +25,12 @@ const LOGIN = gql`
   }
 `;
 
+const LOGOUT = gql`
+  mutation logout {
+    logout
+  }
+`;
+
 export const useAuth = () => {
   const { data: meData, loading } = useQuery(GET_USER);
   // 取得関数
@@ -33,6 +39,7 @@ export const useAuth = () => {
     if (loading) return { user: HOOKS_STATE.LOADING };
     return { user };
   };
+  // ログイン
   const [login, { data }] = useMutation<{
     login: Token;
   }>(LOGIN);
@@ -57,15 +64,19 @@ export const useAuth = () => {
     Cookies.set("refreshToken", refreshToken);
   }, [data]);
 
-  const logout = async () => {
+  // ログアウト
+  const [logout] = useMutation(LOGOUT);
+  // ログアウト関数
+  const executeLogout = async () => {
+    await logout();
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
-    // ページをリロード
+    // トップへ戻る
     router.push("/");
   };
   return {
     getUser,
     requestLogin,
-    logout,
+    executeLogout,
   };
 };
