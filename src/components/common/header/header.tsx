@@ -19,7 +19,6 @@ const HeaderComponent: FC<Props> = ({ title, userName, isLogined }) => {
   const router = useRouter();
   const logout = async () => {
     await executeLogout();
-    // router.push("/");
     router.reload();
   };
   return (
@@ -35,7 +34,7 @@ const HeaderComponent: FC<Props> = ({ title, userName, isLogined }) => {
       </Head>
       {isLogined ? (
         <div className={styles.myAccount}>
-          <p>{userName ?? ""} </p>
+          <p>{userName ? `${userName}でログイン中` : ""} </p>
           <br />
           <Button variant="primary" size="sm" onClick={logout}>
             Sign out
