@@ -31,7 +31,6 @@ export const TopContentComponent = () => {
     // ユーザー新規登録処理
     if (!isLogined) {
       // name入力ない場合は空文字で登録
-      console.log(email, name ?? "", password);
       await executeCreateUser(email, name ?? "", password);
     }
     // ログイン処理
