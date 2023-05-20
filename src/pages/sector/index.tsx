@@ -1,12 +1,9 @@
 import { GetStaticProps } from "next";
-import { Header } from "../../components/common/header/header";
 import { SectorContent } from "../../contents/sector/sectorContent";
 import { gql } from "@apollo/client";
 import { MarketData } from "../../types/marketData.type";
 import { createApolloClient } from "../../lib/apolloClient/apollo-client";
-import { useAuth } from "../../hooks/auth/useAuth";
-import { Loading } from "../../components/common/loading/loading";
-import { HOOKS_STATE } from "../../constants/hooks";
+import { NextHead } from "../../components/common/next-head/nextHead";
 
 type Response = {
   getMarketPrices: MarketData[];
@@ -52,17 +49,9 @@ const GET_SECTORS = gql`
 
 const Sector: React.FC<SSGProps> = (props) => {
   const { sectors } = props;
-  const { getUser } = useAuth();
-  const { user } = getUser();
-  if (user === HOOKS_STATE.LOADING) return <Loading />;
-  const isLogined = user != null;
   return (
     <>
-      <Header
-        title="My US Stock Portfolio | Sector"
-        userName={user?.name}
-        isLogined={isLogined}
-      />
+      <NextHead title="My US Stock Portfolio | Sector" />
       <SectorContent sectors={sectors} />
     </>
   );

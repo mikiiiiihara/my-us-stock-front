@@ -10,6 +10,8 @@ import { convertYYYYMMDD } from "../../functions/util/convertYYYYMMDD";
 import { useAssets } from "../../hooks/assets/useAssets";
 import CashContent from "./cash/cashContent";
 import { useGetUSDJPY } from "../../hooks/export/useGetUSDJPY";
+import { Header } from "../../components/common/header/header";
+import { useUser } from "../../hooks/user/userUser";
 
 const DISPLAY_MODE = {
   oneWeek: 7,
@@ -28,6 +30,9 @@ export const AssetContent = () => {
     executeCreateTodayAsset,
   } = useAssets();
   const { assets } = getAssets();
+  const { getUserName } = useUser();
+  // ユーザー名取得
+  const userName = getUserName();
   // 画面切り替え用
   const changeDisplay = async (day: number) => {
     await changeAssetLength(day);
@@ -44,7 +49,11 @@ export const AssetContent = () => {
   let todayCrypto = 0;
   let xDataList: string[] = new Array();
   let yDataList: number[] = new Array();
-  if (currentUsd === HOOKS_STATE.LOADING || assets === HOOKS_STATE.LOADING)
+  if (
+    userName === HOOKS_STATE.LOADING ||
+    currentUsd === HOOKS_STATE.LOADING ||
+    assets === HOOKS_STATE.LOADING
+  )
     return <Loading />;
   // 当日の資産情報を更新
   const update = async () => {
@@ -94,6 +103,7 @@ export const AssetContent = () => {
   return (
     <>
       <Center>
+        <Header userName={userName} />
         <div className="content">
           <h1>資産総額推移</h1>
           <div className="m-3">

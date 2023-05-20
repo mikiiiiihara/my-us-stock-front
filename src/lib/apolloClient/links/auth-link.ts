@@ -1,27 +1,17 @@
-import { GraphQLRequest } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
-import Cookies from "js-cookie";
+import { ApolloLink } from "@apollo/client";
+import { IncomingMessage } from "http";
 
-const isRefreshRequest = (operation: GraphQLRequest) => {
-  // ヘッダーにrefreshTokenを使う場合true
-  return (
-    operation.operationName === "refreshToken" ||
-    operation.operationName === "logout"
-  );
+export const createAuthLink = (accessToken: string, req?: IncomingMessage) => {
+  return new ApolloLink((operation, forward) => {
+    if (req) {
+      const headers = operation.getContext().headers || {};
+      operation.setContext({
+        headers: {
+          ...headers,
+          authorization: accessToken ? `Bearer ${accessToken}` : "",
+        },
+      });
+    }
+    return forward ? forward(operation) : null;
+  });
 };
-// Returns accesstoken if opoeration is not a refresh token request
-const returnTokenDependingOnOperation = (operation: GraphQLRequest) => {
-  if (isRefreshRequest(operation)) return Cookies.get("refreshToken") || "";
-  else return Cookies.get("accessToken") || "";
-};
-
-export const authLink = setContext((operation, { headers }) => {
-  let token = returnTokenDependingOnOperation(operation);
-
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : "",
-    },
-  };
-});

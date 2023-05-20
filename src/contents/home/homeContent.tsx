@@ -13,6 +13,8 @@ import { StrategyContent } from "./strategy/strategyContent";
 import { FxChangeButton } from "../../components/fx-change-button/fxChangeButton";
 import { useTickers } from "../../hooks/tickers/useTickers";
 import { useGetUSDJPY } from "../../hooks/export/useGetUSDJPY";
+import { Header } from "../../components/common/header/header";
+import { useUser } from "../../hooks/user/userUser";
 
 const DISPLAY_MODE = {
   summary: "summary",
@@ -27,6 +29,9 @@ export const HomeContentComponent = () => {
     executeUpdateTicker,
     executeDeleteTicker,
   } = useTickers();
+  const { getUserName } = useUser();
+  // ユーザー名取得
+  const userName = getUserName();
   // 為替情報取得
   const { currentUsd } = useGetUSDJPY();
   // 保有株式総額を取得
@@ -46,7 +51,7 @@ export const HomeContentComponent = () => {
   const ShowUpdModal = useCallback(() => setUpdModal(true), []);
   const ShowAddModal = useCallback(() => setAddModal(true), []);
 
-  if (tickers === HOOKS_STATE.LOADING) {
+  if (userName === HOOKS_STATE.LOADING || tickers === HOOKS_STATE.LOADING) {
     return (
       <Center>
         <div className="content">
@@ -70,6 +75,7 @@ export const HomeContentComponent = () => {
   return (
     <>
       <Center>
+        <Header userName={userName} />
         <div className="content">
           <h1>
             保有株式総額: {fx}
