@@ -9,5 +9,5 @@ export default async function handler(
   let accessToken = "";
   const cookies = parse(req.headers.cookie || "");
   accessToken = cookies["accessToken"];
-  res.status(200).json({ accessToken });
+  res.status(200).json({ accessToken: accessToken ?? "" });
 }
