@@ -28,7 +28,9 @@ const Home = (props: Props) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const response = await fetch("/api/access-token");
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SELF_BASE_URL}/api/access-token`
+  );
   const data = await response.json();
   const accessToken = data.accessToken;
   return {
