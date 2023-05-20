@@ -16,7 +16,7 @@ export const createApolloClient = (
 ) => {
   const httpLink = new HttpLink({
     uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`, // GraphQL API エンドポイントを指定してください
-    credentials: "include",
+    credentials: "same-origin",
     headers: {
       // アプリ起動時→ログイン→取得したアクセストークンを、GraphQLリクエストヘッダーにデフォルトで設定する。
       Authorization: `Bearer ${accessToken}`,
