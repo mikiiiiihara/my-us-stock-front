@@ -1,5 +1,4 @@
 import router from "next/router";
-import { Header } from "../../components/common/header/header";
 import { HomeContent } from "../../contents/home/homeContent";
 import { GetServerSideProps } from "next";
 import { parse } from "cookie";
@@ -29,12 +28,9 @@ const Home = (props: Props) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  let accessToken = "";
-  if (context.req.headers.cookie) {
-    const cookies = parse(context.req.headers.cookie);
-    accessToken = cookies["accessToken"]; // Remove const before accessToken here
-  }
-
+  const response = await fetch("/api/access-token");
+  const data = await response.json();
+  const accessToken = data.accessToken;
   return {
     props: {
       accessToken,
