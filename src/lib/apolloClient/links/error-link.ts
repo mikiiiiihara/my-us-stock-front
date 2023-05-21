@@ -7,6 +7,11 @@ const executeRefreshToken = async () => {
     response = await fetch(
       `${process.env.NEXT_PUBLIC_SELF_BASE_URL}/api/refresh`
     );
+
+    // Check if the response was successful
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
   } catch (error) {
     console.error(error);
     // API処理に失敗した場合、ログイン画面に飛ばす
