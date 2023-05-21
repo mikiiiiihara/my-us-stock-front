@@ -26,10 +26,11 @@ export default async function handler(
     }
     const accessToken = response.data.accessToken;
     res.status(200).json({ accessToken });
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
+    const statusCode = error.response?.status || 500;
     res
-      .status(500)
+      .status(statusCode)
       .json({ message: "An error occurred while processing your request." });
   }
 }

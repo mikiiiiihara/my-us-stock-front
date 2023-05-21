@@ -2,9 +2,19 @@ import { FetchResult, Observable } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 
 const executeRefreshToken = async () => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SELF_BASE_URL}/api/refresh`
-  );
+  let response: any;
+  try {
+    response = await fetch(
+      `${process.env.NEXT_PUBLIC_SELF_BASE_URL}/api/refresh`
+    );
+  } catch (error) {
+    console.error(error);
+    // API処理に失敗した場合、ログイン画面に飛ばす
+    if (typeof window !== "undefined") {
+      window.location.href = "/";
+      return;
+    }
+  }
   const data = await response.json();
   return data.accessToken as string;
 };
@@ -35,6 +45,7 @@ export const errorLink = onError(
                 forward(operation).subscribe(subscriber);
               });
             });
+          default:
         }
       }
     }
