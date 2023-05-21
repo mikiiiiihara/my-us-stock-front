@@ -9,6 +9,8 @@ export default async function handler(
 ) {
   const cookies = parse(req.headers.cookie || "");
   try {
+    // cookieのやりとりをする場合はtrueにする必要あり
+    axios.defaults.withCredentials = true;
     const response = await axios.get<{ accessToken: string }>(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
       {
