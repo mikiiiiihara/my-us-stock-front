@@ -1,4 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "cookie";
 import axios from "axios";
@@ -9,13 +8,12 @@ export default async function handler(
 ) {
   const cookies = parse(req.headers.cookie || "");
   try {
-    // cookieのやりとりをする場合はtrueにする必要あり
-    axios.defaults.withCredentials = true;
     const response = await axios.get<{ accessToken: string }>(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
       {
+        withCredentials: true,
         headers: {
-          Authorization: `Bearer ${cookies["refreshToken"]}`,
+          Cookie: `refreshToken=${cookies["refreshToken"]};`,
         },
       }
     );
