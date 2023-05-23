@@ -5,7 +5,6 @@ export type Asset = {
   year: string;
   month: string;
   date: string;
-  addDate: string;
   updDate: string;
   cashUSD: number;
   cashJPY: number;

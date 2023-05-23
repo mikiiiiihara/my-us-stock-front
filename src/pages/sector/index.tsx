@@ -4,6 +4,8 @@ import { gql } from "@apollo/client";
 import { MarketData } from "../../types/marketData.type";
 import { createApolloClient } from "../../lib/apolloClient/apollo-client";
 import { NextHead } from "../../components/common/next-head/nextHead";
+import { useRouter } from "next/router";
+import { Loading } from "../../components/common/loading/loading";
 
 type Response = {
   getMarketPrices: MarketData[];
@@ -49,6 +51,12 @@ const GET_SECTORS = gql`
 
 const Sector: React.FC<SSGProps> = (props) => {
   const { sectors } = props;
+  const router = useRouter();
+
+  if (router.isFallback) {
+    // フォールバック用ページを返す
+    return <Loading />;
+  }
   return (
     <>
       <NextHead title="My US Stock Portfolio | Sector" />
@@ -64,6 +72,8 @@ export const getStaticProps: GetStaticProps<SSGProps> = async (context) => {
   return {
     //ここで返したpropsを元にページコンポーネントを描画する
     props: { sectors: data.getMarketPrices },
+    // ページの有効期間を秒単位で設定
+    revalidate: 60,
   };
 };
 export default Sector;

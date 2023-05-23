@@ -10,7 +10,6 @@ export function useUpdateCash() {
         year
         month
         date
-        addDate
         updDate
         cashUSD
         cashJPY

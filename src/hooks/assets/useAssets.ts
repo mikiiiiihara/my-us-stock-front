@@ -13,7 +13,6 @@ export function useAssets() {
         year
         month
         date
-        addDate
         updDate
         cashUSD
         cashJPY
@@ -50,7 +49,6 @@ export function useAssets() {
         year
         month
         date
-        addDate
         updDate
         cashUSD
         cashJPY
@@ -99,7 +97,6 @@ export function useAssets() {
         year
         month
         date
-        addDate
         updDate
         cashUSD
         cashJPY
@@ -126,7 +123,6 @@ export function useAssets() {
                   year
                   month
                   date
-                  addDate
                   updDate
                   cashUSD
                   cashJPY

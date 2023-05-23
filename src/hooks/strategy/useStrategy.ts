@@ -9,7 +9,6 @@ export const useStrategy = () => {
       getStrategy {
         id
         text
-        addDate
         updDate
       }
     }
@@ -26,7 +25,6 @@ export const useStrategy = () => {
       updateStrategy(input: $input) {
         id
         text
-        addDate
         updDate
       }
     }
