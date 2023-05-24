@@ -1,5 +1,4 @@
 import { onError } from "@apollo/client/link/error";
-import axios, { AxiosError } from "axios";
 
 const executeRefreshToken = async () => {
   fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, {
@@ -32,22 +31,21 @@ const executeRefreshToken = async () => {
     });
 };
 
-export const errorLink = onError(
-  ({ graphQLErrors, networkError, operation, forward }) => {
-    if (graphQLErrors) {
-      for (let err of graphQLErrors) {
-        switch (err.extensions.code) {
-          case "UNAUTHENTICATED":
-            executeRefreshToken();
-            break;
-          default:
-            // TODO: エラー画面に飛ばすようにしたい
-            console.log(`[GraphQL error]: ${err.message}`);
-            break;
-        }
+export const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    for (let err of graphQLErrors) {
+      switch (err.extensions.code) {
+        case "UNAUTHENTICATED":
+          executeRefreshToken();
+          break;
+        default:
+          console.log(`[GraphQL error]: ${err.message}`);
+          // ポップアップを表示
+          alert("市場価格取得に失敗しました。しばらくしたら再度お試しください");
+          break;
       }
     }
-
-    if (networkError) console.log(`[Network error]: ${networkError}`);
   }
-);
+
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});

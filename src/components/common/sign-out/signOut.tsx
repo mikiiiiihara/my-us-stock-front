@@ -1,12 +1,24 @@
-import router from "next/router";
 import { Button } from "react-bootstrap";
 
 const SignOut = () => {
   const executeSignOut = async () => {
     // ログアウトAPIを実行
-    await fetch("/api/logout");
-    // ログイン画面に遷移
-    router.push("/");
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+      credentials: "include", // Send the cookies
+      // Other settings...
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data.success) {
+          // Redirect to the login page
+          window.location.href = "/";
+        } else {
+          // Handle the error
+          console.error(data.message);
+        }
+      });
   };
   return (
     <Button variant="primary" size="sm" onClick={executeSignOut}>
