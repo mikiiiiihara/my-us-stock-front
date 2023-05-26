@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { Center } from "../../components/common/center/center";
 import { MarketData } from "../../types/marketData.type";
 import { SectorPanel } from "../../components/sector/sectorPanel";
-import { DISPLAY_SECTOR_LIST } from "../../constants/displaySectorList";
 import { getTickerRealData } from "../../functions/export/getTickerRealData";
 import { Header } from "../../components/common/header/header";
 
@@ -11,8 +10,7 @@ type Props = {
 };
 
 export const SectorContent: FC<Props> = ({ sectors }) => {
-  const allSectorList = DISPLAY_SECTOR_LIST;
-  const allSectorData = getTickerRealData(allSectorList, sectors);
+  const allSectorData = getTickerRealData(sectors);
   return (
     <Center>
       <Header />

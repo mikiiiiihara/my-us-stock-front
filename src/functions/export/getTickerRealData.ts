@@ -2,15 +2,12 @@ import { SectorTickerList } from "../../constants/sectorTickerList";
 import { MarketData } from "../../types/marketData.type";
 import { TickerRealData } from "../../types/tickerRealData.type";
 
-export const getTickerRealData = (
-  tickerList: string[],
-  realData: MarketData[]
-): TickerRealData[] => {
+export const getTickerRealData = (realData: MarketData[]): TickerRealData[] => {
   let tickerRealData: TickerRealData[] = new Array();
   if (realData != undefined) {
     for (let i = 0; i < realData.length; i++) {
       const ticker = SectorTickerList.find(
-        (e) => e.ticker === tickerList[i]
+        (e) => e.ticker === realData[i].ticker
       )?.describe;
       const item: TickerRealData = {
         ticker: ticker || "",
