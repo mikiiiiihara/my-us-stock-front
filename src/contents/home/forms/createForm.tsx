@@ -9,9 +9,6 @@ type Props = {
     ticker: string,
     getPrice: number,
     quantity: number,
-    dividend: number,
-    dividendTime: number,
-    dividendFirstTime: number,
     sector: string,
     usdjpy: number,
     currentPrice: number,
@@ -24,9 +21,6 @@ type FormData = {
   ticker: string;
   getPrice: string;
   quantity: string;
-  dividend: string;
-  dividendTime: string;
-  dividendFirstTime: string;
   sector: string;
   usdjpy: string;
 };
@@ -43,23 +37,11 @@ const CreateFormComponent: React.FC<Props> = ({
   const { register, handleSubmit } = useForm<FormData>();
 
   const onSubmit = handleSubmit(
-    async ({
-      ticker,
-      getPrice,
-      quantity,
-      dividend,
-      dividendTime,
-      dividendFirstTime,
-      sector,
-      usdjpy,
-    }) => {
+    async ({ ticker, getPrice, quantity, sector, usdjpy }) => {
       await executeCreateTicker(
         ticker,
         parseFloat(getPrice),
         parseInt(quantity),
-        parseFloat(dividend),
-        parseInt(dividendTime),
-        parseInt(dividendFirstTime),
         sector,
         parseFloat(usdjpy),
         // 新規登録時、マーケットデータの取得は実施せず、ダミー値を表示
@@ -104,41 +86,6 @@ const CreateFormComponent: React.FC<Props> = ({
             className="form-control"
             {...register("quantity", { required: true })}
             placeholder="例：4"
-          />
-        </div>
-        <div className="form-group mb-3">
-          <label htmlFor="dividend">配当/年</label>
-          <input
-            type="double"
-            className="form-control"
-            {...register("dividend", { required: true })}
-            placeholder="例：0.92"
-          />
-        </div>
-        <div className="form-group mb-3">
-          <label htmlFor="dividendTime">配当回数/年</label>
-          <p className="text-muted small text-secondary">
-            ※米国株の場合は主に年４回（その場合4を入力）
-          </p>
-          <input
-            type="int"
-            className="form-control"
-            {...register("dividendTime", { required: true })}
-            placeholder="例：4"
-          />
-        </div>
-        <div className="form-group mb-3">
-          <label htmlFor="dividendFirstTime">初回配当権利月</label>
-          <p className="text-muted small text-secondary">
-            ※AAPL:2/5/8/11月が配当権利月なため、
-            <br />
-            2を入力
-          </p>
-          <input
-            type="int"
-            className="form-control"
-            {...register("dividendFirstTime", { required: true })}
-            placeholder="例：2"
           />
         </div>
         <div className="form-group mb-3">

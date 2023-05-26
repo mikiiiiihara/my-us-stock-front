@@ -7,8 +7,6 @@ export type TickerDetail = {
   priceGets: number;
   priceRate: number;
   dividend: number;
-  dividendTime: number;
-  dividendFirstTime: number;
   sumOfDividend: number;
   dividendRate: number;
   sector: string;

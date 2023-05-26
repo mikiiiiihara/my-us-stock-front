@@ -5,8 +5,6 @@ export type Ticker = {
   getPrice: number;
   quantity: number;
   dividend: number;
-  dividendTime: number;
-  dividendFirstTime: number;
   sector: string;
   usdjpy: number;
   currentPrice: number;

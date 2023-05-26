@@ -62,7 +62,7 @@ export const HomeContentComponent = () => {
     );
   }
 
-  const { tickerDetail, priceTotal, getPriceTotal, dividendTotal } = tickers;
+  const { tickerDetail, priceTotal, getPriceTotal } = tickers;
   const balanceTotal = Math.round((priceTotal - getPriceTotal) * 10) / 10;
   const balanceRateTotal = ((balanceTotal / getPriceTotal) * 100).toFixed(2);
   const balanceRateClass =
@@ -85,10 +85,6 @@ export const HomeContentComponent = () => {
             損益: {fx}
             {balanceTotal.toLocaleString()}（{balanceRateTotal}
             %）
-          </p>
-          <p>
-            年配当金総額： {fx}
-            {dividendTotal.toLocaleString()}
           </p>
           <p>（USDJPY: {currentUsd}）</p>
           <div className="m-3">

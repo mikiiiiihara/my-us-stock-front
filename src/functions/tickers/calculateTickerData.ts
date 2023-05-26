@@ -21,8 +21,6 @@ export const calculateTickerData = (
     const priceGets = tickers[i].priceGets;
     const priceRate = tickers[i].currentRate;
     const dividend = tickers[i].dividend * fx;
-    const dividendTime = tickers[i].dividendTime;
-    const dividendFirstTime = tickers[i].dividendFirstTime;
     const sector = tickers[i].sector;
 
     const sumOfDividend = quantity * (dividend * 0.71);
@@ -44,8 +42,6 @@ export const calculateTickerData = (
       sumOfDividend: Math.round(sumOfDividend * 100) / 100,
       dividendRate:
         Math.round(((dividend * 0.71 * 100) / getPrice) * 100) / 100,
-      dividendTime: dividendTime,
-      dividendFirstTime: dividendFirstTime,
       sector: sector,
       usdjpy: usdJpy,
       sumOfGetPrice: sumOfGetPrice,

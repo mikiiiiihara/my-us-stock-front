@@ -18,7 +18,6 @@ type Props = {
     id: number,
     getPrice: number,
     quantity: number,
-    dividend: number,
     usdjpy: number,
     currentPrice: number,
     priceGets: number,
@@ -30,7 +29,6 @@ interface FormData {
   id: string;
   getPrice: string;
   quantity: string;
-  dividend: string;
   usdjpy: string;
 }
 
@@ -54,47 +52,44 @@ const UpdateFormComponent: React.FC<Props> = ({
     setShowModal(false);
   };
 
-  const onSubmit = handleSubmit(
-    async ({ id, getPrice, quantity, dividend, usdjpy }) => {
-      const intQuantity = parseInt(quantity);
-      const parsedToNumberId = parseInt(id);
-      // 更新時、マーケットデータの取得は実施せず、入力時の値を表示
-      // なんらかの理由で取得できなかった場合は新規登録時と同じ対応
-      const myTicker = tickers.find((ticker) => ticker.id.toString() === id);
-      // 現在価格
-      const currentPrice = myTicker ? myTicker.price : parseFloat(getPrice);
-      const priceGets = myTicker ? myTicker.priceGets : 0;
-      const priceRate = myTicker ? myTicker.priceRate : 0;
-      if (intQuantity == 0) {
-        // 削除
-        await executeDeleteTicker(
-          parsedToNumberId,
-          currentPrice,
-          priceGets,
-          priceRate
-        );
-        setMsg("削除中...");
-      } else {
-        // 更新
-        await executeUpdateTicker(
-          parsedToNumberId,
-          parseFloat(getPrice),
-          intQuantity,
-          parseFloat(dividend),
-          parseFloat(usdjpy),
-          currentPrice,
-          priceGets,
-          priceRate
-        );
-        setMsg("更新中...");
-      }
-      await new Promise((s) => {
-        setTimeout(s, 300);
-      });
-      closeModal();
-      setMsg("");
+  const onSubmit = handleSubmit(async ({ id, getPrice, quantity, usdjpy }) => {
+    const intQuantity = parseInt(quantity);
+    const parsedToNumberId = parseInt(id);
+    // 更新時、マーケットデータの取得は実施せず、入力時の値を表示
+    // なんらかの理由で取得できなかった場合は新規登録時と同じ対応
+    const myTicker = tickers.find((ticker) => ticker.id.toString() === id);
+    // 現在価格
+    const currentPrice = myTicker ? myTicker.price : parseFloat(getPrice);
+    const priceGets = myTicker ? myTicker.priceGets : 0;
+    const priceRate = myTicker ? myTicker.priceRate : 0;
+    if (intQuantity == 0) {
+      // 削除
+      await executeDeleteTicker(
+        parsedToNumberId,
+        currentPrice,
+        priceGets,
+        priceRate
+      );
+      setMsg("削除中...");
+    } else {
+      // 更新
+      await executeUpdateTicker(
+        parsedToNumberId,
+        parseFloat(getPrice),
+        intQuantity,
+        parseFloat(dividend),
+        parseFloat(usdjpy),
+        currentPrice,
+        priceGets
+      );
+      setMsg("更新中...");
     }
-  );
+    await new Promise((s) => {
+      setTimeout(s, 300);
+    });
+    closeModal();
+    setMsg("");
+  });
   return (
     <div>
       <h4 className="mb-3">Update ticker Price</h4>
@@ -147,16 +142,6 @@ const UpdateFormComponent: React.FC<Props> = ({
             {...register("quantity")}
             placeholder="例：6"
             defaultValue={quantity}
-          />
-        </div>
-        <div className="form-group mb-3">
-          <label htmlFor="dividend">配当/年</label>
-          <input
-            type="double"
-            className="form-control"
-            {...register("dividend")}
-            placeholder="例：0.92"
-            defaultValue={dividend}
           />
         </div>
         <div className="form-group mb-3">

@@ -1,26 +1,26 @@
 import { DivData } from "../../types/divData.type";
-import { TickerDetail } from "../../types/tickerDetail.type";
+import { Dividend } from "../../types/dividend.type";
 
-export const calculateDividendCalendar = (tickerDetail: TickerDetail[]) => {
+export const calculateDividendCalendar = (
+  currentUsd: number,
+  dividendList: Dividend[]
+) => {
   let result: DivData[] = new Array();
-  for (let data of tickerDetail) {
-    const ticker = data.ticker;
-    const dividend = data.sumOfDividend;
+  for (let data of dividendList) {
+    const { ticker, dividend, dividendMonth, quantity, dividendTime } = data;
     if (dividend == 0) {
       continue;
     }
-    const dividendTime = data.dividendTime;
-    const dividendFirstTime = data.dividendFirstTime;
-    // 頻度の計算
-    const interval = 12 / dividendTime;
     // 配当月管理用
-    let count = dividendFirstTime;
+    let count = dividendMonth[0];
+    // 間隔
+    const interval = 12 / dividendTime;
     //１回あたり配当
-    const initDividend = Math.round((dividend / dividendTime) * 100) / 100;
     let dividendData: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     for (let i = 1; i <= 12; i++) {
       if (count == i) {
-        dividendData[i - 1] = initDividend;
+        dividendData[i - 1] =
+          Math.round(dividend * quantity * 0.71 * currentUsd * 100) / 100;
         count += interval;
       }
     }

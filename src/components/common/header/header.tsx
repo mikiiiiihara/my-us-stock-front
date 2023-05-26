@@ -31,6 +31,11 @@ const HeaderComponent: FC<Props> = ({ userName }) => {
           </Link>
           <ul className={`navbar-nav mr-auto float-left ${styles.subMenu}`}>
             <li className="nav-item">
+              <Link href={NAVIGATION_LIST.DIVIDEND} className="nav-link">
+                Dividend
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link href={NAVIGATION_LIST.ASSET} className="nav-link">
                 Asset
               </Link>
@@ -55,6 +60,18 @@ const HeaderComponent: FC<Props> = ({ userName }) => {
                 alt="logo"
               />
               <p>Home</p>
+            </div>
+          </Link>
+          <Link href={NAVIGATION_LIST.DIVIDEND}>
+            <div className={styles.navSpItem}>
+              <Image
+                src="/dividend.png"
+                width={36}
+                height={36}
+                style={{ objectFit: "contain" }}
+                alt="logo"
+              />
+              <p>Dividend</p>
             </div>
           </Link>
           <Link href={NAVIGATION_LIST.ASSET}>

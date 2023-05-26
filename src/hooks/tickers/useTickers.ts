@@ -13,11 +13,9 @@ export const useTickers = () => {
       getTickers {
         id
         ticker
+        dividend
         getPrice
         quantity
-        dividend
-        dividendTime
-        dividendFirstTime
         sector
         usdjpy
         currentPrice
@@ -53,11 +51,9 @@ export const useTickers = () => {
       createTicker(input: $input) {
         id
         ticker
+        dividend
         getPrice
         quantity
-        dividend
-        dividendTime
-        dividendFirstTime
         sector
         usdjpy
         currentPrice
@@ -78,11 +74,9 @@ export const useTickers = () => {
                 fragment NewTicker on Ticker {
                   id
                   ticker
+                  dividend
                   getPrice
                   quantity
-                  dividend
-                  dividendTime
-                  dividendFirstTime
                   sector
                   usdjpy
                   currentPrice
@@ -103,9 +97,6 @@ export const useTickers = () => {
       ticker: string,
       getPrice: number,
       quantity: number,
-      dividend: number,
-      dividendTime: number,
-      dividendFirstTime: number,
       sector: string,
       usdjpy: number,
       currentPrice: number,
@@ -118,9 +109,6 @@ export const useTickers = () => {
             ticker,
             getPrice,
             quantity,
-            dividend,
-            dividendTime,
-            dividendFirstTime,
             sector,
             usdjpy,
             currentPrice,
@@ -138,11 +126,9 @@ export const useTickers = () => {
       updateTicker(input: $input) {
         id
         ticker
+        dividend
         getPrice
         quantity
-        dividend
-        dividendTime
-        dividendFirstTime
         sector
         usdjpy
         currentPrice
@@ -158,7 +144,6 @@ export const useTickers = () => {
       id: number,
       getPrice: number,
       quantity: number,
-      dividend: number,
       usdjpy: number,
       currentPrice: number,
       priceGets: number,
@@ -170,7 +155,6 @@ export const useTickers = () => {
             id,
             getPrice,
             quantity,
-            dividend,
             usdjpy,
             currentPrice,
             priceGets,
@@ -191,8 +175,6 @@ export const useTickers = () => {
         getPrice
         quantity
         dividend
-        dividendTime
-        dividendFirstTime
         sector
         usdjpy
         currentPrice
@@ -215,7 +197,7 @@ export const useTickers = () => {
       });
     },
   });
-  // 保有株式情報を更新する関数
+  // 保有株式情報を削除する関数
   const executeDeleteTicker = useCallback(
     async (
       id: number,
