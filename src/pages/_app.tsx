@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.css";
 import { AppProps } from "next/app";
@@ -6,7 +7,7 @@ import { ApolloProvider } from "@apollo/client";
 import { createApolloClient } from "../lib/apolloClient/apollo-client";
 
 function App({ Component, pageProps }: AppProps) {
-  const apolloClient = createApolloClient();
+  const apolloClient = useMemo(() => createApolloClient(), []);
   return (
     <ApolloProvider client={apolloClient}>
       <TickerProvider>
