@@ -6,7 +6,6 @@ import {
   ApolloLink,
 } from "@apollo/client";
 import { errorLink } from "./links/error-link";
-import { createAuthLink } from "./links/auth-link";
 
 export const createApolloClient = () => {
   const httpLink = new HttpLink({
@@ -14,10 +13,8 @@ export const createApolloClient = () => {
     credentials: "include",
   });
 
-  const authLink = createAuthLink();
-
   return new ApolloClient({
-    link: ApolloLink.from([errorLink, authLink, httpLink]),
+    link: ApolloLink.from([errorLink, httpLink]),
     cache: new InMemoryCache(),
   });
 };
