@@ -18,15 +18,15 @@ const CashContent: FC<Props> = ({ cash, crypto, stock }) => {
   };
   const values = [
     {
-      name: "cash",
+      name: "現金",
       value: cash,
     },
     {
-      name: "crypto",
+      name: "暗号通貨",
       value: crypto,
     },
     {
-      name: "stock",
+      name: "株式",
       value: stock,
     },
   ];

@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import React from "react";
 import { Header } from "../../components/common/header/header";
 import { useUser } from "../../hooks/user/userUser";
@@ -13,6 +12,8 @@ import { themeDefault } from "../../constants/themeColor";
 import { DivData } from "../../types/divData.type";
 import { calculateDividendCalendar } from "../../functions/dividend/calculateDividendCalendar";
 import { FxChangeButton } from "../../components/fx-change-button/fxChangeButton";
+import { Pie } from "../../components/graph/pie";
+import { PieData } from "../../types/pieData.type";
 
 export const DividendContent = () => {
   const { fx, changeFx } = useTickerContext();
@@ -43,17 +44,32 @@ export const DividendContent = () => {
   });
   const displayDividendTotal =
     fx === "$" ? dividendTotal : dividendTotal * currentUsd;
+  const pieDataOfDividend: PieData[] = dividendList
+    .map((dividend) => ({
+      name: dividend.ticker,
+      y: dividend.dividendTotal * dividend.quantity,
+    }))
+    .sort(function (a, b) {
+      if (a.y > b.y) return -1;
+      if (a.y < b.y) return 1;
+      return 0;
+    });
   return (
     <>
       <Center>
         <Header userName={userName} />
         <div className="content">
-          <h1>配当推移(仮)</h1>
+          <h1>配当金情報(仮)</h1>
           <p>
             年配当金総額： {fx}
             {displayDividendTotal.toLocaleString()}
           </p>
           <p>（USDJPY: {currentUsd}）</p>
+          <Pie
+            pieData={pieDataOfDividend}
+            themeColor={themeDefault}
+            background="#343a40"
+          />
           <StackedColumn
             divData={divData}
             themeColor={themeDefault}
