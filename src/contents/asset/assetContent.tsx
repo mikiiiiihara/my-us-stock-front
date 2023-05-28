@@ -17,11 +17,14 @@ const DISPLAY_MODE = {
   oneWeek: 7,
   oneMonth: 30,
   threeMonthes: 90,
+  all: undefined,
 };
 
 export const AssetContent = () => {
   //表示切り替え用
-  const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.oneWeek);
+  const [displayMode, setDisplayMode] = useState<number | undefined>(
+    DISPLAY_MODE.oneWeek
+  );
   // 資産情報取得
   const {
     getAssets,
@@ -34,7 +37,7 @@ export const AssetContent = () => {
   // ユーザー名取得
   const userName = getUserName();
   // 画面切り替え用
-  const changeDisplay = async (day: number) => {
+  const changeDisplay = async (day?: number) => {
     await changeAssetLength(day);
     setDisplayMode(day);
   };
@@ -100,13 +103,40 @@ export const AssetContent = () => {
         todayAsset.total - todayAsset.asset - todayAsset.cashJPY - todayCashUSD;
     }
   }
+  // 前日比の差分
+  const priceGap =
+    assets.length > 1
+      ? assets[assets.length - 1].total - assets[assets.length - 2].total
+      : 0;
+  // 前日比(%)の計算
+  const priceRate = priceGap / assets[assets.length - 2].total;
+  const priceRateBalance = priceRate > 0 ? "text-success" : "text-danger";
+  const balanceIcon = priceRate > 0 ? "+" : "-";
   return (
     <>
       <Center>
         <Header userName={userName} />
         <div className="content">
           <h1>資産総額推移</h1>
+          <p>
+            資産総額：¥
+            {assets[assets.length - 1].total
+              ? Math.round(
+                  (assets[assets.length - 1].total * 10) / 10
+                ).toLocaleString()
+              : ""}
+            <p className={priceRateBalance}>
+              前日比:{balanceIcon}
+              {priceGap.toLocaleString()}({balanceIcon}
+              {(Math.round(priceRate * 100) / 100).toLocaleString()}%)
+            </p>
+          </p>
           <div className="m-3">
+            <PrimaryButton
+              content="全期間"
+              notSelected={displayMode !== DISPLAY_MODE.all}
+              onClick={() => changeDisplay(DISPLAY_MODE.all)}
+            />
             <PrimaryButton
               content="3ヶ月"
               notSelected={displayMode !== DISPLAY_MODE.threeMonthes}

@@ -5,7 +5,7 @@ import { Asset } from "../../types/asset.type";
 export function useAssets() {
   // 取得
   const GET_ASSETS = gql`
-    query GetAssets($day: Int!) {
+    query GetAssets($day: Int) {
       getAssets(day: $day) {
         id
         total
@@ -36,7 +36,7 @@ export function useAssets() {
     };
   };
   // クエリ表示期間を変更する
-  const changeAssetLength = async (day: number) => {
+  const changeAssetLength = async (day?: number) => {
     await refetch({ day });
   };
   // 更新

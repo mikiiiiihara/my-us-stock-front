@@ -59,7 +59,7 @@ export const DividendContent = () => {
       <Center>
         <Header userName={userName} />
         <div className="content">
-          <h1>配当金情報(仮)</h1>
+          <h1>配当金情報</h1>
           <p>
             年配当金総額： {fx}
             {displayDividendTotal.toLocaleString()}
