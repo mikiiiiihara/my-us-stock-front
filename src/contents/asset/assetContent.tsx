@@ -111,7 +111,7 @@ export const AssetContent = () => {
   // 前日比(%)の計算
   const priceRate = priceGap / assets[assets.length - 2].total;
   const priceRateBalance = priceRate > 0 ? "text-success" : "text-danger";
-  const balanceIcon = priceRate > 0 ? "+" : "-";
+  const balanceIcon = priceRate > 0 ? "+" : "";
   return (
     <>
       <Center>
