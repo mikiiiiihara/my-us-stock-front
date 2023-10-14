@@ -77,10 +77,10 @@ const UpdateFormComponent: React.FC<Props> = ({
         parsedToNumberId,
         parseFloat(getPrice),
         intQuantity,
-        parseFloat(dividend),
         parseFloat(usdjpy),
         currentPrice,
-        priceGets
+        priceGets,
+        priceRate
       );
       setMsg("更新中...");
     }
