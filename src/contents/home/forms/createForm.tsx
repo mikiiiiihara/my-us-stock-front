@@ -3,20 +3,6 @@ import { useForm } from "react-hook-form";
 import { PrimaryButton } from "../../../components/primary-button/primaryButton";
 import { sectorList } from "../../../constants/sectorList";
 
-type Props = {
-  setShowModal: Function;
-  executeCreateTicker: (
-    ticker: string,
-    getPrice: number,
-    quantity: number,
-    sector: string,
-    usdjpy: number,
-    currentPrice: number,
-    priceGets: number,
-    currentRate: number
-  ) => Promise<void>; // 保有株式情報追加関数
-};
-
 type FormData = {
   ticker: string;
   getPrice: string;
@@ -25,7 +11,7 @@ type FormData = {
   usdjpy: string;
 };
 
-const CreateFormComponent: React.FC<Props> = ({
+const CreateFormComponent: React.FC<CreateTickerProps> = ({
   setShowModal,
   executeCreateTicker,
 }) => {

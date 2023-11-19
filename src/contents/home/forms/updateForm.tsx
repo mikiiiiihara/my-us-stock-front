@@ -3,28 +3,8 @@ import { useForm } from "react-hook-form";
 import { PrimaryButton } from "../../../components/primary-button/primaryButton";
 import { sortTickers } from "../../../functions/tickers/sortTickers";
 
-import { TickerDetail } from "../../../types/tickerDetail.type";
 import { DangerButton } from "../../../components/danger-button/dangerButton";
-
-type Props = {
-  setShowModal: Function;
-  tickers: TickerDetail[];
-  executeDeleteTicker: (
-    id: number,
-    currentPrice: number,
-    priceGets: number,
-    currentRate: number
-  ) => Promise<void>;
-  executeUpdateTicker: (
-    id: number,
-    getPrice: number,
-    quantity: number,
-    usdjpy: number,
-    currentPrice: number,
-    priceGets: number,
-    currentRate: number
-  ) => Promise<void>;
-};
+import { UpdateTickerProps } from "./props/updateTickerProps";
 
 interface FormData {
   id: string;
@@ -33,7 +13,7 @@ interface FormData {
   usdjpy: string;
 }
 
-const UpdateFormComponent: React.FC<Props> = ({
+const UpdateFormComponent: React.FC<UpdateTickerProps> = ({
   setShowModal,
   tickers,
   executeDeleteTicker,
@@ -92,7 +72,7 @@ const UpdateFormComponent: React.FC<Props> = ({
     setMsg("");
   });
 
-  // 新しい削除処理を実行する関数
+  // 削除処理のみを実行する関数
   const executeDelete = async () => {
     if (selectedId != null) {
       const myTicker = tickers.find(
