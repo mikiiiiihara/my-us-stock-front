@@ -4,6 +4,7 @@ import { PrimaryButton } from "../../../components/primary-button/primaryButton"
 import { sortTickers } from "../../../functions/tickers/sortTickers";
 
 import { TickerDetail } from "../../../types/tickerDetail.type";
+import { DangerButton } from "../../../components/danger-button/dangerButton";
 
 type Props = {
   setShowModal: Function;
@@ -42,8 +43,8 @@ const UpdateFormComponent: React.FC<Props> = ({
   // dafault values
   const [getPrice, setGetPrice] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [dividend, setDividend] = useState("");
   const [usdJpy, setUsdJpy] = useState("");
+  const [selectedId, setSelectedId] = useState<number | null>(null);
   // フォーム表示用
   const tickerDisplayList = sortTickers(tickers);
 
@@ -90,6 +91,29 @@ const UpdateFormComponent: React.FC<Props> = ({
     closeModal();
     setMsg("");
   });
+
+  // 新しい削除処理を実行する関数
+  const executeDelete = async () => {
+    if (selectedId != null) {
+      const myTicker = tickers.find(
+        (ticker) => ticker.id.toString() === selectedId.toString()
+      );
+      if (myTicker) {
+        await executeDeleteTicker(
+          selectedId,
+          myTicker.price,
+          myTicker.priceGets,
+          myTicker.priceRate
+        );
+        setMsg("削除中...");
+        await new Promise((s) => {
+          setTimeout(s, 300);
+        });
+        closeModal();
+        setMsg("");
+      }
+    }
+  };
   return (
     <div>
       <h4 className="mb-3">Update ticker Price</h4>
@@ -102,13 +126,14 @@ const UpdateFormComponent: React.FC<Props> = ({
           <select
             {...register("id", {
               onChange: (e) => {
+                const selectedValue = parseInt(e.target.value);
+                setSelectedId(selectedValue);
                 const ticker = tickerDisplayList.find(
-                  (element) => element.id == parseInt(e.target.value)
+                  (element) => element.id == selectedValue
                 );
                 if (ticker !== undefined) {
                   setGetPrice(ticker?.getPrice.toString());
                   setQuantity(ticker?.quantity.toString());
-                  setDividend(ticker?.dividend.toString());
                   setUsdJpy(ticker?.usdjpy.toString());
                 }
               },
@@ -157,6 +182,11 @@ const UpdateFormComponent: React.FC<Props> = ({
         <PrimaryButton content="更新" className="mb-3 w-100" type="submit" />
         <p>{msg}</p>
       </form>
+      <DangerButton
+        content="この銘柄を全売却"
+        className="mb-3 w-100"
+        onClick={executeDelete}
+      />
     </div>
   );
 };
