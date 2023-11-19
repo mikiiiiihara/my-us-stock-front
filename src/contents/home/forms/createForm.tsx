@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { PrimaryButton } from "../../../components/primary-button/primaryButton";
 import { sectorList } from "../../../constants/sectorList";
+import { CreateTickerProps } from "./props/createTickerProps";
 
 type FormData = {
   ticker: string;

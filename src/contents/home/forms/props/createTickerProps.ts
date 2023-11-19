@@ -1,4 +1,4 @@
-type CreateTickerProps = {
+export type CreateTickerProps = {
   setShowModal: Function;
   executeCreateTicker: (
     ticker: string,

@@ -109,9 +109,14 @@ export const AssetContent = () => {
       ? assets[assets.length - 1].total - assets[assets.length - 2].total
       : 0;
   // 前日比(%)の計算
-  const priceRate = priceGap / assets[assets.length - 2].total;
+  const priceRate =
+    (100 * priceGap) /
+    (assets.length > 1 ? assets[assets.length - 2].total : 0);
   const priceRateBalance = priceRate > 0 ? "text-success" : "text-danger";
   const balanceIcon = priceRate > 0 ? "+" : "";
+  const displayPriceRate = isNaN(priceRate)
+    ? "-"
+    : (Math.round(priceRate * 100) / 100).toLocaleString();
   return (
     <>
       <Center>
@@ -120,15 +125,15 @@ export const AssetContent = () => {
           <h1>資産総額推移</h1>
           <p>
             資産総額：¥
-            {assets[assets.length - 1].total
+            {assets[assets.length - 1] && assets[assets.length - 1].total
               ? Math.round(
                   (assets[assets.length - 1].total * 10) / 10
                 ).toLocaleString()
-              : ""}
+              : "0"}
             <p className={priceRateBalance}>
               前日比:{balanceIcon}
               {priceGap.toLocaleString()}({balanceIcon}
-              {(Math.round(priceRate * 100) / 100).toLocaleString()}%)
+              {displayPriceRate}%)
             </p>
           </p>
           <div className="m-3">
