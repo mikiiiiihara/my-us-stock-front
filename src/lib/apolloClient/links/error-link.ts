@@ -41,7 +41,7 @@ export const errorLink = onError(({ graphQLErrors, networkError }) => {
         default:
           console.log(`[GraphQL error]: ${err.message}`);
           // ポップアップを表示
-          alert("市場価格取得に失敗しました。しばらくしたら再度お試しください");
+          alert(`${err.message}`);
           break;
       }
     }
