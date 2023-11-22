@@ -3,6 +3,5 @@ export type Dividend = {
   dividend: number;
   dividendTotal: number;
   quantity: number;
-  dividendTime: number;
   dividendMonth: number[];
 };

@@ -13,7 +13,6 @@ export const useDividend = () => {
         dividend
         dividendTotal
         quantity
-        dividendTime
         dividendMonth
       }
     }
