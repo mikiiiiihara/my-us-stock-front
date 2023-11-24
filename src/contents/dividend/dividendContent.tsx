@@ -14,6 +14,7 @@ import { calculateDividendCalendar } from "../../functions/dividend/calculateDiv
 import { FxChangeButton } from "../../components/fx-change-button/fxChangeButton";
 import { Pie } from "../../components/graph/pie";
 import { PieData } from "../../types/pieData.type";
+import { Empty } from "../../components/graph/empty";
 
 export const DividendContent = () => {
   const { fx, changeFx } = useTickerContext();
@@ -39,9 +40,12 @@ export const DividendContent = () => {
     (dividend) => dividend.quantity * dividend.dividendTotal
   );
   // 配当総額
-  const dividendTotal = dividendAmountList.reduce((a, b) => {
-    return a + b;
-  });
+  const dividendTotal =
+    dividendAmountList.length > 0
+      ? dividendAmountList.reduce((a, b) => {
+          return a + b;
+        })
+      : 0;
   const displayDividendTotal =
     fx === "$" ? dividendTotal : dividendTotal * currentUsd;
   const pieDataOfDividend: PieData[] = dividendList
@@ -65,16 +69,22 @@ export const DividendContent = () => {
             {displayDividendTotal.toLocaleString()}
           </p>
           <p>（USDJPY: {currentUsd}）</p>
-          <Pie
-            pieData={pieDataOfDividend}
-            themeColor={themeDefault}
-            background="#343a40"
-          />
-          <StackedColumn
-            divData={divData}
-            themeColor={themeDefault}
-            background="#343a40"
-          />
+          {divData.length > 0 ? (
+            <>
+              <Pie
+                pieData={pieDataOfDividend}
+                themeColor={themeDefault}
+                background="#343a40"
+              />
+              <StackedColumn
+                divData={divData}
+                themeColor={themeDefault}
+                background="#343a40"
+              />
+            </>
+          ) : (
+            <Empty />
+          )}
         </div>
         <FxChangeButton currency={fx == "$" ? "$" : "¥"} onClick={changeFx} />
       </Center>

@@ -6,8 +6,6 @@ import { Modal } from "../../components/modal/modal";
 import { HOOKS_STATE } from "../../constants/hooks";
 import { PrimaryButton } from "../../components/primary-button/primaryButton";
 import { Center } from "../../components/common/center/center";
-import { TickerContent } from "../ticker/tickerContent";
-import { SummaryContent } from "./summary/summaryContent";
 import { useTickerContext } from "../../contexts/tickersContext";
 import { StrategyContent } from "./strategy/strategyContent";
 import { FxChangeButton } from "../../components/fx-change-button/fxChangeButton";
@@ -15,8 +13,10 @@ import { useTickers } from "../../hooks/tickers/useTickers";
 import { useGetUSDJPY } from "../../hooks/export/useGetUSDJPY";
 import { Header } from "../../components/common/header/header";
 import { useUser } from "../../hooks/user/userUser";
+import { HomeMain } from "./homeMain";
+import { Empty } from "../../components/graph/empty";
 
-const DISPLAY_MODE = {
+export const DISPLAY_MODE = {
   summary: "summary",
   detail: "detail",
 };
@@ -71,7 +71,6 @@ export const HomeContentComponent = () => {
       : Number(balanceRateTotal) < 0
       ? "text-danger"
       : "";
-
   return (
     <>
       <Center>
@@ -83,7 +82,8 @@ export const HomeContentComponent = () => {
           </h1>
           <p className={balanceRateClass}>
             損益: {fx}
-            {balanceTotal.toLocaleString()}（{balanceRateTotal}
+            {balanceTotal.toLocaleString()}（
+            {isNaN(Number(balanceRateTotal)) ? 0 : balanceRateTotal}
             %）
           </p>
           <p>（USDJPY: {currentUsd}）</p>
@@ -99,10 +99,14 @@ export const HomeContentComponent = () => {
               onClick={changeDisplayToDetail}
             />
           </div>
-          {displayMode === DISPLAY_MODE.summary ? (
-            <SummaryContent tickerDetail={tickerDetail} />
+          {tickerDetail.length > 0 ? (
+            <HomeMain
+              displayMode={displayMode}
+              tickerDetail={tickerDetail}
+              tickers={tickers}
+            />
           ) : (
-            <TickerContent tickers={tickers} />
+            <Empty />
           )}
           <PrimaryButton
             content="情報を変更"
