@@ -1,11 +1,11 @@
-import { AssetContent } from "../../contents/asset/assetContent";
 import { NextHead } from "../../components/common/next-head/nextHead";
+import { HomeContent } from "../../contents/home/homeContent";
 
 const Asset = () => {
   return (
     <>
-      <NextHead title="My US Stock Portfolio | Asset" />
-      <AssetContent />
+      <NextHead title="My US Stock Portfolio | Stock" />
+      <HomeContent />
     </>
   );
 };

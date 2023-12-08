@@ -37,7 +37,7 @@ const HeaderComponent: FC<Props> = ({ userName }) => {
             </li>
             <li className="nav-item">
               <Link href={NAVIGATION_LIST.ASSET} className="nav-link">
-                Asset
+                Stock
               </Link>
             </li>
             <li className="nav-item">
@@ -53,7 +53,7 @@ const HeaderComponent: FC<Props> = ({ userName }) => {
           <Link href={NAVIGATION_LIST.HOME}>
             <div className={styles.navSpItem}>
               <Image
-                src="/home.png"
+                src="/asset.png"
                 width={36}
                 height={36}
                 style={{ objectFit: "contain" }}
@@ -77,13 +77,13 @@ const HeaderComponent: FC<Props> = ({ userName }) => {
           <Link href={NAVIGATION_LIST.ASSET}>
             <div className={styles.navSpItem}>
               <Image
-                src="/asset.png"
+                src="/home.png"
                 width={36}
                 height={36}
                 style={{ objectFit: "contain" }}
                 alt="logo"
               />
-              <p>Asset</p>
+              <p>Stock</p>
             </div>
           </Link>
           <Link href={NAVIGATION_LIST.SECTOR}>
