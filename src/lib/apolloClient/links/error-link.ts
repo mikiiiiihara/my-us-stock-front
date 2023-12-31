@@ -1,7 +1,11 @@
 import { onError } from "@apollo/client/link/error";
 
 const executeRefreshToken = async () => {
-  fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, {
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/refresh`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     credentials: "include", // Send the cookies
     // Other settings...
   })

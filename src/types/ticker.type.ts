@@ -1,6 +1,6 @@
 export type Ticker = {
   id: number;
-  ticker: string;
+  code: string;
   price: number;
   getPrice: number;
   quantity: number;

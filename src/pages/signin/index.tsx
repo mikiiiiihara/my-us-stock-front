@@ -8,7 +8,7 @@ const Sector = () => {
   if (loading) return <Loading />;
   return (
     <>
-      <NextHead title="My US Stock Portfolio | Sector" />
+      <NextHead title="My US Stock Portfolio | Signin" />
       <SectorContent sectors={data?.marketPrices || []} />
     </>
   );

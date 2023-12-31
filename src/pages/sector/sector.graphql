@@ -1,0 +1,31 @@
+query marketPrices {
+  marketPrices(
+    tickerList: [
+      "SPY"
+      "XLE"
+      "XLK"
+      "SMH"
+      "IBB"
+      "XLV"
+      "XLP"
+      "XLU"
+      "XLB"
+      "XLY"
+      "XLF"
+      "XLI"
+      "XLRE"
+      "XME"
+      "XRT"
+      "ITA"
+      "ICLN"
+      "AGG"
+      "GLD"
+      "DBA"
+    ]
+  ) {
+    ticker
+    currentPrice
+    currentRate
+    priceGets
+  }
+}

@@ -1,0 +1,14 @@
+query usStocks {
+  usStocks {
+    id
+    code
+    dividend
+    getPrice
+    quantity
+    sector
+    usdJpy
+    currentPrice
+    priceGets
+    currentRate
+  }
+}

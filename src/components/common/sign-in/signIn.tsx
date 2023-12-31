@@ -5,15 +5,27 @@ const SignIn = () => {
   const router = useRouter();
 
   const executeLogin = async () => {
-    try {
-      router.push("/api/login");
-    } catch (error) {
-      console.error("Login error:", error);
-    }
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/signin`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: "drake@test.com",
+          password: "abc123",
+        }),
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    window.location.href = "/test";
   };
   return (
     <PrimaryButton
-      content={"googleログイン"}
+      content={"ログイン"}
       className="mb-3"
       onClick={executeLogin}
     />
