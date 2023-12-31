@@ -24,7 +24,7 @@ const DISPLAY_MODE = {
   detail: "detail",
 };
 
-const UsStocksComponent: FC<Props> = ({ assets, currentUsdJpy }) => {
+const AssetsComponent: FC<Props> = ({ assets, currentUsdJpy }) => {
   const [displayAssets, setDisplayAssets] = useState(assets);
   const [selectedGroups, setSelectedGroups] = useState<SelectedGroups>({
     usStock: true,
@@ -120,5 +120,5 @@ const UsStocksComponent: FC<Props> = ({ assets, currentUsdJpy }) => {
     </div>
   );
 };
-UsStocksComponent.displayName = "UsStocks";
-export const UsStocks = React.memo(UsStocksComponent);
+AssetsComponent.displayName = "AssetTemplate";
+export const AssetTemplate = React.memo(AssetsComponent);

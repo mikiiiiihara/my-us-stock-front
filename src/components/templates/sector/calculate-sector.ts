@@ -1,8 +1,8 @@
-import { SectorTickerList } from "../../constants/sectorTickerList";
-import { MarketData } from "../../types/marketData.type";
-import { TickerRealData } from "../../types/tickerRealData.type";
+import { SectorTickerList } from "../../../constants/sectorTickerList";
+import { MarketData } from "../../../types/marketData.type";
+import { TickerRealData } from "../../../types/tickerRealData.type";
 
-export const getTickerRealData = (realData: MarketData[]): TickerRealData[] => {
+export const calculateSectors = (realData: MarketData[]): TickerRealData[] => {
   let tickerRealData: TickerRealData[] = new Array();
   if (realData != undefined) {
     for (let i = 0; i < realData.length; i++) {

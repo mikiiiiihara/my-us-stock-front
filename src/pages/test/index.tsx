@@ -7,7 +7,7 @@ import {
   useJapanFundsQuery,
   useUsStocksQuery,
 } from "../../gql/graphql";
-import { UsStocks } from "../../components/templates/us-stocks/us-stocks";
+import { AssetTemplate } from "../../components/templates/assets/assets";
 import { AllAssets, CaluculateAllAssets } from "./calculate-all-assets";
 
 const Test = () => {
@@ -48,7 +48,7 @@ const Test = () => {
   return (
     <>
       <NextHead title="My US Stock Portfolio | Test" />
-      <UsStocks
+      <AssetTemplate
         assets={assets ?? []}
         currentUsdJpy={currentUsdJpyQuery?.currentUsdJpy ?? 0}
       />

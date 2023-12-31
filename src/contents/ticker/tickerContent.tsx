@@ -3,7 +3,7 @@ import { SearchTicker } from "./search-ticker/search-ticker";
 import { useTickerContext } from "../../contexts/tickersContext";
 import { Summary } from "./summary/summary";
 import { PrimaryButton } from "../../components/primary-button/primaryButton";
-import { UsStockSummary } from "../../components/templates/us-stocks/types";
+import { UsStockSummary } from "../../components/templates/assets/types";
 
 const DISPLAY_MODE = {
   summary: "summary",

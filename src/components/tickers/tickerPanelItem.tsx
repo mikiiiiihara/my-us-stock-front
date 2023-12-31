@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import styles from "./ticker-panel-item.module.scss";
-import { UsStockDetail } from "../templates/us-stocks/types";
+import { UsStockDetail } from "../templates/assets/types";
 
 // 表示タイプ
 export const DISPLAY_TYPE = {

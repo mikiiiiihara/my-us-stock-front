@@ -4,7 +4,7 @@ import { SummaryContent } from "./summary/summaryContent";
 import {
   UsStockDetail,
   UsStockSummary,
-} from "../../components/templates/us-stocks/types";
+} from "../../components/templates/assets/types";
 
 type Props = {
   displayMode: string;

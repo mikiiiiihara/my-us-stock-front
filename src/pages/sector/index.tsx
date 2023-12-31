@@ -1,7 +1,7 @@
-import { SectorContent } from "../../contents/sector/sectorContent";
 import { NextHead } from "../../components/common/next-head/nextHead";
 import { Loading } from "../../components/common/loading/loading";
 import { useMarketPricesQuery } from "../../gql/graphql";
+import { SectorTemplate } from "../../components/templates/sector/sector";
 
 const Sector = () => {
   const { data, loading } = useMarketPricesQuery();
@@ -9,7 +9,7 @@ const Sector = () => {
   return (
     <>
       <NextHead title="My US Stock Portfolio | Sector" />
-      <SectorContent sectors={data?.marketPrices || []} />
+      <SectorTemplate sectors={data?.marketPrices || []} />
     </>
   );
 };

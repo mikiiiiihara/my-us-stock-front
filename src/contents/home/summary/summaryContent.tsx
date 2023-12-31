@@ -3,10 +3,9 @@ import { Pie } from "../../../components/graph/pie";
 import { themeDefault } from "../../../constants/themeColor";
 import { PrimaryButton } from "../../../components/primary-button/primaryButton";
 import { PieData } from "../../../types/pieData.type";
-import { calculateSectors } from "../../../functions/sector/calculateSector";
+import { calculateSectors } from "../../../functions/sector/calculateSectors";
 import { calculateTickerPie } from "../../../functions/tickers/calculateTickerPie";
-import { TickerDetail } from "../../../types/tickerDetail.type";
-import { UsStockDetail } from "../../../components/templates/us-stocks/types";
+import { UsStockDetail } from "../../../components/templates/assets/types";
 
 const DISPLAY_MODE = {
   ticker: "ticker",
