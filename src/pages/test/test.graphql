@@ -12,3 +12,39 @@ query usStocks {
     currentRate
   }
 }
+
+query CurrentUsdJpy {
+  currentUsdJpy
+}
+
+query Cryptos {
+  cryptos {
+    id
+    code
+    quantity
+    getPrice
+    currentPrice
+  }
+}
+
+query FixedIncomeAssets {
+  fixedIncomeAssets {
+    id
+    code
+    getPriceTotal
+    dividendRate
+    usdJpy
+    paymentMonth
+  }
+}
+
+query JapanFunds {
+  japanFunds {
+    id
+    code
+    name
+    getPrice
+    getPriceTotal
+    currentPrice
+  }
+}

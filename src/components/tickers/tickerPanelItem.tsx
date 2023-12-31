@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import styles from "./ticker-panel-item.module.scss";
-import { TickerDetail } from "../../types/tickerDetail.type";
+import { UsStockDetail } from "../templates/us-stocks/types";
 
 // 表示タイプ
 export const DISPLAY_TYPE = {
@@ -10,7 +10,7 @@ export const DISPLAY_TYPE = {
 export type DisplayType = (typeof DISPLAY_TYPE)[keyof typeof DISPLAY_TYPE];
 
 type Props = {
-  data: TickerDetail;
+  data: UsStockDetail;
   currency: string;
   displayType?: DisplayType;
 };
@@ -41,7 +41,7 @@ const TickerPanelItemComponent: FC<Props> = ({
   return (
     <div className={styles.tickerPanelItem}>
       <div className={styles.tickerPanelItemContent} onClick={changeModal}>
-        <h3>{data.ticker}</h3>
+        <h3>{data.code}</h3>
         <p>
           {currency}
           {(Math.round(data.price * 10) / 10).toLocaleString()}
@@ -56,7 +56,7 @@ const TickerPanelItemComponent: FC<Props> = ({
           <div className={styles.tickerModal} onClick={changeModal}>
             <div className={styles.tickerModalContent}>
               <div className={styles.baseInfo}>
-                <p className={styles.tickerName}>{data.ticker}</p>
+                <p className={styles.tickerName}>{data.code}</p>
                 <div>
                   <p className={styles.tickerName}>
                     {currency}
@@ -79,7 +79,7 @@ const TickerPanelItemComponent: FC<Props> = ({
               </p>
               <p className={styles.modalText}>
                 取得為替：{currency}
-                {data.usdjpy.toLocaleString()}
+                {data.usdJpy.toLocaleString()}
               </p>
               <p className={styles.modalText}>
                 時価総額：{currency}

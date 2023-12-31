@@ -1,12 +1,9 @@
 import { FC, ReactNode, useContext, createContext } from "react";
-import { HOOKS_STATE } from "../constants/hooks";
 import { useSelectedFx } from "../hooks/selected-fx/useSelectedFx";
 
 type Props = {
   children: ReactNode;
 };
-export type Loading = (typeof HOOKS_STATE)[keyof typeof HOOKS_STATE];
-
 type ContextType = {
   fx: string; // 画面表示する為替の値
   changeFx: () => void; // 画面表示する為替を切り替える関数

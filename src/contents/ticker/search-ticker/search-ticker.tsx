@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { SearchBar } from "../../../components/search-bar/search-bar";
 import { TickerPanel } from "../../../components/tickers/tickerPanel";
-import { TickerDetail } from "../../../types/tickerDetail.type";
+import { UsStockDetail } from "../../../components/templates/us-stocks/types";
 
 type SearchTickerProps = {
-  tickers: TickerDetail[];
+  usStockDetails: UsStockDetail[];
   selectedFx: string;
 };
 
 export const SearchTickerComponent: React.FC<SearchTickerProps> = ({
-  tickers,
+  usStockDetails,
   selectedFx,
 }) => {
-  const [tickerList, setTickerList] = useState(tickers);
+  const [tickerList, setTickerList] = useState(usStockDetails);
 
   useEffect(() => {
-    setTickerList(tickers);
-  }, [selectedFx, tickers]);
+    setTickerList(usStockDetails);
+  }, [selectedFx, usStockDetails]);
 
   const search = (searchValue: string) => {
-    const result = tickers.filter(
-      (ticker) =>
-        ticker.ticker.includes(searchValue) ||
-        ticker.sector.includes(searchValue)
+    const result = usStockDetails.filter(
+      (usStockDetail) =>
+        usStockDetail.code.includes(searchValue) ||
+        usStockDetail.sector.includes(searchValue)
     );
 
-    setTickerList(result.length > 0 ? result : tickers);
+    setTickerList(result.length > 0 ? result : usStockDetails);
   };
 
   return (

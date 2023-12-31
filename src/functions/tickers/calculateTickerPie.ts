@@ -1,13 +1,15 @@
+import { UsStockDetail } from "../../components/templates/us-stocks/types";
 import { PieData } from "../../types/pieData.type";
-import { TickerDetail } from "../../types/tickerDetail.type";
 
-export const calculateTickerPie = (tickerDetail: TickerDetail[]): PieData[] => {
+export const calculateTickerPie = (
+  tickerDetail: UsStockDetail[]
+): PieData[] => {
   let graphData: PieData[] = new Array();
   // 比率計算
   for (let data of tickerDetail) {
     const yData = data.sumOfPrice;
     const value = {
-      name: data.ticker,
+      name: data.code,
       y: Math.round(yData * 10) / 10,
     };
     graphData.push(value);

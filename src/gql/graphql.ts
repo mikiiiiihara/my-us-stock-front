@@ -214,6 +214,26 @@ export type UsStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type UsStocksQuery = { __typename?: 'Query', usStocks?: Array<{ __typename?: 'UsStock', id: string, code: string, dividend: number, getPrice: number, quantity: number, sector: string, usdJpy: number, currentPrice: number, priceGets: number, currentRate: number }> | null };
 
+export type CurrentUsdJpyQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentUsdJpyQuery = { __typename?: 'Query', currentUsdJpy: number };
+
+export type CryptosQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CryptosQuery = { __typename?: 'Query', cryptos?: Array<{ __typename?: 'Crypto', id: string, code: string, quantity: number, getPrice: number, currentPrice: number }> | null };
+
+export type FixedIncomeAssetsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FixedIncomeAssetsQuery = { __typename?: 'Query', fixedIncomeAssets?: Array<{ __typename?: 'FixedIncomeAsset', id: string, code: string, getPriceTotal: number, dividendRate: number, usdJpy?: number | null, paymentMonth: Array<number> }> | null };
+
+export type JapanFundsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type JapanFundsQuery = { __typename?: 'Query', japanFunds?: Array<{ __typename?: 'JapanFund', id: string, code: string, name: string, getPrice: number, getPriceTotal: number, currentPrice: number }> | null };
+
 
 export const MarketPricesDocument = gql`
     query marketPrices {
@@ -307,3 +327,171 @@ export type UsStocksQueryHookResult = ReturnType<typeof useUsStocksQuery>;
 export type UsStocksLazyQueryHookResult = ReturnType<typeof useUsStocksLazyQuery>;
 export type UsStocksSuspenseQueryHookResult = ReturnType<typeof useUsStocksSuspenseQuery>;
 export type UsStocksQueryResult = Apollo.QueryResult<UsStocksQuery, UsStocksQueryVariables>;
+export const CurrentUsdJpyDocument = gql`
+    query CurrentUsdJpy {
+  currentUsdJpy
+}
+    `;
+
+/**
+ * __useCurrentUsdJpyQuery__
+ *
+ * To run a query within a React component, call `useCurrentUsdJpyQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCurrentUsdJpyQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCurrentUsdJpyQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCurrentUsdJpyQuery(baseOptions?: Apollo.QueryHookOptions<CurrentUsdJpyQuery, CurrentUsdJpyQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CurrentUsdJpyQuery, CurrentUsdJpyQueryVariables>(CurrentUsdJpyDocument, options);
+      }
+export function useCurrentUsdJpyLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrentUsdJpyQuery, CurrentUsdJpyQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CurrentUsdJpyQuery, CurrentUsdJpyQueryVariables>(CurrentUsdJpyDocument, options);
+        }
+export function useCurrentUsdJpySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CurrentUsdJpyQuery, CurrentUsdJpyQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CurrentUsdJpyQuery, CurrentUsdJpyQueryVariables>(CurrentUsdJpyDocument, options);
+        }
+export type CurrentUsdJpyQueryHookResult = ReturnType<typeof useCurrentUsdJpyQuery>;
+export type CurrentUsdJpyLazyQueryHookResult = ReturnType<typeof useCurrentUsdJpyLazyQuery>;
+export type CurrentUsdJpySuspenseQueryHookResult = ReturnType<typeof useCurrentUsdJpySuspenseQuery>;
+export type CurrentUsdJpyQueryResult = Apollo.QueryResult<CurrentUsdJpyQuery, CurrentUsdJpyQueryVariables>;
+export const CryptosDocument = gql`
+    query Cryptos {
+  cryptos {
+    id
+    code
+    quantity
+    getPrice
+    currentPrice
+  }
+}
+    `;
+
+/**
+ * __useCryptosQuery__
+ *
+ * To run a query within a React component, call `useCryptosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCryptosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCryptosQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCryptosQuery(baseOptions?: Apollo.QueryHookOptions<CryptosQuery, CryptosQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CryptosQuery, CryptosQueryVariables>(CryptosDocument, options);
+      }
+export function useCryptosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CryptosQuery, CryptosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CryptosQuery, CryptosQueryVariables>(CryptosDocument, options);
+        }
+export function useCryptosSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CryptosQuery, CryptosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CryptosQuery, CryptosQueryVariables>(CryptosDocument, options);
+        }
+export type CryptosQueryHookResult = ReturnType<typeof useCryptosQuery>;
+export type CryptosLazyQueryHookResult = ReturnType<typeof useCryptosLazyQuery>;
+export type CryptosSuspenseQueryHookResult = ReturnType<typeof useCryptosSuspenseQuery>;
+export type CryptosQueryResult = Apollo.QueryResult<CryptosQuery, CryptosQueryVariables>;
+export const FixedIncomeAssetsDocument = gql`
+    query FixedIncomeAssets {
+  fixedIncomeAssets {
+    id
+    code
+    getPriceTotal
+    dividendRate
+    usdJpy
+    paymentMonth
+  }
+}
+    `;
+
+/**
+ * __useFixedIncomeAssetsQuery__
+ *
+ * To run a query within a React component, call `useFixedIncomeAssetsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFixedIncomeAssetsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFixedIncomeAssetsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFixedIncomeAssetsQuery(baseOptions?: Apollo.QueryHookOptions<FixedIncomeAssetsQuery, FixedIncomeAssetsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FixedIncomeAssetsQuery, FixedIncomeAssetsQueryVariables>(FixedIncomeAssetsDocument, options);
+      }
+export function useFixedIncomeAssetsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FixedIncomeAssetsQuery, FixedIncomeAssetsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FixedIncomeAssetsQuery, FixedIncomeAssetsQueryVariables>(FixedIncomeAssetsDocument, options);
+        }
+export function useFixedIncomeAssetsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<FixedIncomeAssetsQuery, FixedIncomeAssetsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FixedIncomeAssetsQuery, FixedIncomeAssetsQueryVariables>(FixedIncomeAssetsDocument, options);
+        }
+export type FixedIncomeAssetsQueryHookResult = ReturnType<typeof useFixedIncomeAssetsQuery>;
+export type FixedIncomeAssetsLazyQueryHookResult = ReturnType<typeof useFixedIncomeAssetsLazyQuery>;
+export type FixedIncomeAssetsSuspenseQueryHookResult = ReturnType<typeof useFixedIncomeAssetsSuspenseQuery>;
+export type FixedIncomeAssetsQueryResult = Apollo.QueryResult<FixedIncomeAssetsQuery, FixedIncomeAssetsQueryVariables>;
+export const JapanFundsDocument = gql`
+    query JapanFunds {
+  japanFunds {
+    id
+    code
+    name
+    getPrice
+    getPriceTotal
+    currentPrice
+  }
+}
+    `;
+
+/**
+ * __useJapanFundsQuery__
+ *
+ * To run a query within a React component, call `useJapanFundsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useJapanFundsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useJapanFundsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useJapanFundsQuery(baseOptions?: Apollo.QueryHookOptions<JapanFundsQuery, JapanFundsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<JapanFundsQuery, JapanFundsQueryVariables>(JapanFundsDocument, options);
+      }
+export function useJapanFundsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<JapanFundsQuery, JapanFundsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<JapanFundsQuery, JapanFundsQueryVariables>(JapanFundsDocument, options);
+        }
+export function useJapanFundsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<JapanFundsQuery, JapanFundsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<JapanFundsQuery, JapanFundsQueryVariables>(JapanFundsDocument, options);
+        }
+export type JapanFundsQueryHookResult = ReturnType<typeof useJapanFundsQuery>;
+export type JapanFundsLazyQueryHookResult = ReturnType<typeof useJapanFundsLazyQuery>;
+export type JapanFundsSuspenseQueryHookResult = ReturnType<typeof useJapanFundsSuspenseQuery>;
+export type JapanFundsQueryResult = Apollo.QueryResult<JapanFundsQuery, JapanFundsQueryVariables>;

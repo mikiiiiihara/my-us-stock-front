@@ -6,6 +6,7 @@ import { PieData } from "../../../types/pieData.type";
 import { calculateSectors } from "../../../functions/sector/calculateSector";
 import { calculateTickerPie } from "../../../functions/tickers/calculateTickerPie";
 import { TickerDetail } from "../../../types/tickerDetail.type";
+import { UsStockDetail } from "../../../components/templates/us-stocks/types";
 
 const DISPLAY_MODE = {
   ticker: "ticker",
@@ -13,10 +14,10 @@ const DISPLAY_MODE = {
 };
 
 type Props = {
-  tickerDetail: TickerDetail[];
+  usStockDetail: UsStockDetail[];
 };
 
-const SummaryContentComponent: FC<Props> = ({ tickerDetail }) => {
+const SummaryContentComponent: FC<Props> = ({ usStockDetail }) => {
   // 画面表示
   //表示切り替え用
   const [displayMode, setDisplayMode] = useState(DISPLAY_MODE.ticker);
@@ -29,13 +30,13 @@ const SummaryContentComponent: FC<Props> = ({ tickerDetail }) => {
   }, []);
 
   const pieData = useMemo(
-    () => calculateTickerPie(tickerDetail),
-    [tickerDetail]
+    () => calculateTickerPie(usStockDetail),
+    [usStockDetail]
   );
 
   const sectorData: PieData[] = useMemo(
-    () => calculateSectors(tickerDetail),
-    [tickerDetail]
+    () => calculateSectors(usStockDetail),
+    [usStockDetail]
   );
   return (
     <>

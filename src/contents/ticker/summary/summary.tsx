@@ -1,46 +1,46 @@
 import React from "react";
 import { TickerPanel } from "../../../components/tickers/tickerPanel";
-import { TickerDetail } from "../../../types/tickerDetail.type";
 import { useTickersSummary } from "../../../hooks/useTickersSummary.ts/useTickersSummary";
+import { UsStockDetail } from "../../../components/templates/us-stocks/types";
 
 type Props = {
-  tickers: TickerDetail[];
+  usStockDetails: UsStockDetail[];
   selectedFx: string;
 };
-const SummaryComponent: React.FC<Props> = ({ tickers, selectedFx }) => {
+const SummaryComponent: React.FC<Props> = ({ usStockDetails, selectedFx }) => {
   // 値上がりTOP3
   const dataPriceRateDesc = useTickersSummary(
-    tickers,
+    usStockDetails,
     (a, b) => b.priceRate - a.priceRate,
     3
   );
   // 値下がりTOP3
   const dataPriceRateAsc = useTickersSummary(
-    tickers,
+    usStockDetails,
     (a, b) => a.priceRate - b.priceRate,
     3
   );
   // 含み益（額）TOP3
   const dataBalanceDesc = useTickersSummary(
-    tickers,
+    usStockDetails,
     (a, b) => b.balance - a.balance,
     3
   );
   // 含み損（額）TOP3
   const dataBalanceAsc = useTickersSummary(
-    tickers,
+    usStockDetails,
     (a, b) => a.balance - b.balance,
     3
   );
   // 含み益（率）TOP3
   const dataBalanceRateDesc = useTickersSummary(
-    tickers,
+    usStockDetails,
     (a, b) => b.balanceRate - a.balanceRate,
     3
   );
   // 含み益（率）TOP3
   const dataBalanceRateAsc = useTickersSummary(
-    tickers,
+    usStockDetails,
     (a, b) => a.balanceRate - b.balanceRate,
     3
   );

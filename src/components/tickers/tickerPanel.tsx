@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import { TickerDetail } from "../../types/tickerDetail.type";
 import { DisplayType, TickerPanelItem } from "./tickerPanelItem";
+import { UsStockDetail } from "../templates/us-stocks/types";
 
 type Props = {
-  tickerDetail: TickerDetail[];
+  tickerDetail: UsStockDetail[];
   currency: string;
   displayType?: DisplayType;
 };
@@ -16,7 +16,7 @@ const TickerPanelComponent: FC<Props> = ({
   return (
     <div>
       {tickerDetail.map((data) => (
-        <div key={data.ticker}>
+        <div key={data.code}>
           <TickerPanelItem
             data={data}
             currency={currency}

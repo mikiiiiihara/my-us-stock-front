@@ -1,13 +1,13 @@
 import { useMemo } from "react";
-import { TickerDetail } from "../../types/tickerDetail.type";
+import { UsStockDetail } from "../../components/templates/us-stocks/types";
 
 export const useTickersSummary = (
-  tickers: TickerDetail[],
-  compareFn: (a: TickerDetail, b: TickerDetail) => number,
+  usStockDetails: UsStockDetail[],
+  compareFn: (a: UsStockDetail, b: UsStockDetail) => number,
   limit: number
 ) => {
   return useMemo(
-    () => tickers.sort(compareFn).slice(0, limit),
-    [tickers, compareFn, limit]
+    () => usStockDetails.sort(compareFn).slice(0, limit),
+    [usStockDetails, compareFn, limit]
   );
 };

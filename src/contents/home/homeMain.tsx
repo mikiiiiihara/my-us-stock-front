@@ -1,23 +1,33 @@
 import React, { FC } from "react";
-import { TickerDetail } from "../../types/tickerDetail.type";
-import { TickerData } from "../../types/tickerData.type";
 import { TickerContent } from "../ticker/tickerContent";
 import { SummaryContent } from "./summary/summaryContent";
-import { DISPLAY_MODE } from "./homeContent";
+import {
+  UsStockDetail,
+  UsStockSummary,
+} from "../../components/templates/us-stocks/types";
 
 type Props = {
   displayMode: string;
-  tickerDetail: TickerDetail[];
-  tickers: TickerData;
+  usStockDetail: UsStockDetail[];
+  usStockSummary: UsStockSummary;
 };
 
-export const HomeMain: FC<Props> = ({ displayMode, tickerDetail, tickers }) => {
+const DISPLAY_MODE = {
+  summary: "summary",
+  detail: "detail",
+};
+
+export const HomeMain: FC<Props> = ({
+  displayMode,
+  usStockDetail,
+  usStockSummary,
+}) => {
   return (
     <>
       {displayMode === DISPLAY_MODE.summary ? (
-        <SummaryContent tickerDetail={tickerDetail} />
+        <SummaryContent usStockDetail={usStockDetail} />
       ) : (
-        <TickerContent tickers={tickers} />
+        <TickerContent usStockSummary={usStockSummary} />
       )}
     </>
   );
