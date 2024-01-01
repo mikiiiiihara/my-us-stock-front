@@ -1,4 +1,3 @@
-import { HomeContent } from "../../contents/home/homeContent";
 import { NextHead } from "../../components/common/next-head/nextHead";
 import { AssetContent } from "../../contents/asset/assetContent";
 
